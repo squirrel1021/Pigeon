@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="pure_white">#FFFFFF</color>
+    <color name="msg_notify_white">#e6FFFFFF</color>
+
+    <color name="translate_pure_white">#80FFFFFF</color>
+    <color name="pure_black">#000000</color>
+    <color name="pure_dark_white">#CCF0EC</color>
+    <color name="red_text">#FF7A1C</color>
+    <color name="red_bg">#F52F02</color>
+    <color name="orange_bg">#FF7900</color>
+    <color name="theme_body_dark">#cc20272a</color>
+    <color name="theme_body">#cc22292c</color>
+    <color name="red_deep_bg">#CC3333</color>
+    <color name="gray_theme">#EFEFEF</color>
+    <color name="gray_bg">#9A9A9A</color>
+    <color name="btn_gray_bg">#9F9FA0</color>
+    <color name="gray_time">#9F9FA0</color>
+    <color name="gray_hint">#9B9B9B</color>
+    <color name="gray_deep_bg">#666666</color>
+    <color name="color_83">#838383</color>
+    <color name="color_gray_light">#99C9C9C9</color>
+    <color name="red_hint">#E73828</color>
+    <color name="msg_red_light">#e73828</color>
+
+    <!-- 界面背景颜色值 -->
+    <color name="color_f8">#F8F8F8</color>
+    <color name="color_f0">#F0F0F0</color>
+    <color name="color_df">#DFDFDF</color>
+    <color name="color_90">#9000</color>
+    <color name="color_0000">#0000</color>
+    <color name="pink">#FF7A1C</color>
+    <!-- 正在加载背景颜色值 -->
+    <color name="loading_bg">#d65365</color>
+    <color name="red">#ED4A4A</color>
+    <color name="price_red">#F24949</color>
+    <!-- 字体颜色，深黑色 -->
+    <color name="color_33">#333333</color>
+    <color name="text_color_goods_name">#3c3c3c</color>
+    <color name="color_lucency">#00000000</color>
+    <!-- 字体颜色，浅色 -->
+    <color name="color_66">#666666</color>
+    <color name="color_6e">#6e6e6e</color>
+
+    <color name="new_gray">#FF888888</color>
+
+    <!-- 字体颜色，浅黑色 -->
+    <color name="color_99">#999999</color>
+    <color name="text_red">#F63108</color>
+
+    <!-- 表格边框颜色 -->
+    <color name="color_bb">#BBBBBB</color>
+    <color name="color_b4">#B4B4B4</color>
+    <!-- 分割线颜色 -->
+    <color name="color_dd">#DDDDDD</color>
+    <color name="color_00">#000000</color>
+    <color name="color_ee">#EEEEEE</color>
+    <color name="color_f4">#F4F4F4</color>
+    <color name="color_e7">#E7E7E7</color>
+    <color name="color_e1">#E1E1E1</color>
+    <color name="color_e0">#E0E0E0</color>
+    <color name="color_e8">#E8E8E8</color>
+    <!-- 黄色数字 -->
+    <color name="yellow">#F1B652</color>
+    <color name="yellowto">#F79400</color>
+    <color name="yellow_bg">#F29801</color>
+    <!-- 应用整体颜色 - 底部按钮未选中字体颜色 -->
+    <color name="button_text_color">#FFFFFF</color>
+    <!-- 应用整体颜色 - 主题颜色 -->
+    <color name="theme_color">#F39800</color>
+    <color name="deeper_theme_color">#CB7C12</color>
+    <color name="home_title_color">#FF7A1C</color>
+    <color name="travel_price_color">#C30E23</color>
+    <!-- 应用整体颜色 - 背景颜色 -->
+    <color name="theme_bg">#9d3a4e</color>
+    <color name="title_text_color">#231815</color>
+    <color name="bg_color">#EDEDED</color>
+    <color name="contents_text">#ff000000</color>
+    <color name="encode_view">#ffffffff</color>
+    <color name="possible_result_points">#c0ffbd21</color>
+    <color name="add_new_addr_common_black_text_color">#666666</color>
+    <color name="add_new_addr_common_gray_text_color">#cccccc</color>
+    <color name="addr_list_common_black_text_color">#666666</color>
+    <color name="addr_list_common_gray_text_color">#cccccc</color>
+    <!-- <color name="gray">#808080</color> -->
+    <color name="lightgreen">#99CC33</color>
+    <color name="green">#00CC00</color>
+    <color name="white">#FFFFFF</color>
+
+    <color name="black">#000000</color>
+    <color name="middleblue">#5f9cf9</color>
+    <color name="lightgray">#eef2f5</color>
+
+    <!-- 电子券背景色 -->
+    <color name="ecoupon_pink">#FC6C98</color>
+    <color name="green_main">#1C9F26</color>
+    <color name="btn_normal_color">#FB3F5B</color>
+    <color name="btn_press_color">#d65365</color>
+    <color name="btn_disable_color">#9e9e9e</color>
+    <color name="transparent">#00000000</color>
+    <color name="press_color">#eeeeee</color>
+    <color name="mpsdk_btn_gray_normal">#d0d0d0</color>
+    <color name="mpsdk_btn_gray_press">#9e9e9e</color>
+    <color name="color_half_transparent">#55000000</color>
+    <color name="bg_inteage_yellow">#9B7E54</color>
+
+    <!-- 二维码 -->
+    <!-- 应用整体颜色 - 标题栏背景色 -->
+    <color name="title_bg_color">#1EB4B3</color>
+    <!-- 应用整体颜色 - 标题栏文字色 -->
+    <!-- Android standard ICS color -->
+    <color name="result_minor_text">#ffc0c0c0</color>
+    <color name="result_points">#c099cc00</color>
+    <!-- Android standard ICS color -->
+    <color name="result_text">#ffffffff</color>
+    <color name="result_view">#b0000000</color>
+    <color name="status_text">#ffffffff</color>
+    <color name="viewfinder_laser">#ffcc0000</color>
+    <!-- Android standard ICS color -->
+    <color name="viewfinder_mask">#60000000</color>
+    <color name="help_button_view">#ffcccccc</color>
+    <color name="help_view">#ff404040</color>
+    <color name="result_image_border">#ffffffff</color>
+    <color name="sbc_header_text">#ff808080</color>
+    <color name="sbc_header_view">#ffffffff</color>
+    <color name="sbc_list_item">#fffff0e0</color>
+    <color name="sbc_layout_view">#ffffffff</color>
+    <color name="sbc_page_number_text">#ff000000</color>
+    <color name="sbc_snippet_text">#ff4b4b4b</color>
+    <color name="share_text">#ff000000</color>
+    <color name="share_view">#ffffffff</color>
+    <color name="status_view">#50000000</color>
+    <color name="viewfinder_frame">#ff000000</color>
+    <color name="header">#58567D</color>
+    <color name="grgray">#686868</color>
+
+    <color name="yellow_title">#C2623C</color>
+
+    <color name="blue_color">#4D8CE2</color>
+
+    <!-- 旅游 -->
+    <color name="travel_search_goods_bg">#852541</color>
+    <color name="travel_search_goods_text">#DEC6CE</color>
+    <color name="travel_detail_choose_black">#020202</color>
+
+    <color name="navpage">#FFE1E8EB</color>
+
+    <color name="scratch_start_gradient">#e5e5e5</color>
+    <color name="scratch_end_gradient">#cccccc</color>
+
+
+    <!-- 统一APP -->
+    <color name="bg_theme_gray">#EFEFEF</color>
+    <color name="gray_text">#9FA0A0</color>
+    <color name="bg_title">#FFFFFF</color>
+    <color name="white_translate_color">#80ffffff</color>
+    <color name="primary_light">#35B056</color>
+
+    <!--  拼车 -->
+    <color name="bg_blue">#13ad67</color>
+
+    <color name="pc_route_line">#C0C2CC</color>
+
+
+    <!-- 原生商城 -->
+    <!-- 首页也最上方的标题的背景颜色 -->
+    <color name="home_fragment_title_bg">#00FFFFFF</color>
+    <!-- 首页也最上方的标题的背景颜色 -->
+    <color name="home_fragment_title_text_bg">#80e9e9e9</color>
+
+    <!-- 首页也最上方的标题的背景颜色 -->
+    <color name="order_fragment_title_bg">#FFFFFF</color>
+    <!--首页面推荐的字体颜色  -->
+    <color name="home_fragment_recommend_text_color">#4D4D4D</color>
+    <!-- 首页上方的编辑框的背景颜色 -->
+    <color name="home_fragment_top_edit_bg">#FAF0E7</color>
+    <!-- 首页上方搜索编辑框的边框颜色 -->
+    <color name="home_fragment_top_edit_stroke">#D4CAC1</color>
+    <!-- 首页上方编辑框内的字体颜色 -->
+    <color name="home_fragment_top_eidt_hint_text_color">#B3B3B3</color>
+    <!--首页上方的右边消息字体颜色  -->
+    <color name="home_fragment_top_right_text">#B3B3B3</color>
+    <!--我的页面上方个人信息的背景颜色  -->
+    <color name="mine_fragment_top_perinfo_bg">#FA3C3C</color>
+    <!-- 我的页面中间分隔线的背景颜色 -->
+    <color name="mine_fragment_separation_line">#EDEDED</color>
+    <!-- 我的页面上方文字的分隔线 -->
+    <color name="mine_fragment_top_text_color">#FFFFFF</color>
+    <color name="login_activity_center_line_color">#DCDCDC</color>
+    <!--登录页面的按钮背景  -->
+    <color name="login_activity_login_btn_bg">#F82D30</color>
+    <color name="login_activity_family_registration">#E5E5E5</color>
+    <!-- 更多设置页面的 缓存统计-->
+    <color name="more_settings_clear_cache_count">#B3B3B3</color>
+    <!--我的订单页面上方切换菜单的按钮的选中字体颜色  -->
+    <color name="myorder_top_menu_text_selected_color">#E83437</color>
+    <!-- 我的订单页面上方切换菜单的按钮的默认字体颜色 -->
+    <color name="myorder_top_menu_text_default_color">#000000</color>
+    <!--主页面特别推荐的价格字体的颜色  -->
+    <color name="home_frag_recommand_price_color">#C16B74</color>
+
+    <!--订单详情页面上方的切换菜单的下划线的颜色  -->
+    <color name="produces_detail_menu_line_check">#000000</color>
+    <color name="produces_detail_menu_line_normal">#FFFFFF</color>
+    <!-- 图片的边框颜色 -->
+    <color name="image_view_border_color">#D2D2D2</color>
+    <!-- 订单页面中商品颜色文字的颜色 -->
+    <color name="order_frag_goods_color_text_color">#9A9A9A</color>
+    <color name="order_frag_cancel_order_solid">#F4F5F7</color>
+    <color name="order_frag_cancel_border_color">#D2D2D2</color>
+    <color name="order_frag_pay_order_solid">#F23030</color>
+    <color name="order_frag_pay_text_color">#FFFFFF</color>
+    <!-- 购物车页面的价格字体的颜色 -->
+    <color name="shoppingcar_price_text_color">#FF0003</color>
+    <color name="shoppingcar_goods_num_stroke">#999999</color>
+
+    <!-- 订单详情页面分割线的颜色 -->
+    <color name="order_content_line_color">#99999B</color>
+    <!-- 商品详情分割线颜色 -->
+    <color name="goods_detail_line_color">#ECECEC</color>
+
+    <!-- 半透明的activity -->
+    <color name="transparent_backgorund">#50000000</color>
+
+    <!-- 半透明的售罄图 -->
+    <color name="transparent_backgorund_1">#33000000</color>
+
+    <!-- 半透明的activity -->
+
+    <!-- 编辑订单按钮颜色 -->
+    <color name="edit_order_btn_bg">#F23030</color>
+
+    <color name="hot_search_bg_color">#F1F2F6</color>
+    <!-- 订单详情字体颜色 -->
+    <color name="check_pay_way_text_color_normal">#A5A6A8</color>
+    <color name="check_pay_way_text_color_check">#D23E3E</color>
+
+
+    <!-- r -->
+    <color name="font_title2">#4c4c4c</color>
+    <color name="font_content">#808080</color>
+    <color name="font_content1">#424242</color>
+    <color name="font_msg_title">#171717</color>
+    <color name="font_title2_select">#bd4648</color>
+    <color name="btn_bg_select">#f4f5f7</color>
+    <color name="btn_bg_select_no">#fff</color>
+    <color name="btn_bg_line">#e6e6e6</color>
+    <color name="btn_address_select">#f82d30</color>
+    <color name="btn_address_select_no">#f2f2f2</color>
+
+    <color name="msgpage_bg">#f3f4f6</color>
+
+    <color name="popup_bg">#99585858</color>
+    <color name="pupup_text_color">#FFFFFF</color>
+    <color name="popup_main_background">#b0000000</color>
+
+    <color name="dialogTxtColor">#0048fc</color>
+    <color name="dialogColor">#f0ffffff</color>
+    <color name="dialog_gray">#e6e6e6</color>
+    <color name="black_text">#333333</color>
+    <color name="line1">#aeaeae</color>
+    <color name="return_bg_color">#eaebec</color>
+
+    <color name="background_tab_pressed">#6633B5E5</color>
+</resources>

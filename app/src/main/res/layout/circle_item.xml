@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="@dimen/margin_70"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/margin_10">
+
+            <com.july.pigeon.ui.weight.CircleImageView
+                android:id="@+id/imageView2"
+                android:layout_width="@dimen/margin_50"
+                android:layout_height="@dimen/margin_50"
+                android:layout_marginLeft="@dimen/margin_10"
+
+                android:src="@drawable/hefans_bg" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/margin_10"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/userName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_10"
+                android:layout_marginTop="@dimen/margin_5"
+                android:text="上胡养鸽中心"
+                android:textColor="@color/blue_color" />
+
+            <TextView
+                android:id="@+id/circleInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_10"
+                android:layout_marginTop="@dimen/margin_5"
+                android:text="看我养的鸽子漂不漂亮"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <com.july.pigeon.ui.weight.MyGridView
+                android:id="@+id/circleGv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_10"
+                android:layout_marginRight="@dimen/margin_5"
+                android:layout_marginTop="@dimen/margin_10"
+                android:horizontalSpacing="2dp"
+                android:numColumns="3"
+                android:verticalSpacing="2dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/margin_10"
+                    android:src="@drawable/date" />
+
+                <TextView
+                    android:id="@+id/textView5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="11dp"
+                    android:layout_marginStart="11dp"
+                    android:layout_toEndOf="@+id/imageView3"
+                    android:layout_toRightOf="@+id/imageView3"
+                    android:text="6月8日 昨天" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

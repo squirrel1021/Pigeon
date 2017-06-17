@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_margin="0.0dip"
+    android:background="#000">
+
+    <RelativeLayout
+        android:id="@+id/itemLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_centerInParent="true"
+        android:background="@color/white"
+        android:padding="12.0dip">
+
+        <!--<ImageView
+            android:id="@+id/iv_item"
+            android:layout_width="58.0dip"
+            android:layout_height="58.0dip"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/uapp_icon_logo"
+            android:contentDescription="@string/app_name" />-->
+
+        <com.july.pigeon.ui.weight.CircleImageView
+            android:id="@+id/iv_item"
+            android:layout_width="58.0dip"
+            android:layout_height="58.0dip"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/hefans_bg"
+            />
+
+        <TextView
+            android:id="@+id/tv_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/iv_item"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5.0dip"
+            android:text="意见与建议"
+            android:singleLine="true"
+            android:textSize="14.0sp" />
+
+        <ImageView
+            android:visibility="gone"
+            android:id="@+id/jian"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/iv_item"
+            android:src="@drawable/ic_launcher" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

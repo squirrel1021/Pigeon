@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:paddingBottom="@dimen/margin_40"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/blue_color">
+
+        <com.july.pigeon.ui.weight.CircleImageView
+            android:id="@+id/imageView"
+            android:layout_width="@dimen/margin_90"
+            android:layout_height="@dimen/margin_90"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/margin_50"
+            android:src="@drawable/hefans_bg" />
+
+        <LinearLayout
+            android:id="@+id/leftLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/imageView"
+            android:layout_marginEnd="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginTop="24dp"
+            android:layout_toLeftOf="@+id/imageView"
+            android:layout_toStartOf="@+id/imageView"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:text="养殖鸽龄"
+                android:textColor="@color/gray_text" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView3"
+                android:layout_marginTop="12dp"
+                android:text="2-5年"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/rightLayout"
+            android:layout_width="@dimen/margin_70"
+            android:layout_height="wrap_content"
+
+            android:layout_alignTop="@+id/imageView"
+            android:layout_marginLeft="@dimen/margin_40"
+            android:layout_marginTop="24dp"
+            android:layout_toEndOf="@+id/imageView"
+            android:layout_toRightOf="@+id/imageView"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:text="荣誉"
+                android:textColor="@color/gray_text" />
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView3"
+                android:layout_marginTop="12dp"
+                android:gravity="center"
+                android:text="全国养鸽大赛一等奖"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rightLayout"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rightLayout"
+                android:layout_centerHorizontal="true"
+                android:text="1825648564"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/textView9"
+                android:layout_alignStart="@+id/textView9"
+                android:layout_below="@+id/textView9"
+                android:layout_marginTop="11dp"
+                android:text="张三"
+                android:textColor="@color/white" />
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>

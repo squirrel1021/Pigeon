@@ -1,0 +1,122 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+    <!--<include-->
+        <!--android:id="@+id/layout_actionbar"-->
+        <!--layout="@layout/layout_actionbar" />-->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <FrameLayout
+            android:id="@+id/home_frame_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/updateNumLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#E6F1B652"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/updateNum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_5"
+                android:layout_marginTop="@dimen/margin_5"
+                android:textColor="@color/white"
+                android:text="本次更新了2条帖子" />
+
+        </LinearLayout>
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioGroup
+            android:id="@+id/tab_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/pure_white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingTop="2dp">
+
+            <RadioButton
+                android:id="@+id/tab_home"
+                style="@style/buttom_btn_style"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:drawableTop="@drawable/lab_home_sel"
+                android:tag="1"
+                android:text="脚环" />
+
+            <RadioButton
+                android:id="@+id/tab_shop_cart"
+                style="@style/buttom_btn_style"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:drawableTop="@drawable/lab_commounit_sel"
+                android:tag="3"
+                android:text="信鸽" />
+
+            <RadioButton
+                android:id="@+id/tab_order"
+                style="@style/buttom_btn_style"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:drawableTop="@drawable/lab_activity_sel"
+                android:tag="2"
+                android:text="社区" />
+
+            <RadioButton
+                android:id="@+id/tab_user"
+                style="@style/buttom_btn_style"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:drawableTop="@drawable/hefans_user_lab"
+                android:tag="4"
+                android:text="我的" />
+        </RadioGroup>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:orientation="horizontal"
+            android:weightSum="4">
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2">
+
+                <ImageView
+                    android:id="@+id/all_cart_nums"
+                    android:layout_width="@dimen/margin_10"
+                    android:layout_height="@dimen/margin_10"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/margin_25"
+                    android:layout_marginTop="@dimen/margin_5"
+                    android:visibility="gone" />
+            </RelativeLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>
