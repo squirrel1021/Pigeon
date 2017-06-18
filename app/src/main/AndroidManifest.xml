@@ -51,7 +51,9 @@
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="UeqmLFLmQ2V3bAIukDXYUdSFWnnQ3G1b" />
 
-        <activity android:name=".ui.activity.main.HomeActivity">
+        <activity
+            android:name=".ui.activity.main.HomeActivity"
+            android:screenOrientation="portrait">
 
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN" /> -->
@@ -60,23 +62,40 @@
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
         </activity>
-        <activity android:name=".ui.activity.TestMap" />
-        <activity android:name=".ui.activity.main.MapControlDemo" />
-        <activity android:name=".ui.activity.main.WelcomeActivity">
+        <activity
+            android:name=".ui.activity.TestMap"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.main.MapControlDemo"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.main.WelcomeActivity"
+            android:screenOrientation="portrait">
             <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
+            <!--<action android:name="android.intent.action.MAIN" />-->
 
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--<category android:name="android.intent.category.LAUNCHER" />-->
             <!--</intent-filter>-->
         </activity>
-        <activity android:name=".ui.activity.main.SplashActivity">
+        <activity
+            android:name=".ui.activity.main.SplashActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.login.LoginActivity"/>
+        <activity
+            android:name=".ui.activity.login.LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.login.RegisterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.login.RegisterFormal"
+            android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>

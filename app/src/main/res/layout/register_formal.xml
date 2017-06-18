@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_50"
+        android:text="欢迎加入信鸽"
+        android:textColor="@color/blue_color"
+        android:textSize="28sp" />
+
+    <LinearLayout
+        android:layout_marginTop="@dimen/margin_50"
+        android:background="@drawable/edittext_bg"
+        android:layout_marginLeft="@dimen/margin_15"
+        android:layout_marginRight="@dimen/margin_15"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <EditText
+            android:textColorHint="@color/gray_text"
+            android:paddingLeft="@dimen/margin_10"
+            android:paddingBottom="@dimen/margin_10"
+            android:paddingTop="@dimen/margin_5"
+            android:background="@drawable/edit_one"
+            android:id="@+id/editText4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="输入手机验证码"
+            android:inputType="phone" />
+
+        <EditText
+            android:textColorHint="@color/gray_text"
+            android:paddingLeft="@dimen/margin_10"
+            android:paddingBottom="@dimen/margin_10"
+            android:paddingTop="@dimen/margin_10"
+            android:background="@drawable/edit_one"
+            android:id="@+id/editText5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="输入您的昵称" />
+
+        <EditText
+            android:textColorHint="@color/gray_text"
+            android:paddingLeft="@dimen/margin_10"
+            android:hint="输入6-16位字符密码"
+            android:paddingBottom="@dimen/margin_10"
+            android:paddingTop="@dimen/margin_10"
+            android:background="@drawable/edit_one"
+            android:id="@+id/editText6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPassword" />
+
+        <EditText
+            android:textColorHint="@color/gray_text"
+            android:paddingLeft="@dimen/margin_10"
+            android:hint="再次输入密码"
+            android:paddingBottom="@dimen/margin_5"
+            android:paddingTop="@dimen/margin_10"
+            android:background="@null"
+            android:id="@+id/editText7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPassword" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_20"
+        android:textSize="16sp"
+        android:text="点击下一步代表您已阅读并同意用户协议" />
+    <Button
+        android:id="@+id/doneBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_18"
+        android:layout_marginRight="@dimen/margin_18"
+        android:layout_marginTop="@dimen/margin_20"
+        android:background="@color/blue_color"
+        android:text="完成"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
+</LinearLayout>
