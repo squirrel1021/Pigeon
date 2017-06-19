@@ -37,6 +37,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         btn = (Button) findViewById(R.id.loginBtn);
         btn.setOnClickListener(this);
         ((TextView)findViewById(R.id.regiest)).setOnClickListener(this);
+        ((TextView)findViewById(R.id.forget_psw)).setOnClickListener(this);
     }
 
     @Override
@@ -48,6 +49,10 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 break;
             case R.id.regiest:
                 ActivityStartUtil.start(this,RegisterActivity.class);
+                finish();
+                break;
+            case R.id.forget_psw:
+                ActivityStartUtil.start(this,ForgetPassWordActivity.class);
                 finish();
                 break;
             default:

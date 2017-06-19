@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_70"
+        android:background="@color/blue_color">
+
+        <TextView
+
+            android:id="@+id/title_center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/margin_30"
+            android:text="社区"
+            android:textColor="@color/white"
+            android:textSize="22sp" />
+
+        <TextView
+            android:visibility="gone"
+            android:layout_marginLeft="@dimen/margin_20"
+            android:textColor="@color/white"
+            android:id="@+id/left_tv"
+            android:layout_width="wrap_content"
+            android:textSize="18sp"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/title_center"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:text="取消" />
+    </RelativeLayout>
+</LinearLayout>

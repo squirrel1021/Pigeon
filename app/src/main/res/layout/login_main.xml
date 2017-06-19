@@ -82,6 +82,7 @@
             android:background="@color/gray_text" />
 
         <TextView
+            android:id="@+id/forget_psw"
             android:layout_marginLeft="@dimen/margin_20"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
