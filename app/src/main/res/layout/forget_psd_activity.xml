@@ -49,12 +49,13 @@
                 android:paddingTop="@dimen/margin_10"
                 android:textColorHint="@color/gray_text" />
             <View
-
+                android:layout_marginTop="@dimen/margin_3"
                 android:layout_width="1dp"
                 android:layout_height="20dp"
                 android:background="@color/color_b4"
                 />
             <TextView
+                android:layout_marginTop="@dimen/margin_3"
                 android:layout_marginRight="@dimen/margin_10"
                 android:layout_marginLeft="@dimen/margin_10"
                 android:textColor="@color/blue_color"

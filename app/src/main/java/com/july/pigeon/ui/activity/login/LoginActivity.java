@@ -49,11 +49,9 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 break;
             case R.id.regiest:
                 ActivityStartUtil.start(this,RegisterActivity.class);
-                finish();
                 break;
             case R.id.forget_psw:
                 ActivityStartUtil.start(this,ForgetPassWordActivity.class);
-                finish();
                 break;
             default:
                 break;
