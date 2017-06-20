@@ -23,7 +23,7 @@
             android:src="@drawable/uapp_icon_logo"
             android:contentDescription="@string/app_name" />-->
 
-        <com.july.pigeon.ui.weight.CircleImageView
+        <ImageView
             android:id="@+id/iv_item"
             android:layout_width="58.0dip"
             android:layout_height="58.0dip"

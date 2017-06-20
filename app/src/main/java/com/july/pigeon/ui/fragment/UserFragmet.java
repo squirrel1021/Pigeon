@@ -32,6 +32,7 @@ public class UserFragmet extends Fragment {
     private BaseListAdapter adapter;
     private List<String> list = new ArrayList<String>();
     private String[] gridTvs={"昵称","养殖鸽龄","荣誉","我的鸽子","我的脚环","设置"};
+    private int[]imgs={R.drawable.icon_nickname,R.drawable.icon_oldpigeon,R.drawable.icon_honor,R.drawable.icon_mydove,R.drawable.icon_myfootring,R.drawable.icon_setup};
 
     @Nullable
     @Override
@@ -65,6 +66,7 @@ public class UserFragmet extends Fragment {
                 public void convert(CommViewHolder holder) {
                     TextView tv=holder.getView(R.id.tv_item);
                     tv.setText(gridTvs[holder.getPosition()]);
+                    ((ImageView)holder.getView(R.id.iv_item)).setImageResource(imgs[holder.getPosition()]);
                 }
             };
             gv.setAdapter(adapter);
