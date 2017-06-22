@@ -99,6 +99,9 @@
         <activity
             android:name=".ui.activity.login.ForgetPassWordActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.circle.ReleaseCircleActivity"
+            android:screenOrientation="portrait" />
 
     </application>
 

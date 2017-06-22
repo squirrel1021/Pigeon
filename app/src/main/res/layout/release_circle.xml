@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/base_titlebar" />
+
+    <EditText
+        android:id="@+id/editText8"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_150"
+        android:background="@null"
+        android:ems="100"
+        android:gravity="top"
+        android:hint="说点什么吧..."
+        android:inputType="textPersonName"
+        android:paddingLeft="@dimen/margin_15"
+        android:paddingTop="@dimen/margin_12"
+        android:textColorHint="@color/gray_text" />
+
+    <GridView
+        android:id="@+id/imageGv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:numColumns="3">
+    </GridView>
+</LinearLayout>

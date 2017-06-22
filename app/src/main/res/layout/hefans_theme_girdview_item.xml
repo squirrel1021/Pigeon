@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/imageShowView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/theme_image"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:adjustViewBounds="true"
+            android:minHeight="@dimen/margin_30"
+            android:minWidth="@dimen/margin_30"
+            android:scaleType="centerCrop"
+             />
+
+        <ImageView
+            android:id="@+id/delImage"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="@dimen/layout_width_60"
+            android:layout_marginTop="3dp"
+            android:src="@drawable/gray_fork_icon" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/addMoreLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_80"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/addImage"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/add_image"/>
+    </LinearLayout>
+</LinearLayout>

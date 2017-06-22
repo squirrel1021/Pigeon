@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
-
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
@@ -21,23 +20,30 @@ import com.jude.easyrecyclerview.decoration.DividerDecoration;
 import com.july.pigeon.R;
 import com.july.pigeon.adapter.holder.CircleHolder;
 import com.july.pigeon.bean.Circle;
+import com.july.pigeon.ui.activity.circle.ReleaseCircleActivity;
+import com.july.pigeon.ui.activity.main.HomeActivity;
+import com.july.pigeon.util.ActivityStartUtil;
 import com.july.pigeon.util.UiUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/**首页社区fragment
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
+/**
+ * 首页社区fragment
  * Created by ANDROID on 2017/6/7.
  */
 
-public class CircleFragment extends Fragment implements RecyclerArrayAdapter.OnLoadMoreListener, SwipeRefreshLayout.OnRefreshListener{
+public class CircleFragment extends Fragment implements RecyclerArrayAdapter.OnLoadMoreListener, SwipeRefreshLayout.OnRefreshListener {
     private View view;
     private EasyRecyclerView recyclerView;
     private RecyclerArrayAdapter<Circle> adapter;
     private Handler handler = new Handler();
-    List<Circle> list=new ArrayList<Circle>();
-    List<Circle> list1=new ArrayList<Circle>();
+    List<Circle> list = new ArrayList<Circle>();
+    List<Circle> list1 = new ArrayList<Circle>();
     private String[] IMG_URL_LIST = {
             "https://pic4.zhimg.com/02685b7a5f2d8cbf74e1fd1ae61d563b_xll.jpg",
             "https://pic4.zhimg.com/fc04224598878080115ba387846eabc3_xll.jpg",
@@ -49,18 +55,20 @@ public class CircleFragment extends Fragment implements RecyclerArrayAdapter.OnL
             "https://pic4.zhimg.com/52e093cbf96fd0d027136baf9b5cdcb3_xll.png",
             "https://pic3.zhimg.com/f6dc1c1cecd7ba8f4c61c7c31847773e_xll.jpg",
     };
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.circle_frag, container, false);
+        ButterKnife.bind(this, view);
         initView();
         return view;
     }
 
     private void initView() {
-        for(int i=0;i<10;i++){
-            Circle circle=new Circle();
-            circle.setUsername("养鸽"+i+"号");
+        for (int i = 0; i < 10; i++) {
+            Circle circle = new Circle();
+            circle.setUsername("养鸽" + i + "号");
             circle.setThemeInfo("这是一个养鸽子的软件");
             List<String> imgUrls = new ArrayList<>();
             imgUrls.addAll(Arrays.asList(IMG_URL_LIST).subList(0, i % 9 + 1));
@@ -76,7 +84,7 @@ public class CircleFragment extends Fragment implements RecyclerArrayAdapter.OnL
         recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<Circle>(getActivity()) {
             @Override
             public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
-                return new CircleHolder(parent,getActivity());
+                return new CircleHolder(parent, getActivity());
             }
         });
         adapter.setMore(R.layout.view_more, this);
@@ -84,6 +92,11 @@ public class CircleFragment extends Fragment implements RecyclerArrayAdapter.OnL
         recyclerView.setRefreshListener(this);
         adapter.addAll(list1);
 
+    }
+
+    @OnClick(R.id.write_circle)
+    public void writeCircle() {
+        ActivityStartUtil.start(getActivity(), ReleaseCircleActivity.class);
     }
 
     @Override
@@ -99,7 +112,7 @@ public class CircleFragment extends Fragment implements RecyclerArrayAdapter.OnL
 
     @Override
     public void onLoadMore() {
-        Log.i("EasyRecyclerView","onLoadMore");
+        Log.i("EasyRecyclerView", "onLoadMore");
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {

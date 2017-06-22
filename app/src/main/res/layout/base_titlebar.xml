@@ -31,5 +31,19 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:text="取消" />
+
+        <TextView
+            android:visibility="gone"
+            android:textSize="18sp"
+            android:id="@+id/right_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/title_center"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="11dp"
+            android:layout_marginRight="@dimen/margin_20"
+            android:textColor="@color/white"
+            android:text="发表" />
     </RelativeLayout>
 </LinearLayout>
