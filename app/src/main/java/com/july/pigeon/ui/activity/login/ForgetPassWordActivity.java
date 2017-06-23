@@ -20,6 +20,8 @@ import com.july.pigeon.R;
 import com.july.pigeon.ui.activity.BaseActivity;
 import com.pizidea.imagepicker.AndroidImagePicker;
 import com.pizidea.imagepicker.bean.ImageItem;
+import com.uuzuche.lib_zxing.activity.CaptureActivity;
+import com.uuzuche.lib_zxing.activity.CodeUtils;
 
 import java.util.List;
 
@@ -36,6 +38,7 @@ public class ForgetPassWordActivity extends BaseActivity {
     public TextView title;
     @BindView(R.id.left_tv)
     public TextView leftTv;
+    private static int REQUEST_CODE=5;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,7 +56,7 @@ public class ForgetPassWordActivity extends BaseActivity {
 
     @OnClick(R.id.next_step)
     public void nextStep() {
-        XPermissionUtils.requestPermissions(this, 1, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE},
+        XPermissionUtils.requestPermissions(this, 1, new String[]{Manifest.permission.CAMERA},
                 new XPermissionUtils.OnPermissionListener() {
                     @Override
                     public void onPermissionGranted() {
@@ -65,7 +68,7 @@ public class ForgetPassWordActivity extends BaseActivity {
                         Toast.makeText(ForgetPassWordActivity.this, "获取权限失败", Toast.LENGTH_SHORT).show();
                         if (alwaysDenied) { // 拒绝后不再询问 -> 提示跳转到设置
                             new AlertDialog.Builder(ForgetPassWordActivity.this).setTitle("温馨提示")
-                                    .setMessage("我们需要读写权限才能正常使用该功能")
+                                    .setMessage("我们需要摄像头权限才能正常使用该功能")
                                     .setNegativeButton("取消", null)
                                     .setPositiveButton("打开权限", new DialogInterface.OnClickListener() {
                                         @RequiresApi(api = Build.VERSION_CODES.M)
@@ -85,11 +88,30 @@ public class ForgetPassWordActivity extends BaseActivity {
     }
 
     private void selectImage() {
-        AndroidImagePicker.getInstance().pickMulti(ForgetPassWordActivity.this, true, new AndroidImagePicker.OnImagePickCompleteListener() {
-            @Override
-            public void onImagePickComplete(List<ImageItem> items) {
+        Intent intent = new Intent(this, CaptureActivity.class);
+        startActivityForResult(intent, REQUEST_CODE);
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        /**
+         * 处理二维码扫描结果
+         */
+        if (requestCode == REQUEST_CODE) {
+            //处理扫描结果（在界面上显示）
+            if (null != data) {
+                Bundle bundle = data.getExtras();
+                if (bundle == null) {
+                    return;
+                }
+                if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_SUCCESS) {
+                    String result = bundle.getString(CodeUtils.RESULT_STRING);
+                    Toast.makeText(this, "解析结果:" + result, Toast.LENGTH_LONG).show();
+                } else if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_FAILED) {
+                    Toast.makeText(ForgetPassWordActivity.this, "解析二维码失败", Toast.LENGTH_LONG).show();
+                }
             }
-        });
+        }
     }
 }
