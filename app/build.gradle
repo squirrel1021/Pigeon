@@ -3,10 +3,7 @@ apply plugin: 'com.android.application'
 android {
     signingConfigs {
         config {
-            keyAlias 'ou'
-            keyPassword 'for2012'
-            storeFile file('E:/gitwork/key.jks')
-            storePassword 'for2012'
+            storeFile file('debug.keystore')
         }
     }
     compileSdkVersion 25
@@ -27,10 +24,8 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.config
         }
         debug {
-            signingConfig signingConfigs.config
         }
     }
 }
