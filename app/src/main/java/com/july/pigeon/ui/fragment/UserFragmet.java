@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,6 +16,9 @@ import com.july.pigeon.R;
 import com.july.pigeon.adapter.BaseListAdapter;
 import com.july.pigeon.adapter.holder.CommViewHolder;
 import com.july.pigeon.ui.activity.TestMap;
+import com.july.pigeon.ui.activity.login.ForgetPassWordActivity;
+import com.july.pigeon.ui.activity.login.RegisterActivity;
+import com.july.pigeon.ui.activity.main.HomeActivity;
 import com.july.pigeon.ui.activity.main.MapControlDemo;
 import com.july.pigeon.util.ActivityStartUtil;
 
@@ -25,26 +29,53 @@ import java.util.List;
  * Created by ANDROID on 2017/6/7.
  */
 
-public class UserFragmet extends Fragment {
+public class UserFragmet extends Fragment implements View.OnClickListener {
     private View view;
     private GridView gv;
     private ImageView headImg;
     private BaseListAdapter adapter;
     private List<String> list = new ArrayList<String>();
-    private String[] gridTvs={"昵称","养殖鸽龄","荣誉","我的鸽子","我的脚环","设置"};
-    private int[]imgs={R.drawable.icon_nickname,R.drawable.icon_oldpigeon,R.drawable.icon_honor,R.drawable.icon_mydove,R.drawable.icon_myfootring,R.drawable.icon_setup};
+    private String[] gridTvs = {"昵称", "养殖鸽龄", "荣誉", "我的鸽子", "我的脚环", "设置"};
+    private int[] imgs = {R.drawable.icon_nickname, R.drawable.icon_oldpigeon, R.drawable.icon_honor, R.drawable.icon_mydove, R.drawable.icon_myfootring, R.drawable.icon_setup};
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.user_frag, container, false);
         initView();
+        setOnItemClick();
         return view;
+    }
+
+    private void setOnItemClick() {
+        gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                switch (position) {
+                    case 0://
+                        break;
+                    case 1:
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        break;
+                    case 4:
+                        break;
+                    case 5:
+                        break;
+
+
+                    default:
+                        break;
+                }
+            }
+        });
     }
 
     private void initView() {
         gv = (GridView) view.findViewById(R.id.girdview);
-        headImg= (ImageView) view.findViewById(R.id.imageView);
+        headImg = (ImageView) view.findViewById(R.id.imageView);
         headImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,14 +95,26 @@ public class UserFragmet extends Fragment {
 
                 @Override
                 public void convert(CommViewHolder holder) {
-                    TextView tv=holder.getView(R.id.tv_item);
+                    TextView tv = holder.getView(R.id.tv_item);
                     tv.setText(gridTvs[holder.getPosition()]);
-                    ((ImageView)holder.getView(R.id.iv_item)).setImageResource(imgs[holder.getPosition()]);
+                    ((ImageView) holder.getView(R.id.iv_item)).setImageResource(imgs[holder.getPosition()]);
                 }
             };
             gv.setAdapter(adapter);
         } else {
             adapter.notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.loginBtn:
+
+                break;
+
+            default:
+                break;
         }
     }
 }
