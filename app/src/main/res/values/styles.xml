@@ -17,4 +17,21 @@
         <item name="android:gravity">center</item>
         <item name="android:background">@android:color/transparent</item>
     </style>
+    <!-- 正在加载进度条的样式 -->
+    <style name="loadingDialogTheme" parent="android:Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <!-- 边框 -->
+        <item name="android:windowIsFloating">true</item>
+        <!-- 是否浮现在activity之上 -->
+        <item name="android:windowIsTranslucent">true</item>
+        <!-- 半透明 -->
+        <item name="android:windowNoTitle">true</item>
+        <!-- 无标题 -->
+        <item name="android:windowContentOverlay">@null</item>
+        <!-- 对话框是否有遮盖 -->
+        <item name="android:backgroundDimEnabled">false</item>
+        <!--&lt;!&ndash; 模糊 &ndash;&gt;-->
+        <!--<item name="android:windowBackground">@drawable/bg_loading_dialog_round</item>-->
+        <!-- 背景透明 -->
+    </style>
 </resources>

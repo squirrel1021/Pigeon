@@ -49,4 +49,5 @@ dependencies {
     //二维码依赖
     compile 'cn.yipianfengye.android:zxing-library:2.1'
     compile 'com.flaviofaria:kenburnsview:1.0.7'
+    compile 'com.loopj.android:android-async-http:1.4.9'
 }

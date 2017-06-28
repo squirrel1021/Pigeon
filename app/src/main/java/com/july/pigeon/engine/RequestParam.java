@@ -1,25 +1,21 @@
 package com.july.pigeon.engine;
 
+import com.loopj.android.http.RequestParams;
+
 /**
  * Created by ANDROID on 2017/6/7.
  */
 
 public class RequestParam {
     /**
-     * 收藏帖子
+     * 获取验证码
      *
-     * @param tid
-     * @param memberId
      * @return
      */
-    public static String collectTheme(String tid, String memberId) {
-
-        StringBuffer sb = new StringBuffer();
-        sb.append("?");
-        sb.append("tid=" + tid);
-        sb.append("&memberId=" + memberId);
-        return sb.toString();
-
+    public static RequestParams smsCode(String mobile) {
+        RequestParams params = new RequestParams();
+        params.put("mobile",mobile);
+        return params;
     }
 
 }
