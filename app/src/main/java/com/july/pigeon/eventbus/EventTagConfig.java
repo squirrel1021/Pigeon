@@ -5,6 +5,11 @@ public interface EventTagConfig {
 	/**
 	 * 首页轮播图，热门、最新列表等
 	 */
-	String MAIN_DATA = "MAIN_DATA";
+	String sms_code = "sms_code";
+	/**
+	 * 登陆
+	 */
+	String regiest = "regiest";
+	String login = "login";
 
 }

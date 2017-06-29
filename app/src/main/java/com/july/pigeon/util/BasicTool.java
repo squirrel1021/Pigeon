@@ -4,6 +4,9 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * Created by Administrator on 2017/6/28 0028.
  */
@@ -20,5 +23,21 @@ public class BasicTool {
             }
         }
         return false;
+    }
+    /**
+     * @param str
+     * @return
+     * @function 手机号的验证, 验证通过则返回ture，否则为false
+     */
+    public static boolean isCellphone(String str) {
+        Pattern pattern = Pattern
+                .compile("^((13[0-9])|(15[^4,\\D])|(18[0-9])|(14[0-9])|(17[0-9]))\\d{8}$");
+        Matcher matcher = pattern.matcher(str);
+
+        if (matcher.matches()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
