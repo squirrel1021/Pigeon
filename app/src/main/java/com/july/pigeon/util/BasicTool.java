@@ -3,6 +3,7 @@ package com.july.pigeon.util;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.widget.Toast;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -39,5 +40,8 @@ public class BasicTool {
         } else {
             return false;
         }
+    }
+    public static void showToast(Context context,String info){
+        Toast.makeText(context,info,Toast.LENGTH_LONG).show();
     }
 }

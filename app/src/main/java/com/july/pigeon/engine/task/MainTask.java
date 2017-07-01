@@ -68,4 +68,36 @@ public class MainTask {
             }
         });
     }
+    //验证手机号
+    public void verifyPhone(final Context context,String phoneNum,String code) {
+        RequestUtil.postRequest(context, ConstantValues.verifyPhone, RequestParam.verifyPhone(phoneNum,code), new BaseResponse(context, "加载中") {
+            @Override
+            public void onFailure(String message) {
+                Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+                Log.i("messagesdfds", message);
+            }
+
+            @Override
+            public void onSuccess(String result) {
+                EventBus.getDefault().post(EventByTag.setDefault(result, EventTagConfig.verifyPhone));
+                Log.i("resultdsf", result);
+            }
+        });
+    }
+    //修改密码
+    public void updatePsw(final Context context, String phoneNum, String code) {
+        RequestUtil.postRequest(context, ConstantValues.updatePsw, RequestParam.updatePsw(phoneNum, code), new BaseResponse(context, "加载中") {
+            @Override
+            public void onFailure(String message) {
+                Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+                Log.i("messagesdfds", message);
+            }
+
+            @Override
+            public void onSuccess(String result) {
+                EventBus.getDefault().post(EventByTag.setDefault(result, EventTagConfig.updatePsw));
+                Log.i("resultdsf", result);
+            }
+        });
+    }
 }

@@ -11,5 +11,7 @@ public interface EventTagConfig {
 	 */
 	String regiest = "regiest";
 	String login = "login";
+	String verifyPhone = "verifyPhone";
+	String updatePsw = "updatePsw";
 
 }

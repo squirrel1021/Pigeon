@@ -63,6 +63,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         if (EventUtils.isValid(eventByTag, EventTagConfig.login, null)) {
             Toast.makeText(this, "登陆成功", Toast.LENGTH_LONG).show();
             ActivityStartUtil.start(this, HomeActivity.class);
+            finish();
         }
     }
 
