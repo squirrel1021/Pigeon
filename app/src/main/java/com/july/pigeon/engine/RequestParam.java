@@ -61,15 +61,15 @@ public class RequestParam {
         params.put("password",password);
         return params;
     }
-    /**
-     * 参数基类
-     * @return
-     */
-    public static RequestParams baseParams(String[] list) {
+
+    public static RequestParams updateNickName(String nickname) {
         RequestParams params = new RequestParams();
-        for(int i=0;i<list.length;i++){
-            params.put(list[i],list[i]);
-        }
+        params.put("nickname",nickname);
+        return params;
+    }
+    public static RequestParams honor(String honor) {
+        RequestParams params = new RequestParams();
+        params.put("honor",honor);
         return params;
     }
 }

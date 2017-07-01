@@ -21,9 +21,11 @@ public class ConstantValues {
     public static final String verifyPhone = BaseUrl + "/app/member/forgetCheckMobile";
     //忘记密码（修改密码）
     public static final String updatePsw = BaseUrl + "/app/member/forgetModifyPassword";
-    //请求url基类
-    public static String requestUrl(String path) {
-        String url = BaseUrl + path;
-        return url;
-    }
+    //修改昵称
+    public static final String updateNickName = BaseUrl + "/app/member/modifyNickname";
+    //个人信息
+    public static final String userInfo = BaseUrl + "/app/member/information";
+    //修改荣誉
+    public static final String honor = BaseUrl + "/app/member/modifyHonor";
+
 }

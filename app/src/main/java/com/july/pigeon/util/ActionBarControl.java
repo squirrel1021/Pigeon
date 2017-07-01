@@ -24,7 +24,7 @@ public class ActionBarControl {
 	ImageView arrow;
 	ImageView pullDown;
 	RelativeLayout backarea;
-	TextView title, cityName, messageAllStatus, leftModuleText;
+	TextView title, rightTv, messageAllStatus, leftText;
 	private int backRes;
 
 	public ActionBarControl(Activity context, ViewGroup container) {
@@ -86,66 +86,13 @@ public class ActionBarControl {
 
 	private void initView() {
 		// pullDown = (ImageView) container.findViewById(R.id.share);
-		arrow = (ImageView) container.findViewById(R.id.goBack);
-		title = (TextView) container.findViewById(R.id.navigationTitle);
-		cityName = (TextView) container.findViewById(R.id.cityName);
+		arrow = (ImageView) container.findViewById(R.id.back_arrow);
+		title = (TextView) container.findViewById(R.id.title_center);
+		leftText= (TextView) container.findViewById(R.id.left_tv);
+		rightTv= (TextView) container.findViewById(R.id.right_tv);
+//		cityName = (TextView) container.findViewById(R.id.cityName);
 	}
 
-	/**
-	 * 标题栏没有搜索有地址的 (餐饮首页)
-	 * 
-	 * @param name
-	 */
-	public void setCommonNavigation(String name) {
-		initView();
-		final ImageView ivMore = (ImageView) container.findViewById(R.id.share);
-		((LinearLayout) container.findViewById(R.id.cityLayout)).setVisibility(View.VISIBLE);
-
-		title.setText(name);
-		arrow.setVisibility(View.VISIBLE);
-
-		// ShowView.seCommontPopwindow(mContext, ivMore);
-
-		handleClick(R.id.share);
-		// back(R.id.goBack);
-		handleClick(R.id.cityLayout);
-	}
-
-	/**
-	 * 标题栏没有地址的(大部分的导航栏，左箭头，右三点)
-	 * 
-	 * @param name
-	 */
-	public void setNoLocationNavigation(String name) {
-		initView();
-		final ImageView ivMore = (ImageView) container.findViewById(R.id.share);
-
-		// ((LinearLayout)
-		// container.findViewById(R.id.cityLayout)).setVisibility(View.GONE);
-		// ((TextView)
-		// container.findViewById(R.id.cityName)).setText(AppSettings.getCurCityName());
-		title.setText(name);
-		arrow.setVisibility(View.VISIBLE);
-
-		back(R.id.goBack);
-		// handleClick(R.id.cityLayout);
-	}
-
-	/**
-	 * 右侧是分享的导航栏
-	 * @param name
-	 */
-	public void setRightShareNavigation(String name) {
-		initView();
-		final ImageView ivMore = (ImageView) container.findViewById(R.id.share);
-
-		ivMore.setVisibility(View.VISIBLE);
-		title.setText(name);
-		arrow.setVisibility(View.VISIBLE);
-		handleClick(R.id.share);
-		back(R.id.goBack);
-	}
-	
 	/**
 	 * 右侧没有东西的导航栏
 	 * @param name
@@ -153,41 +100,10 @@ public class ActionBarControl {
 	public void setNoRightNavigation(String name) {
 		initView();
 		title.setText(name);
-		((ImageView) container.findViewById(R.id.share)).setVisibility(View.INVISIBLE);
-		back(R.id.goBack);
-	}
-	
-	/**
-	 * 右侧有张图片的导航栏
-	 * @param name
-	 */
-	public void setRightImageNavigation(String name) {
-		initView();
-		title.setText(name);
-		ImageView icon= (ImageView) container.findViewById(R.id.share);
-
-		icon.setVisibility(View.VISIBLE);
-		arrow.setVisibility(View.VISIBLE);
-		back(R.id.goBack);
-	}
-	/**
-	 * 导航栏有搜索框（目前就美食广场）
-	 * @param name
-	 */
-	public void setMainNavigation(String name) {
-		initView();
-		final ImageView ivMore = (ImageView) container.findViewById(R.id.share);
-
-		((ImageView) container.findViewById(R.id.sousuo)).setVisibility(View.VISIBLE);
-//		((LinearLayout) container.findViewById(R.id.cityLayout)).setVisibility(View.GONE);
-		// ((TextView)
-		// container.findViewById(R.id.cityName)).setText(AppSettings.getCurCityName());
-		title.setText(name);
 		arrow.setVisibility(View.VISIBLE);
 
-		back(R.id.goBack);
-		
-		handleClick(R.id.sousuo);
+//		((ImageView) container.findViewById(R.id.share)).setVisibility(View.INVISIBLE);
+		back(R.id.back_arrow);
 	}
 
 	public void setTitle(String name) {

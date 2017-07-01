@@ -52,4 +52,5 @@ dependencies {
     compile 'com.loopj.android:android-async-http:1.4.9'
     compile 'io.reactivex:rxjava:1.0.16'
     compile 'io.reactivex:rxandroid:1.0.1'
+    compile 'cn.aigestudio.wheelpicker:WheelPicker:1.1.2'
 }

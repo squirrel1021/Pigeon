@@ -137,6 +137,12 @@
         <activity
             android:name=".ui.activity.user.UpdateNickName"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.user.SetActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.user.SetHonor"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

@@ -19,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.andsync.xpermission.XPermissionUtils;
@@ -32,6 +33,7 @@ import com.july.pigeon.bean.Circle;
 import com.july.pigeon.ui.activity.login.ForgetPassWordActivity;
 import com.july.pigeon.ui.activity.main.HomeActivity;
 import com.july.pigeon.ui.activity.main.MapControlDemo;
+import com.july.pigeon.ui.activity.user.SetActivity;
 import com.july.pigeon.util.ActivityStartUtil;
 
 import java.util.ArrayList;
@@ -57,6 +59,7 @@ public class JiaohuanFragment extends Fragment implements RecyclerArrayAdapter.O
     }
 
     private void initView() {
+        ((LinearLayout) view.findViewById(R.id.setView)).setOnClickListener(this);
         ((ImageView) view.findViewById(R.id.locationImage)).setOnClickListener(this);
         for (int i = 0; i < 5; i++) {
             Circle circle = new Circle();
@@ -102,7 +105,7 @@ public class JiaohuanFragment extends Fragment implements RecyclerArrayAdapter.O
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.locationImage:
-                XPermissionUtils.requestPermissions(getActivity(), 1, new String[]{Manifest.permission.ACCESS_LOCATION_EXTRA_COMMANDS,Manifest.permission.ACCESS_WIFI_STATE,Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.ACCESS_FINE_LOCATION},
+                XPermissionUtils.requestPermissions(getActivity(), 1, new String[]{Manifest.permission.ACCESS_LOCATION_EXTRA_COMMANDS, Manifest.permission.ACCESS_WIFI_STATE, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION},
                         new XPermissionUtils.OnPermissionListener() {
                             @Override
                             public void onPermissionGranted() {
@@ -114,7 +117,7 @@ public class JiaohuanFragment extends Fragment implements RecyclerArrayAdapter.O
                                 Toast.makeText(getActivity(), "获取权限失败", Toast.LENGTH_SHORT).show();
                                 if (alwaysDenied) { // 拒绝后不再询问 -> 提示跳转到设置
                                     new AlertDialog.Builder(getActivity()).setTitle("温馨提示")
-                                            .setMessage("我们需要摄像头权限才能正常使用该功能")
+                                            .setMessage("我们需要定位权限才能正常使用该功能")
                                             .setNegativeButton("取消", null)
                                             .setPositiveButton("打开权限", new DialogInterface.OnClickListener() {
                                                 @RequiresApi(api = Build.VERSION_CODES.M)
@@ -131,7 +134,8 @@ public class JiaohuanFragment extends Fragment implements RecyclerArrayAdapter.O
                                 }
                             }
                         });
-
+                break;
+            case R.id.setView:
 
                 break;
             default:

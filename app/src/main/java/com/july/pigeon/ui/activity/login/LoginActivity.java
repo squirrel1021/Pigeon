@@ -18,6 +18,8 @@ import android.widget.Toast;
 
 import com.baidu.mapapi.SDKInitializer;
 import com.july.pigeon.R;
+import com.july.pigeon.bean.Token;
+import com.july.pigeon.engine.GsonParser;
 import com.july.pigeon.engine.task.MainTask;
 import com.july.pigeon.eventbus.EventByTag;
 import com.july.pigeon.eventbus.EventTagConfig;
@@ -26,6 +28,9 @@ import com.july.pigeon.ui.activity.BaseActivity;
 import com.july.pigeon.ui.activity.main.HomeActivity;
 import com.july.pigeon.ui.activity.main.WelcomeActivity;
 import com.july.pigeon.util.ActivityStartUtil;
+import com.july.pigeon.util.SharedPreferencesUtil;
+
+import org.json.JSONObject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -62,6 +67,8 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         // 登陆
         if (EventUtils.isValid(eventByTag, EventTagConfig.login, null)) {
             Toast.makeText(this, "登陆成功", Toast.LENGTH_LONG).show();
+            Token token=new GsonParser().parseObject(eventByTag.getObj()+"",Token.class);
+            SharedPreferencesUtil.saveData(this,"token",token.getAccess_token());
             ActivityStartUtil.start(this, HomeActivity.class);
             finish();
         }

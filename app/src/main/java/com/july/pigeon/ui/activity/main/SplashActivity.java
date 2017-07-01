@@ -16,6 +16,7 @@ import com.july.pigeon.R;
 import com.july.pigeon.ui.activity.BaseActivity;
 import com.july.pigeon.ui.activity.login.LoginActivity;
 import com.july.pigeon.util.SharedPreferencesUtil;
+import com.july.pigeon.util.StringUtils;
 
 
 /**
@@ -67,16 +68,23 @@ public class SplashActivity extends BaseActivity implements Animator.AnimatorLis
             e.printStackTrace();
         }
 
-        String firstrun = (String) SharedPreferencesUtil.getData(this,"isFisrt","");
+        String firstrun = (String) SharedPreferencesUtil.getData(this, "isFisrt", "");
         if (TextUtils.isEmpty(firstrun)) {
-            SharedPreferencesUtil.saveData(this,"isFisrt","xxxx");
+            SharedPreferencesUtil.saveData(this, "isFisrt", "xxxx");
             Intent intent = new Intent(this, WelcomeActivity.class);
             startActivity(intent);
             finish();
         } else {
-            Intent intent = new Intent(this, LoginActivity.class);
-            startActivity(intent);
-            finish();
+            if (StringUtils.isEmpty((String) SharedPreferencesUtil.getData(this, "token", ""))) {
+                Intent intent = new Intent(this, LoginActivity.class);
+                startActivity(intent);
+                finish();
+            } else {
+                Intent intent = new Intent(this, HomeActivity.class);
+                startActivity(intent);
+                finish();
+            }
+
         }
 
     }

@@ -5,6 +5,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.july.pigeon.util.BasicTool;
+import com.july.pigeon.util.SharedPreferencesUtil;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -58,13 +59,14 @@ public class RequestUtil {
 		} else {
 			Log.i("TAG", relativeUrl + mParams);
 			client.addHeader("charset", "UTF-8");
+			client.addHeader("Authorization", "apptoken "+SharedPreferencesUtil.getData(context, "token", ""));
 			client.post(relativeUrl,mParams,asyncCallBack);
 		}
 	}
 
 	/**
-	 * 发送GET请求,以Json形式返回数据
-	 * 
+	 * 发送Post请求,以Json形式返回数据
+	 *
 	 * @param context
 	 *            上下文对象
 	 * @param relativeUrl
@@ -72,20 +74,17 @@ public class RequestUtil {
 
 	 *            回调函数
 	 */
-	public static void getRequest(Context context, String relativeUrl, String mParams, HefansCallBack asyncCallBack) {
+	public static void getRequest(Context context, String relativeUrl, RequestParams mParams, HefansCallBack asyncCallBack) {
 
 		if (!BasicTool.isNetworkConnected(context)) {
-			Toast.makeText(context, "", Toast.LENGTH_SHORT).show();
+			Toast.makeText(context, "抱歉，您的网络不通呢", Toast.LENGTH_SHORT).show();
 			asyncCallBack.onFail("");
 		} else {
-
-			Log.i(TAG, relativeUrl + mParams);
-			String requestUrl = relativeUrl;
-			Log.i("HFurl",requestUrl);
+			Log.i("TAG", relativeUrl + mParams);
 			client.addHeader("charset", "UTF-8");
-			client.get(requestUrl, asyncCallBack);
+			client.addHeader("Authorization", "apptoken "+SharedPreferencesUtil.getData(context, "token", ""));
+			client.get(relativeUrl,mParams,asyncCallBack);
 		}
-
 	}
 
 }
