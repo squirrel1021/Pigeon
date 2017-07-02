@@ -27,6 +27,7 @@ import com.july.pigeon.ui.activity.login.ForgetPassWordActivity;
 import com.july.pigeon.ui.activity.login.RegisterActivity;
 import com.july.pigeon.ui.activity.main.HomeActivity;
 import com.july.pigeon.ui.activity.main.MapControlDemo;
+import com.july.pigeon.ui.activity.user.BreedAge;
 import com.july.pigeon.ui.activity.user.SetActivity;
 import com.july.pigeon.ui.activity.user.SetHonor;
 import com.july.pigeon.ui.activity.user.UpdateNickName;
@@ -103,6 +104,7 @@ public class UserFragmet extends Fragment implements View.OnClickListener {
                         ActivityStartUtil.start(getActivity(), UpdateNickName.class);
                         break;
                     case 1://鸽龄
+                        ActivityStartUtil.start(getActivity(), BreedAge.class);
                         break;
                     case 2://荣誉
                         ActivityStartUtil.start(getActivity(), SetHonor.class);
