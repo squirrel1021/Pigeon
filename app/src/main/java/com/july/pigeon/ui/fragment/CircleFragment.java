@@ -20,9 +20,15 @@ import com.jude.easyrecyclerview.decoration.DividerDecoration;
 import com.july.pigeon.R;
 import com.july.pigeon.adapter.holder.CircleHolder;
 import com.july.pigeon.bean.Circle;
+import com.july.pigeon.engine.GsonParser;
+import com.july.pigeon.engine.task.CircleTask;
+import com.july.pigeon.eventbus.EventByTag;
+import com.july.pigeon.eventbus.EventTagConfig;
+import com.july.pigeon.eventbus.EventUtils;
 import com.july.pigeon.ui.activity.circle.ReleaseCircleActivity;
 import com.july.pigeon.ui.activity.main.HomeActivity;
 import com.july.pigeon.util.ActivityStartUtil;
+import com.july.pigeon.util.BasicTool;
 import com.july.pigeon.util.UiUtil;
 
 import java.util.ArrayList;
@@ -62,6 +68,7 @@ public class CircleFragment extends Fragment implements RecyclerArrayAdapter.OnL
         view = inflater.inflate(R.layout.circle_frag, container, false);
         ButterKnife.bind(this, view);
         initView();
+        new CircleTask().MyCircle(getActivity(),0,10);
         return view;
     }
 
@@ -98,7 +105,13 @@ public class CircleFragment extends Fragment implements RecyclerArrayAdapter.OnL
     public void writeCircle() {
         ActivityStartUtil.start(getActivity(), ReleaseCircleActivity.class);
     }
-
+    // 接口回调
+    public void onEventMainThread(EventByTag eventByTag) {
+        // 上传图片
+        if (EventUtils.isValid(eventByTag, EventTagConfig.mycircle, null)) {
+            BasicTool.showToast(getActivity(),"请求成功");
+        }
+    }
     @Override
     public void onRefresh() {
         handler.postDelayed(new Runnable() {

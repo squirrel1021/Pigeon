@@ -10,6 +10,15 @@ public class Circle {
     private String username;
     private String themeInfo;
     private List<String> imageurl;
+    private List<String> imgUrls;
+
+    public List<String> getImgUrls() {
+        return imgUrls;
+    }
+
+    public void setImgUrls(List<String> imgUrls) {
+        this.imgUrls = imgUrls;
+    }
 
     public String getUsername() {
         return username;

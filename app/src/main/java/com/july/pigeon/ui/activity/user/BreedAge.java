@@ -11,17 +11,21 @@ import com.july.pigeon.ui.activity.BaseActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/**鸽龄
+/**
+ * 鸽龄
  * Created by Administrator on 2017/7/1 0001.
  */
 
-public class BreedAge extends BaseActivity{
-    @BindView(R.id.touchView)LinearLayout touchView;
-    @BindView(R.id.wheelPicker)WheelPicker picker;
+public class BreedAge extends BaseActivity {
+    @BindView(R.id.touchView)
+    LinearLayout touchView;
+    @BindView(R.id.wheelPicker)
+    WheelPicker picker;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-setContentView(R.layout.breed_age);
+        setContentView(R.layout.breed_age);
         ButterKnife.bind(this);
 
     }

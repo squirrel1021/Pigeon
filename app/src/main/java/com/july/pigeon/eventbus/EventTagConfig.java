@@ -16,5 +16,8 @@ public interface EventTagConfig {
 	String updateNickName = "updateNickName";
 	String userinfo = "userinfo";
 	String honor = "honor";
+	String uploadImg = "uploadImg";
+	String mycircle = "mycircle";
+	String releaseCircle = "releaseCircle";
 
 }

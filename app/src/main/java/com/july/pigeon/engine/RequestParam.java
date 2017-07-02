@@ -2,6 +2,8 @@ package com.july.pigeon.engine;
 
 import com.loopj.android.http.RequestParams;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.List;
 
 /**
@@ -70,6 +72,25 @@ public class RequestParam {
     public static RequestParams honor(String honor) {
         RequestParams params = new RequestParams();
         params.put("honor",honor);
+        return params;
+    }
+    public static RequestParams uploadImg(String token,File[] imgs) throws FileNotFoundException {
+        RequestParams params = new RequestParams();
+        params.put("token",token);
+        params.put("imgUrls",imgs);
+        return params;
+    }
+    public static RequestParams releaseCircle(String title,String content,String[] imgUrls) {
+        RequestParams params = new RequestParams();
+        params.put("title",title);
+        params.put("content",content);
+        params.put("imgUrls",imgUrls);
+        return params;
+    }
+    public static RequestParams myCircle(int pageIndex,int pageSize) {
+        RequestParams params = new RequestParams();
+        params.put("pageIndex",pageIndex);
+        params.put("pageSize",pageSize);
         return params;
     }
 }

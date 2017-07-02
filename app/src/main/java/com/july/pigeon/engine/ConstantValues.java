@@ -27,5 +27,12 @@ public class ConstantValues {
     public static final String userInfo = BaseUrl + "/app/member/information";
     //修改荣誉
     public static final String honor = BaseUrl + "/app/member/modifyHonor";
+    //上传图片
+    public static final String uploadImage = BaseUrl + "/app/community/dynamic/upload";
+    //发表动态
+    public static final String releaseCircle = BaseUrl + "/app/community/dynamic/submit";
+    //社区动态列表
+    public static final String myCircle = BaseUrl + "/app/community/dynamic/myDynamics";
+
 
 }

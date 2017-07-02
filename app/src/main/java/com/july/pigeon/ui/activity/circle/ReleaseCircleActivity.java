@@ -6,14 +6,12 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -22,23 +20,37 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.andsync.xpermission.XPermissionUtils;
-import com.bumptech.glide.Glide;
 import com.july.pigeon.R;
 import com.july.pigeon.adapter.BaseListAdapter;
 import com.july.pigeon.adapter.holder.CommViewHolder;
+import com.july.pigeon.bean.Circle;
+import com.july.pigeon.engine.GsonParser;
+import com.july.pigeon.engine.task.CircleTask;
+import com.july.pigeon.eventbus.EventByTag;
+import com.july.pigeon.eventbus.EventTagConfig;
+import com.july.pigeon.eventbus.EventUtils;
 import com.july.pigeon.ui.activity.BaseActivity;
-import com.july.pigeon.ui.activity.login.ForgetPassWordActivity;
+import com.july.pigeon.ui.activity.login.ForgetUpdatePsw;
+import com.july.pigeon.util.SharedPreferencesUtil;
 import com.pizidea.imagepicker.AndroidImagePicker;
 import com.pizidea.imagepicker.ImgLoader;
 import com.pizidea.imagepicker.UilImgLoader;
 import com.pizidea.imagepicker.bean.ImageItem;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import io.reactivex.Flowable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
+import top.zibin.luban.Luban;
 
 /**
  * Created by Administrator on 2017/6/22 0022.
@@ -56,6 +68,8 @@ public class ReleaseCircleActivity extends BaseActivity {
     private BaseListAdapter adapter;
     private List<ImageItem> itemsList = new ArrayList<ImageItem>();
     ImgLoader presenter = new UilImgLoader();
+    private List<String> UrlList = new ArrayList<String>();
+    private Circle cricle = new Circle();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -72,9 +86,34 @@ public class ReleaseCircleActivity extends BaseActivity {
         setAdapter();
     }
 
+    @OnClick(R.id.right_tv)
+    public void release() {
+        List<File> fileList = new ArrayList<File>();
+        for (int i = 0; i < itemsList.size(); i++) {
+            File file = new File(itemsList.get(i).path);
+            fileList.add(file);
+        }
+        File[] arr = (File[]) fileList.toArray(new File[fileList.size()]);//使用了第二种接口，返回值和参数均为结果
+        try {
+            new CircleTask().uploadImg(this, "apptoken " + SharedPreferencesUtil.getData(this, "token", ""), arr);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+//        compressImage();
+    }
+
+    // 接口回调
+    public void onEventMainThread(EventByTag eventByTag) {
+        // 上传图片
+        if (EventUtils.isValid(eventByTag, EventTagConfig.uploadImg, null)) {
+            cricle=new GsonParser().parseObject(eventByTag.getObj()+"",Circle.class);
+
+        }
+    }
+
     private void setAdapter() {
-        if(adapter==null){
-            adapter=new BaseListAdapter(this,itemsList,R.layout.hefans_theme_girdview_item) {
+        if (adapter == null) {
+            adapter = new BaseListAdapter(this, itemsList, R.layout.hefans_theme_girdview_item) {
                 @Override
                 public int getCount() {
                     if (itemsList.size() == 9) {
@@ -82,6 +121,7 @@ public class ReleaseCircleActivity extends BaseActivity {
                     }
                     return itemsList.size() + 1;
                 }
+
                 @Override
                 public void convert(CommViewHolder holder) {
                     ImageView addImage = holder.getView(R.id.addImage);
@@ -111,7 +151,7 @@ public class ReleaseCircleActivity extends BaseActivity {
                 }
             };
             gv.setAdapter(adapter);
-        }else{
+        } else {
             adapter.notifyDataSetChanged();
         }
 
@@ -158,9 +198,31 @@ public class ReleaseCircleActivity extends BaseActivity {
                     Log.i("onImagePickComplete", "=====选择了：" + items.get(0).path);
                     AndroidImagePicker.clearInstance();
                     itemsList.addAll(items);
+
                     setAdapter();
                 }
             }
         });
     }
+
+    private void compressImage() {
+
+        for (int i = 0; i < itemsList.size(); i++) {
+            File file = new File(itemsList.get(i).path);
+            final int finalI = i;
+            Flowable.just(file)
+                    .observeOn(Schedulers.io())
+                    .map(new Function<File, File>() {
+                        @Override
+                        public File apply(@NonNull File file) throws Exception {
+                            // 同步方法直接返回压缩后的文件
+                            return Luban.with(ReleaseCircleActivity.this).load(file).get();
+                        }
+                    })
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe();
+        }
+
+    }
+
 }

@@ -2,36 +2,38 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-android:background="@color/color_ee"
+    android:background="@color/color_ee"
     android:orientation="vertical">
 
     <include layout="@layout/base_titlebar" />
-<RelativeLayout
-    android:gravity="center_horizontal"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-<LinearLayout
-    android:id="@+id/touchView"
-    android:layout_marginTop="@dimen/margin_25"
-    android:background="@color/white"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <TextView
-        android:layout_marginLeft="@dimen/margin_15"
-        android:layout_marginTop="@dimen/margin_15"
-        android:layout_marginBottom="@dimen/margin_15"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="1-2年"
-        />
 
-</LinearLayout>
-
-    <com.aigestudio.wheelpicker.WheelPicker
-        android:id="@+id/wheelPicker"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-</RelativeLayout>
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal">
+
+        <LinearLayout
+            android:id="@+id/touchView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_25"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_15"
+                android:layout_marginLeft="@dimen/margin_15"
+                android:layout_marginTop="@dimen/margin_15"
+                android:text="1-2年" />
+
+        </LinearLayout>
+
+        <com.aigestudio.wheelpicker.WheelPicker
+            android:id="@+id/wheelPicker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true" />
+    </RelativeLayout>
 </LinearLayout>

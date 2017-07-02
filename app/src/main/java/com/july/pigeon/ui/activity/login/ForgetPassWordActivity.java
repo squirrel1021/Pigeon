@@ -40,9 +40,7 @@ import com.uuzuche.lib_zxing.activity.CodeUtils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import rx.Observable;
-import rx.Observer;
-import rx.android.schedulers.AndroidSchedulers;
+
 
 /**
  * Created by Administrator on 2017/6/19 0019.
