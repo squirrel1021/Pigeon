@@ -38,13 +38,13 @@ public class CircleHolder extends BaseViewHolder<Circle> {
     @Override
     public void setData(final Circle circle) {
 
-        mTv_name.setText(circle.getUsername());
-        mTv_sign.setText(circle.getThemeInfo());
-        adapter = new BaseListAdapter(mContext,circle.getImageurl(),R.layout.circle_grid_item) {
+        mTv_name.setText(circle.getMemberName());
+        mTv_sign.setText(circle.getFdContent());
+        adapter = new BaseListAdapter(mContext,circle.getFdImgUrl(),R.layout.circle_grid_item) {
             @Override
             public void convert(CommViewHolder holder) {
                 ImageView image=holder.getView(R.id.theme_image);
-                GlideUtil.getInstance().loadImageView(mContext,circle.getImageurl().get(holder.getPosition()),image);
+                GlideUtil.getInstance().loadImageView(mContext,circle.getFdImgUrl().get(holder.getPosition()),image);
             }
         };
         gv.setAdapter(adapter);

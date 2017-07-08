@@ -40,7 +40,7 @@ public class CircleTask {
     }
 
     //我的社区
-    public void MyCircle(final Context context, int pageIndex, int pageSize) {
+    public void MyCircle(final Context context, int pageIndex, int pageSize, final int type) {
         RequestUtil.getRequest(context, ConstantValues.myCircle, RequestParam.myCircle(pageIndex, pageSize), new BaseResponse(context, "加载中") {
             @Override
             public void onFailure(String message) {
@@ -50,7 +50,12 @@ public class CircleTask {
 
             @Override
             public void onSuccess(String result) {
-                EventBus.getDefault().post(EventByTag.setDefault(result, EventTagConfig.mycircle));
+                if(type==0){
+                    EventBus.getDefault().post(EventByTag.setDefault(result, EventTagConfig.mycircle));
+                }else{
+                    EventBus.getDefault().post(EventByTag.setDefault(result, EventTagConfig.mycirclemore));
+                }
+
                 Log.i("resultdsf", result);
             }
         });

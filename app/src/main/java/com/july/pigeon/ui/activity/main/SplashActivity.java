@@ -6,17 +6,26 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.support.v7.app.AppCompatActivity;
 
 import android.view.WindowManager;
 import android.view.Window;
+import android.widget.Toast;
 
 import com.july.pigeon.R;
+import com.july.pigeon.engine.BaseResponse;
+import com.july.pigeon.engine.ConstantValues;
+import com.july.pigeon.engine.RequestUtil;
+import com.july.pigeon.eventbus.EventByTag;
+import com.july.pigeon.eventbus.EventTagConfig;
 import com.july.pigeon.ui.activity.BaseActivity;
 import com.july.pigeon.ui.activity.login.LoginActivity;
 import com.july.pigeon.util.SharedPreferencesUtil;
 import com.july.pigeon.util.StringUtils;
+
+import de.greenrobot.event.EventBus;
 
 
 /**
@@ -76,13 +85,26 @@ public class SplashActivity extends BaseActivity implements Animator.AnimatorLis
             finish();
         } else {
             if (StringUtils.isEmpty((String) SharedPreferencesUtil.getData(this, "token", ""))) {
-                Intent intent = new Intent(this, LoginActivity.class);
-                startActivity(intent);
-                finish();
+
             } else {
-                Intent intent = new Intent(this, HomeActivity.class);
-                startActivity(intent);
-                finish();
+
+                RequestUtil.getRequest(this, ConstantValues.userInfo, null, new BaseResponse(this, "加载中") {
+                    @Override
+                    public void onFailure(String message) {
+                        Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+
+                    @Override
+                    public void onSuccess(String result) {
+                        Intent intent = new Intent(SplashActivity.this, HomeActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                });
+
+
             }
 
         }

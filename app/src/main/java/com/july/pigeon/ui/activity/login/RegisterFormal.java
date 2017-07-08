@@ -53,7 +53,7 @@ public class RegisterFormal extends Activity implements View.OnClickListener {
     // 接口回调
     public void onEventMainThread(EventByTag eventByTag) {
         // 注册
-        if (EventUtils.isValid(eventByTag, EventTagConfig.sms_code, null)) {
+        if (EventUtils.isValid(eventByTag, EventTagConfig.regiest, null)) {
             Toast.makeText(this, "注册成功", Toast.LENGTH_LONG).show();
             mainTask.login(this,phoneNum,pswEt.getText().toString().trim());
         }

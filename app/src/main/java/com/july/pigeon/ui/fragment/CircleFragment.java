@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
+import com.google.gson.reflect.TypeToken;
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
@@ -31,12 +32,16 @@ import com.july.pigeon.util.ActivityStartUtil;
 import com.july.pigeon.util.BasicTool;
 import com.july.pigeon.util.UiUtil;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.greenrobot.event.EventBus;
 
 /**
  * 首页社区fragment
@@ -50,38 +55,23 @@ public class CircleFragment extends Fragment implements RecyclerArrayAdapter.OnL
     private Handler handler = new Handler();
     List<Circle> list = new ArrayList<Circle>();
     List<Circle> list1 = new ArrayList<Circle>();
-    private String[] IMG_URL_LIST = {
-            "https://pic4.zhimg.com/02685b7a5f2d8cbf74e1fd1ae61d563b_xll.jpg",
-            "https://pic4.zhimg.com/fc04224598878080115ba387846eabc3_xll.jpg",
-            "https://pic3.zhimg.com/d1750bd47b514ad62af9497bbe5bb17e_xll.jpg",
-            "https://pic4.zhimg.com/da52c865cb6a472c3624a78490d9a3b7_xll.jpg",
-            "https://pic3.zhimg.com/0c149770fc2e16f4a89e6fc479272946_xll.jpg",
-            "https://pic1.zhimg.com/76903410e4831571e19a10f39717988c_xll.png",
-            "https://pic3.zhimg.com/33c6cf59163b3f17ca0c091a5c0d9272_xll.jpg",
-            "https://pic4.zhimg.com/52e093cbf96fd0d027136baf9b5cdcb3_xll.png",
-            "https://pic3.zhimg.com/f6dc1c1cecd7ba8f4c61c7c31847773e_xll.jpg",
-    };
+    private int currentPage = 1;
+    private int totalPage = 1;
+
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.circle_frag, container, false);
         ButterKnife.bind(this, view);
+        EventBus.getDefault().register(this);
         initView();
-        new CircleTask().MyCircle(getActivity(),0,10);
+        new CircleTask().MyCircle(getActivity(), 0, 10, 0);
         return view;
     }
 
     private void initView() {
-        for (int i = 0; i < 10; i++) {
-            Circle circle = new Circle();
-            circle.setUsername("养鸽" + i + "号");
-            circle.setThemeInfo("这是一个养鸽子的软件");
-            List<String> imgUrls = new ArrayList<>();
-            imgUrls.addAll(Arrays.asList(IMG_URL_LIST).subList(0, i % 9 + 1));
-            circle.setImageurl(imgUrls);
-            list1.add(circle);
-        }
+
         recyclerView = (EasyRecyclerView) view.findViewById(R.id.recyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
@@ -105,33 +95,53 @@ public class CircleFragment extends Fragment implements RecyclerArrayAdapter.OnL
     public void writeCircle() {
         ActivityStartUtil.start(getActivity(), ReleaseCircleActivity.class);
     }
+
     // 接口回调
     public void onEventMainThread(EventByTag eventByTag) {
-        // 上传图片
-        if (EventUtils.isValid(eventByTag, EventTagConfig.mycircle, null)) {
-            BasicTool.showToast(getActivity(),"请求成功");
+        // 社区详情
+        if (EventUtils.isValid(eventByTag, EventTagConfig.mycircle, null) || EventUtils.isValid(eventByTag, EventTagConfig.mycirclemore, null)) {
+            try {
+
+                JSONObject json = new JSONObject(eventByTag.getObj() + "");
+                String dynamics = json.getString("dynamics");
+                String resultList = new JSONObject(dynamics).getString("resultList");
+                list1 = new GsonParser().parseList(resultList, new TypeToken<List<Circle>>() {
+                });
+//                totalPage=new JSONObject(json.getString("pageBean")).getInt("totalPage");
+                if (EventTagConfig.mycirclemore.equals(eventByTag.getTAG())) {
+                    list.addAll(list1);
+                } else {
+                    list.clear();
+                    adapter.clear();
+                    list.addAll(list1);
+                }
+
+                adapter.addAll(list);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
     }
+
     @Override
     public void onRefresh() {
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                adapter.clear();
-                adapter.addAll(list1);
-            }
-        }, 2000);
+        currentPage = 1;
+        new CircleTask().MyCircle(getActivity(), currentPage, 10, 0);
     }
 
     @Override
     public void onLoadMore() {
         Log.i("EasyRecyclerView", "onLoadMore");
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                adapter.addAll(list1);
-            }
-        }, 2000);
+        if (currentPage < totalPage) {
+            new CircleTask().MyCircle(getActivity(), ++currentPage, 10, 1);
+        } else {
+            adapter.stopMore();
+        }
     }
 
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        EventBus.getDefault().unregister(this);
+    }
 }
