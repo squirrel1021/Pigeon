@@ -12,6 +12,7 @@ import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -31,7 +32,10 @@ import com.july.pigeon.eventbus.EventTagConfig;
 import com.july.pigeon.eventbus.EventUtils;
 import com.july.pigeon.ui.activity.BaseActivity;
 import com.july.pigeon.ui.activity.login.ForgetUpdatePsw;
+import com.july.pigeon.util.BasicTool;
+import com.july.pigeon.util.ListUtils;
 import com.july.pigeon.util.SharedPreferencesUtil;
+import com.july.pigeon.util.StringUtils;
 import com.pizidea.imagepicker.AndroidImagePicker;
 import com.pizidea.imagepicker.ImgLoader;
 import com.pizidea.imagepicker.UilImgLoader;
@@ -65,6 +69,8 @@ public class ReleaseCircleActivity extends BaseActivity {
     TextView titleTv;
     @BindView(R.id.imageGv)
     GridView gv;
+    @BindView(R.id.circleInfo)
+    EditText circleInfo;
     private BaseListAdapter adapter;
     private List<ImageItem> itemsList = new ArrayList<ImageItem>();
     ImgLoader presenter = new UilImgLoader();
@@ -88,17 +94,27 @@ public class ReleaseCircleActivity extends BaseActivity {
 
     @OnClick(R.id.right_tv)
     public void release() {
-        List<File> fileList = new ArrayList<File>();
-        for (int i = 0; i < itemsList.size(); i++) {
-            File file = new File(itemsList.get(i).path);
-            fileList.add(file);
+        if(ListUtils.isEmpty(itemsList)){
+            if(!StringUtils.isEmpty(circleInfo.getText()+"".trim())){
+                String[] arr={};
+                new CircleTask().releaseCircle(this, circleInfo.getText()+"".trim(),arr);
+            }else{
+                BasicTool.showToast(this,"请输入内容");
+            }
+        }else{
+            List<File> fileList = new ArrayList<File>();
+            for (int i = 0; i < itemsList.size(); i++) {
+                File file = new File(itemsList.get(i).path);
+                fileList.add(file);
+            }
+            File[] arr = (File[]) fileList.toArray(new File[fileList.size()]);//使用了第二种接口，返回值和参数均为结果
+            try {
+                new CircleTask().uploadImg(this, "apptoken " + SharedPreferencesUtil.getData(this, "token", ""), arr);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
         }
-        File[] arr = (File[]) fileList.toArray(new File[fileList.size()]);//使用了第二种接口，返回值和参数均为结果
-        try {
-            new CircleTask().uploadImg(this, "apptoken " + SharedPreferencesUtil.getData(this, "token", ""), arr);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+
 //        compressImage();
     }
 
@@ -106,8 +122,18 @@ public class ReleaseCircleActivity extends BaseActivity {
     public void onEventMainThread(EventByTag eventByTag) {
         // 上传图片
         if (EventUtils.isValid(eventByTag, EventTagConfig.uploadImg, null)) {
-            cricle=new GsonParser().parseObject(eventByTag.getObj()+"",Circle.class);
+            cricle = new GsonParser().parseObject(eventByTag.getObj() + "", Circle.class);
+            String[] arr = (String[]) cricle.getImgUrls().toArray(new String[cricle.getImgUrls().size()]);//使用了第二种接口，返回值和参数均为结果
+            if(!StringUtils.isEmpty(circleInfo.getText()+"".trim())){
+                new CircleTask().releaseCircle(this, circleInfo.getText()+"".trim(), arr);
+            }else{
+                BasicTool.showToast(this,"请输入内容");
+            }
 
+        }
+        if (EventUtils.isValid(eventByTag, EventTagConfig.releaseCircle, null)) {
+            BasicTool.showToast(this, "发布成功");
+            finish();
         }
     }
 

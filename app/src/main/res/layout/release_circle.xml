@@ -7,7 +7,7 @@
     <include layout="@layout/base_titlebar" />
 
     <EditText
-        android:id="@+id/editText8"
+        android:id="@+id/circleInfo"
         android:layout_width="match_parent"
         android:layout_height="@dimen/margin_150"
         android:background="@null"
