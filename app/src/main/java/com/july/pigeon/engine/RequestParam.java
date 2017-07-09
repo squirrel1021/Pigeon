@@ -80,7 +80,7 @@ public class RequestParam {
         params.put("imgUrls",imgs);
         return params;
     }
-    public static RequestParams releaseCircle(String title,String content,String[] imgUrls) {
+    public static RequestParams releaseCircle(String title,String content,String imgUrls) {
         RequestParams params = new RequestParams();
         params.put("title",title);
         params.put("content",content);

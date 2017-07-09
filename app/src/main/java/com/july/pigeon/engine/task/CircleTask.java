@@ -61,7 +61,7 @@ public class CircleTask {
     }
 
     //发布动态
-    public void releaseCircle(final Context context, String content, String[] imgUrls) {
+    public void releaseCircle(final Context context, String content, String imgUrls) {
         RequestUtil.postRequest(context, ConstantValues.releaseCircle, RequestParam.releaseCircle("发布动态", content, imgUrls), new BaseResponse(context, "加载中") {
             @Override
             public void onFailure(String message) {

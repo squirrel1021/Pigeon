@@ -97,7 +97,7 @@ public class ReleaseCircleActivity extends BaseActivity {
         if(ListUtils.isEmpty(itemsList)){
             if(!StringUtils.isEmpty(circleInfo.getText()+"".trim())){
                 String[] arr={};
-                new CircleTask().releaseCircle(this, circleInfo.getText()+"".trim(),arr);
+                new CircleTask().releaseCircle(this, circleInfo.getText()+"".trim(),"");
             }else{
                 BasicTool.showToast(this,"请输入内容");
             }
@@ -123,9 +123,19 @@ public class ReleaseCircleActivity extends BaseActivity {
         // 上传图片
         if (EventUtils.isValid(eventByTag, EventTagConfig.uploadImg, null)) {
             cricle = new GsonParser().parseObject(eventByTag.getObj() + "", Circle.class);
-            String[] arr = (String[]) cricle.getImgUrls().toArray(new String[cricle.getImgUrls().size()]);//使用了第二种接口，返回值和参数均为结果
+            StringBuffer stringBuffer=new StringBuffer();
+            for(int i=0;i<cricle.getImgUrls().size();i++){
+                if(i==cricle.getImgUrls().size()-1){
+                    stringBuffer.append(cricle.getImgUrls().get(i));
+                }else{
+                    stringBuffer.append(cricle.getImgUrls().get(i));
+                    stringBuffer.append(";");
+                }
+
+            }
+//            String[] arr = (String[]) cricle.getImgUrls().toArray(new String[cricle.getImgUrls().size()]);//使用了第二种接口，返回值和参数均为结果
             if(!StringUtils.isEmpty(circleInfo.getText()+"".trim())){
-                new CircleTask().releaseCircle(this, circleInfo.getText()+"".trim(), arr);
+                new CircleTask().releaseCircle(this, circleInfo.getText()+"".trim(), stringBuffer.toString());
             }else{
                 BasicTool.showToast(this,"请输入内容");
             }
