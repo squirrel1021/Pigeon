@@ -28,11 +28,16 @@ import butterknife.OnClick;
  * Created by Administrator on 2017/7/1 0001.
  */
 
-public class SetHonor extends BaseActivity{
-    @BindView(R.id.nickEt)EditText honorEt;
-    @BindView(R.id.title_center)TextView title;
-    @BindView(R.id.left_tv)TextView left_tv;
-    @BindView(R.id.right_tv)TextView right_tv;
+public class SetHonor extends BaseActivity {
+    @BindView(R.id.nickEt)
+    EditText honorEt;
+    @BindView(R.id.title_center)
+    TextView title;
+    @BindView(R.id.left_tv)
+    TextView left_tv;
+    @BindView(R.id.right_tv)
+    TextView right_tv;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,24 +54,27 @@ public class SetHonor extends BaseActivity{
         honorEt.setHint("请输入荣誉资料(10字符以内)");
         honorEt.setMaxEms(10);
     }
+
     // 接口回调
     public void onEventMainThread(EventByTag eventByTag) {
         // 荣誉
         if (EventUtils.isValid(eventByTag, EventTagConfig.honor, null)) {
-BasicTool.showToast(this,"修改成功");
+            BasicTool.showToast(this, "修改成功");
             finish();
         }
     }
+
     @OnClick(R.id.left_tv)
-    public void back(){
+    public void back() {
         finish();
     }
+
     @OnClick(R.id.right_tv)
-    public void save(){
-        if(!StringUtils.isEmpty(honorEt.getText()+"".trim())){
-            new UserTask().honor(this,honorEt.getText()+"".trim());
-        }else{
-            BasicTool.showToast(this,"请输入荣誉");
+    public void save() {
+        if (!StringUtils.isEmpty(honorEt.getText() + "".trim())) {
+            new UserTask().honor(this, honorEt.getText() + "".trim());
+        } else {
+            BasicTool.showToast(this, "请输入荣誉");
         }
 
     }

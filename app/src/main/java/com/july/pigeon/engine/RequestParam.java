@@ -69,6 +69,11 @@ public class RequestParam {
         params.put("nickname",nickname);
         return params;
     }
+    public static RequestParams updateAge(String breedAge) {
+        RequestParams params = new RequestParams();
+        params.put("breedAge",breedAge);
+        return params;
+    }
     public static RequestParams honor(String honor) {
         RequestParams params = new RequestParams();
         params.put("honor",honor);

@@ -121,6 +121,10 @@ public class CircleFragment extends Fragment implements RecyclerArrayAdapter.OnL
                 e.printStackTrace();
             }
         }
+        if(EventUtils.isValid(eventByTag, "reflush_circle", null)){
+            currentPage = 1;
+            new CircleTask().MyCircle(getActivity(), currentPage, 10, 0);
+        }
     }
 
     @Override

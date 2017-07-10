@@ -14,6 +14,7 @@ public interface EventTagConfig {
 	String verifyPhone = "verifyPhone";
 	String updatePsw = "updatePsw";
 	String updateNickName = "updateNickName";
+	String updateage = "updateage";
 	String userinfo = "userinfo";
 	String honor = "honor";
 	String uploadImg = "uploadImg";

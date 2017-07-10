@@ -66,4 +66,20 @@ public class UserTask {
             }
         });
     }
+    //修改鸽龄
+    public void upadteage(final Context context, String age) {
+        RequestUtil.postRequest(context, ConstantValues.updateAge, RequestParam.updateAge(age), new BaseResponse(context, "加载中") {
+            @Override
+            public void onFailure(String message) {
+                Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+                Log.i("messagesdfds", message);
+            }
+
+            @Override
+            public void onSuccess(String result) {
+                EventBus.getDefault().post(EventByTag.setDefault(result, EventTagConfig.updateage));
+                Log.i("resultdsf", result);
+            }
+        });
+    }
 }

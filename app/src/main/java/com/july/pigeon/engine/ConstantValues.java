@@ -33,6 +33,8 @@ public class ConstantValues {
     public static final String releaseCircle = BaseUrl + "/app/community/dynamic/submit";
     //社区动态列表
     public static final String myCircle = BaseUrl + "/app/community/dynamic/myDynamics";
+    //修改鸽龄
+    public static final String updateAge = BaseUrl + "/app/member/modifyBreedAge";
 
 
 }

@@ -159,7 +159,7 @@ public class ImagePreviewFragment extends Fragment{
     }
 
     @SuppressLint("ValidFragment")
-    private class SinglePreviewFragment extends Fragment {
+    private  class SinglePreviewFragment extends Fragment {
         public static final String KEY_URL = "key_url";
         private TouchImageView imageView;
         private String url;

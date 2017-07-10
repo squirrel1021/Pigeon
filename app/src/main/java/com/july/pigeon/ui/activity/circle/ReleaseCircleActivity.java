@@ -49,6 +49,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.greenrobot.event.EventBus;
 import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
@@ -143,6 +144,7 @@ public class ReleaseCircleActivity extends BaseActivity {
         }
         if (EventUtils.isValid(eventByTag, EventTagConfig.releaseCircle, null)) {
             BasicTool.showToast(this, "发布成功");
+            EventBus.getDefault().post(EventByTag.setDefault("", "reflush_circle"));
             finish();
         }
     }
