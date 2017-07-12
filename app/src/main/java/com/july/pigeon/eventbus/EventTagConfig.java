@@ -21,5 +21,7 @@ public interface EventTagConfig {
 	String mycircle = "mycircle";
 	String mycirclemore = "mycirclemore";
 	String releaseCircle = "releaseCircle";
-
+	String headimg = "headimg";
+	String saveheadimg = "saveheadimg";
+	String addjiaohuan = "addjiaohuan";
 }

@@ -35,6 +35,10 @@ public class ConstantValues {
     public static final String myCircle = BaseUrl + "/app/community/dynamic/myDynamics";
     //修改鸽龄
     public static final String updateAge = BaseUrl + "/app/member/modifyBreedAge";
-
-
+    //上传头像
+    public static final String headImg = BaseUrl + "/app/member/uploadIcon";
+    //保存头像
+    public static final String saveheadImg = BaseUrl + "/app/member/modifyIcon";
+    //添加脚环
+    public static final String addjiaohuan = BaseUrl + "/app/ring/create";
 }

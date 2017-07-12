@@ -1,5 +1,7 @@
 package com.july.pigeon.bean;
 
+import java.util.List;
+
 /**
  * Created by Administrator on 2017/7/1 0001.
  */
@@ -16,6 +18,15 @@ public class User {
     private String honor;
 
     private String breedAge;
+    private List<String> iconUrl;
+
+    public List<String> getIconUrl() {
+        return iconUrl;
+    }
+
+    public void setIconUrl(List<String> iconUrl) {
+        this.iconUrl = iconUrl;
+    }
 
     public String getId() {
         return id;

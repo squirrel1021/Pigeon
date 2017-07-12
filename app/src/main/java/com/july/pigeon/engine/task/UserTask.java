@@ -10,6 +10,10 @@ import com.july.pigeon.engine.RequestParam;
 import com.july.pigeon.engine.RequestUtil;
 import com.july.pigeon.eventbus.EventByTag;
 import com.july.pigeon.eventbus.EventTagConfig;
+import com.july.pigeon.util.SharedPreferencesUtil;
+
+import java.io.File;
+import java.io.FileNotFoundException;
 
 import de.greenrobot.event.EventBus;
 
@@ -78,6 +82,38 @@ public class UserTask {
             @Override
             public void onSuccess(String result) {
                 EventBus.getDefault().post(EventByTag.setDefault(result, EventTagConfig.updateage));
+                Log.i("resultdsf", result);
+            }
+        });
+    }
+    //上传头像
+    public void uploadHeadImg(final Context context, File img) throws FileNotFoundException {
+        String token="apptoken "+ SharedPreferencesUtil.getData(context, "token", "");
+        RequestUtil.postRequest(context, ConstantValues.headImg, RequestParam.uploadheadImg(token,img), new BaseResponse(context, "加载中") {
+            @Override
+            public void onFailure(String message) {
+                Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+                Log.i("messagesdfds", message);
+            }
+
+            @Override
+            public void onSuccess(String result) {
+                EventBus.getDefault().post(EventByTag.setDefault(result, EventTagConfig.headimg));
+                Log.i("resultdsf", result);
+            }
+        });
+    }
+    public void saveHeadImg(final Context context,String img) {
+        RequestUtil.postRequest(context, ConstantValues.saveheadImg, RequestParam.saveheadImg(img), new BaseResponse(context, "加载中") {
+            @Override
+            public void onFailure(String message) {
+                Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+                Log.i("messagesdfds", message);
+            }
+
+            @Override
+            public void onSuccess(String result) {
+                EventBus.getDefault().post(EventByTag.setDefault(result, EventTagConfig.saveheadimg));
                 Log.i("resultdsf", result);
             }
         });

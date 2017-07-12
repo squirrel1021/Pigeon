@@ -1,8 +1,17 @@
 package com.july.pigeon.ui.fragment;
 
+import android.Manifest;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.andsync.xpermission.XPermissionUtils;
 import com.july.pigeon.R;
 import com.july.pigeon.adapter.BaseListAdapter;
 import com.july.pigeon.adapter.holder.CommViewHolder;
@@ -23,6 +33,7 @@ import com.july.pigeon.eventbus.EventByTag;
 import com.july.pigeon.eventbus.EventTagConfig;
 import com.july.pigeon.eventbus.EventUtils;
 import com.july.pigeon.ui.activity.TestMap;
+import com.july.pigeon.ui.activity.circle.ReleaseCircleActivity;
 import com.july.pigeon.ui.activity.login.ForgetPassWordActivity;
 import com.july.pigeon.ui.activity.login.RegisterActivity;
 import com.july.pigeon.ui.activity.main.HomeActivity;
@@ -34,14 +45,21 @@ import com.july.pigeon.ui.activity.user.UpdateNickName;
 import com.july.pigeon.ui.activity.user.UpdateNickName_ViewBinding;
 import com.july.pigeon.util.ActivityStartUtil;
 import com.july.pigeon.util.BasicTool;
+import com.july.pigeon.util.GlideUtil;
+import com.pizidea.imagepicker.AndroidImagePicker;
+import com.pizidea.imagepicker.bean.ImageItem;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
 import de.greenrobot.event.EventBus;
+import top.zibin.luban.Luban;
+import top.zibin.luban.OnCompressListener;
 
 /**
  * Created by ANDROID on 2017/6/7.
@@ -53,7 +71,8 @@ public class UserFragmet extends Fragment implements View.OnClickListener {
     private ImageView headImg;
     private BaseListAdapter adapter;
     private User user;
-    private TextView phone,nickname,gznl,rongyu;
+    private String headImgurl;
+    private TextView phone, nickname, gznl, rongyu;
     private List<String> list = new ArrayList<String>();
     private String[] gridTvs = {"昵称", "养殖鸽龄", "荣誉", "我的鸽子", "我的脚环", "设置"};
     private int[] imgs = {R.drawable.icon_nickname, R.drawable.icon_oldpigeon, R.drawable.icon_honor, R.drawable.icon_mydove, R.drawable.icon_myfootring, R.drawable.icon_setup};
@@ -73,18 +92,29 @@ public class UserFragmet extends Fragment implements View.OnClickListener {
         super.onResume();
         new UserTask().userinfo(getActivity());
     }
+
     // 接口回调
     public void onEventMainThread(EventByTag eventByTag) {
         // 个人信息
         if (EventUtils.isValid(eventByTag, EventTagConfig.userinfo, null)) {
             try {
-                JSONObject json=new JSONObject(eventByTag.getObj()+"");
-                String info=json.getString("member");
-                user=new GsonParser().parseObject(info,User.class);
+                JSONObject json = new JSONObject(eventByTag.getObj() + "");
+                String info = json.getString("member");
+                user = new GsonParser().parseObject(info, User.class);
                 setDate();
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+        }
+        // 上传头像
+        if (EventUtils.isValid(eventByTag, EventTagConfig.headimg, null)) {
+                User usr = new GsonParser().parseObject(eventByTag.getObj() + "", User.class);
+                headImgurl=usr.getIconUrl().get(0);
+                new UserTask().saveHeadImg(getActivity(), usr.getIconUrl().get(0));
+        }
+        // 保存头像
+        if (EventUtils.isValid(eventByTag, EventTagConfig.saveheadimg, null)) {
+            GlideUtil.getInstance().loadImageView(getActivity(),headImgurl,headImg);
         }
     }
 
@@ -93,6 +123,7 @@ public class UserFragmet extends Fragment implements View.OnClickListener {
         nickname.setText(user.getNickName());
         gznl.setText(user.getBreedAge());
         rongyu.setText(user.getHonor());
+        GlideUtil.getInstance().loadImageView(getActivity(),user.getIcon(),headImg);
     }
 
     private void setOnItemClick() {
@@ -126,19 +157,92 @@ public class UserFragmet extends Fragment implements View.OnClickListener {
     }
 
     private void initView() {
-        phone= (TextView) view.findViewById(R.id.phone);
-        nickname= (TextView) view.findViewById(R.id.nickname);
-        gznl= (TextView) view.findViewById(R.id.gznl);
-        rongyu= (TextView) view.findViewById(R.id.rongyu);
+        phone = (TextView) view.findViewById(R.id.phone);
+        nickname = (TextView) view.findViewById(R.id.nickname);
+        gznl = (TextView) view.findViewById(R.id.gznl);
+        rongyu = (TextView) view.findViewById(R.id.rongyu);
         gv = (GridView) view.findViewById(R.id.girdview);
         headImg = (ImageView) view.findViewById(R.id.imageView);
         headImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ActivityStartUtil.start(getActivity(), MapControlDemo.class);
+                XPermissionUtils.requestPermissions(getActivity(), 1, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        new XPermissionUtils.OnPermissionListener() {
+                            @Override
+                            public void onPermissionGranted() {
+                                selectImage();
+                            }
+
+                            @Override
+                            public void onPermissionDenied(final String[] deniedPermissions, boolean alwaysDenied) {
+                                Toast.makeText(getActivity(), "获取权限失败", Toast.LENGTH_SHORT).show();
+                                if (alwaysDenied) { // 拒绝后不再询问 -> 提示跳转到设置
+                                    new AlertDialog.Builder(getActivity()).setTitle("温馨提示")
+                                            .setMessage("我们需要相册权限才能正常使用该功能")
+                                            .setNegativeButton("取消", null)
+                                            .setPositiveButton("打开权限", new DialogInterface.OnClickListener() {
+                                                @RequiresApi(api = Build.VERSION_CODES.M)
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+//                                            XPermissionUtils.requestPermissionsAgain(ForgetPassWordActivity.this, deniedPermissions,
+//                                                    1);
+                                                    Uri packageURI = Uri.parse("package:" + getActivity().getPackageName());
+                                                    Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, packageURI);
+                                                    startActivity(intent);
+                                                }
+                                            })
+                                            .show();
+                                }
+                            }
+                        });
             }
         });
         setAdapter();
+    }
+
+    private void selectImage() {
+        AndroidImagePicker.getInstance().setSelectLimit(1);
+        AndroidImagePicker.getInstance().pickMulti(getActivity(), true, new AndroidImagePicker.OnImagePickCompleteListener() {
+            @Override
+            public void onImagePickComplete(List<ImageItem> items) {
+                if (items != null && items.size() > 0) {
+                    Log.i("onImagePickComplete", "=====选择了：" + items.get(0).path);
+                    AndroidImagePicker.clearInstance();
+                    compressImage(items);
+                }
+            }
+        });
+    }
+
+    private void compressImage(List<ImageItem> items) {
+        File file = new File(items.get(0).path);
+        Luban.with(getActivity())
+
+                .load(file)                     //传人要压缩的图片
+                .setCompressListener(new OnCompressListener() { //设置回调
+                    @Override
+                    public void onStart() {
+                        // TODO 压缩开始前调用，可以在方法内启动 loading UI
+                    }
+
+                    @Override
+                    public void onSuccess(File file) {
+                        // TODO 压缩成功后调用，返回压缩后的图片文件
+                        try {
+                            new UserTask().uploadHeadImg(getActivity(), file);
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                        Log.i("fksdlfjsdl", "fd");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        // TODO 当压缩过程出现问题时调用
+
+                        Log.i("sdfsd", e.toString());
+                    }
+                }).launch();    //启动压缩
     }
 
     private void setAdapter() {

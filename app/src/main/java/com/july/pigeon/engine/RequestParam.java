@@ -85,6 +85,17 @@ public class RequestParam {
         params.put("imgUrls",imgs);
         return params;
     }
+    public static RequestParams uploadheadImg(String token,File imgs) throws FileNotFoundException {
+        RequestParams params = new RequestParams();
+        params.put("token",token);
+        params.put("iconUrl",imgs);
+        return params;
+    }
+    public static RequestParams saveheadImg(String imgs) {
+        RequestParams params = new RequestParams();
+        params.put("iconUrl",imgs);
+        return params;
+    }
     public static RequestParams releaseCircle(String title,String content,String imgUrls) {
         RequestParams params = new RequestParams();
         params.put("title",title);
@@ -96,6 +107,11 @@ public class RequestParam {
         RequestParams params = new RequestParams();
         params.put("pageIndex",pageIndex);
         params.put("pageSize",pageSize);
+        return params;
+    }
+    public static RequestParams addjiaohuan(String ringCode) {
+        RequestParams params = new RequestParams();
+        params.put("ringCode",ringCode);
         return params;
     }
 }

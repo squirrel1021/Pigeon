@@ -55,7 +55,7 @@ public class CircleFragment extends Fragment implements RecyclerArrayAdapter.OnL
     private Handler handler = new Handler();
     List<Circle> list = new ArrayList<Circle>();
     List<Circle> list1 = new ArrayList<Circle>();
-    private int currentPage = 1;
+    private int currentPage = 0;
     private int totalPage = 1;
 
 
@@ -108,28 +108,26 @@ public class CircleFragment extends Fragment implements RecyclerArrayAdapter.OnL
                 list1 = new GsonParser().parseList(resultList, new TypeToken<List<Circle>>() {
                 });
 //                totalPage=new JSONObject(json.getString("pageBean")).getInt("totalPage");
-                if (EventTagConfig.mycirclemore.equals(eventByTag.getTAG())) {
-                    list.addAll(list1);
-                } else {
+                if (!EventTagConfig.mycirclemore.equals(eventByTag.getTAG())) {
                     list.clear();
                     adapter.clear();
                     list.addAll(list1);
                 }
 
-                adapter.addAll(list);
+                adapter.addAll(list1);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
         if(EventUtils.isValid(eventByTag, "reflush_circle", null)){
-            currentPage = 1;
+            currentPage = 0;
             new CircleTask().MyCircle(getActivity(), currentPage, 10, 0);
         }
     }
 
     @Override
     public void onRefresh() {
-        currentPage = 1;
+        currentPage = 0;
         new CircleTask().MyCircle(getActivity(), currentPage, 10, 0);
     }
 
