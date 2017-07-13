@@ -75,7 +75,7 @@ public class CircleFragment extends Fragment implements RecyclerArrayAdapter.OnL
         recyclerView = (EasyRecyclerView) view.findViewById(R.id.recyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
-        DividerDecoration itemDecoration = new DividerDecoration(Color.GRAY, UiUtil.dip2px(getActivity(), 0.5f), 0, 0);
+        DividerDecoration itemDecoration = new DividerDecoration(getResources().getColor(R.color.color_ee), UiUtil.dip2px(getActivity(), 0.5f), 0, 0);
         itemDecoration.setDrawLastItem(false);
         recyclerView.addItemDecoration(itemDecoration);
         recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<Circle>(getActivity()) {

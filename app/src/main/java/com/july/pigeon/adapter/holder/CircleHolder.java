@@ -19,7 +19,7 @@ import com.july.pigeon.util.GlideUtil;
  */
 
 public class CircleHolder extends BaseViewHolder<Circle> {
-    private TextView mTv_name;
+    private TextView mTv_name,releaseTime;
     private TextView mTv_sign;
     private Context mContext;
     private MyGridView gv;
@@ -29,6 +29,7 @@ public class CircleHolder extends BaseViewHolder<Circle> {
     public CircleHolder(ViewGroup parent, Context context) {
         super(parent, R.layout.circle_item);
         mTv_name = $(R.id.userName);
+        releaseTime= $(R.id.releaseTime);
         mTv_sign = $(R.id.circleInfo);
         gv = $(R.id.circleGv);
         mContext = context;
@@ -37,7 +38,7 @@ public class CircleHolder extends BaseViewHolder<Circle> {
 
     @Override
     public void setData(final Circle circle) {
-
+        releaseTime.setText(circle.getFdCreateTime());
         mTv_name.setText(circle.getMemberName());
         mTv_sign.setText(circle.getFdContent());
         adapter = new BaseListAdapter(mContext,circle.getFdImgUrl(),R.layout.circle_grid_item) {

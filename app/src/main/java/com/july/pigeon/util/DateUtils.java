@@ -58,19 +58,19 @@ public class DateUtils {
 
 	private DateUtils(Date fiducialDate) {
 		if (fiducialDate != null) {
-			this.fiducialDate = fiducialDate;
+			DateUtils.fiducialDate = fiducialDate;
 		} else {
-			this.fiducialDate = new Date(System.currentTimeMillis());
+			DateUtils.fiducialDate = new Date(System.currentTimeMillis());
 		}
 
 		this.cal = Calendar.getInstance();
-		this.cal.setTime(this.fiducialDate);
+		this.cal.setTime(DateUtils.fiducialDate);
 		this.cal.set(Calendar.HOUR_OF_DAY, 0);
 		this.cal.set(Calendar.MINUTE, 0);
 		this.cal.set(Calendar.SECOND, 0);
 		this.cal.set(Calendar.MILLISECOND, 0);
 
-		this.fiducialDate = this.cal.getTime();
+		DateUtils.fiducialDate = this.cal.getTime();
 	}
 
 	/**
@@ -100,7 +100,7 @@ public class DateUtils {
 	* @return Date 返回类型  
 	 */
 	public Date getFirstDayOfYear(int offset) {
-		cal.setTime(this.fiducialDate);
+		cal.setTime(fiducialDate);
 		cal.set(Calendar.YEAR, cal.get(Calendar.YEAR) + offset);
 		cal.set(Calendar.MONTH, Calendar.JANUARY);
 		cal.set(Calendar.DAY_OF_MONTH, 1);
@@ -115,7 +115,7 @@ public class DateUtils {
 	* @return Date 返回类型  
 	 */
 	public Date getLastDayOfYear(int offset) {
-		cal.setTime(this.fiducialDate);
+		cal.setTime(fiducialDate);
 		cal.set(Calendar.YEAR, cal.get(Calendar.YEAR) + offset);
 		cal.set(Calendar.MONTH, Calendar.DECEMBER);
 		cal.set(Calendar.DAY_OF_MONTH, 31);
@@ -130,7 +130,7 @@ public class DateUtils {
 	* @return Date 返回类型  
 	 */
 	public Date getFirstDayOfQuarter(int offset) {
-		cal.setTime(this.fiducialDate);
+		cal.setTime(fiducialDate);
 		cal.add(Calendar.MONTH, offset * 3);
 		int mon = cal.get(Calendar.MONTH);
 		if (mon >= Calendar.JANUARY && mon <= Calendar.MARCH) {
@@ -158,7 +158,7 @@ public class DateUtils {
 	}
 
 	public Date getTomorrow() {
-		long time = this.fiducialDate.getTime() + 60 * 60 * 24 * 1000;
+		long time = fiducialDate.getTime() + 60 * 60 * 24 * 1000;
 		return new Date(time);
 	}
 
@@ -170,7 +170,7 @@ public class DateUtils {
 	* @return Date 返回类型  
 	 */
 	public Date getLastDayOfQuarter(int offset) {
-		cal.setTime(this.fiducialDate);
+		cal.setTime(fiducialDate);
 		cal.add(Calendar.MONTH, offset * 3);
 
 		int mon = cal.get(Calendar.MONTH);
@@ -201,7 +201,7 @@ public class DateUtils {
 	* @return Date 返回类型  
 	 */
 	public Date getFirstDayOfMonth(int offset) {
-		cal.setTime(this.fiducialDate);
+		cal.setTime(fiducialDate);
 		cal.add(Calendar.MONTH, offset);
 		cal.set(Calendar.DAY_OF_MONTH, 1);
 		return cal.getTime();
@@ -215,7 +215,7 @@ public class DateUtils {
 	* @return Date 返回类型  
 	 */
 	public Date getLastDayOfMonth(int offset) {
-		cal.setTime(this.fiducialDate);
+		cal.setTime(fiducialDate);
 		cal.add(Calendar.MONTH, offset + 1);
 		cal.set(Calendar.DAY_OF_MONTH, 1);
 		cal.add(Calendar.DAY_OF_MONTH, -1);
@@ -230,7 +230,7 @@ public class DateUtils {
 	* @return Date 返回类型  
 	 */
 	public Date getFirstDayOfTendays(int offset) {
-		cal.setTime(this.fiducialDate);
+		cal.setTime(fiducialDate);
 		int day = cal.get(Calendar.DAY_OF_MONTH);
 		if (day >= 21) {
 			day = 21;
@@ -283,7 +283,7 @@ public class DateUtils {
 	* @return Date 返回类型  
 	 */
 	public Date getFirstDayOfWeek(int offset) {
-		cal.setTime(this.fiducialDate);
+		cal.setTime(fiducialDate);
 		cal.add(Calendar.DAY_OF_MONTH, offset * 7);
 		cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
 		return cal.getTime();
@@ -297,7 +297,7 @@ public class DateUtils {
 	* @return Date 返回类型  
 	 */
 	public Date getLastDayOfWeek(int offset) {
-		cal.setTime(this.fiducialDate);
+		cal.setTime(fiducialDate);
 		cal.add(Calendar.DAY_OF_MONTH, offset * 7);
 		cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
 		cal.add(Calendar.DAY_OF_MONTH, 6);
@@ -340,7 +340,7 @@ public class DateUtils {
 	* @throws:throws
 	 */
 	public Date add(int field, int offset) {
-		cal.setTime(this.fiducialDate);
+		cal.setTime(fiducialDate);
 		cal.add(field, offset);
 		return cal.getTime();
 	}
@@ -353,7 +353,7 @@ public class DateUtils {
 	* @return Date 返回类型  
 	 */
 	public Date roll(int field, boolean up) {
-		cal.setTime(this.fiducialDate);
+		cal.setTime(fiducialDate);
 		cal.roll(field, up);
 		return cal.getTime();
 	}

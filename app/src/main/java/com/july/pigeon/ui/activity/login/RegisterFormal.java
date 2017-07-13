@@ -47,7 +47,7 @@ public class RegisterFormal extends Activity implements View.OnClickListener {
 
     private void initView() {
         phoneNum = getIntent().getStringExtra("phoneNum");
-        ((Button) findViewById(R.id.doneBtn)).setOnClickListener(this);
+        findViewById(R.id.doneBtn).setOnClickListener(this);
     }
 
     // 接口回调

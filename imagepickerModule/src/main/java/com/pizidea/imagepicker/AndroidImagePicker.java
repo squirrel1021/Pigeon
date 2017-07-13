@@ -387,23 +387,23 @@ public class AndroidImagePicker {
     /**
      * take picture
      */
-    public void takePicture(Fragment fragment, int requestCode) throws IOException {
+    public void takePicture(Context context, int requestCode) throws IOException {
 
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         //Intent takePictureIntent = new Intent(MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA);
         takePictureIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         // Ensure that there's a camera activity to handle the intent
-        if (takePictureIntent.resolveActivity(fragment.getContext().getPackageManager()) != null) {
+        if (takePictureIntent.resolveActivity(context.getPackageManager()) != null) {
             // Create the File where the photo should go
             //File photoFile = createImageFile();
-            File photoFile = createImageSaveFile(fragment.getContext());
+            File photoFile = createImageSaveFile(context);
             // Continue only if the File was successfully created
             if (photoFile != null) {
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
                 Log.i(TAG,"=====file ready to take photo:"+photoFile.getAbsolutePath() );
             }
         }
-        fragment.startActivityForResult(takePictureIntent, requestCode);
+        ((Activity)context).startActivityForResult(takePictureIntent, requestCode);
 
     }
 

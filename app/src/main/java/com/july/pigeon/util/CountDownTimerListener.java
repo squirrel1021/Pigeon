@@ -20,5 +20,5 @@ package com.july.pigeon.util;
  * @用例：
  */
 public interface CountDownTimerListener {
-	public void onFinishedTimerCount(boolean success);
+	void onFinishedTimerCount(boolean success);
 }

@@ -147,8 +147,8 @@ public class SuperImageView extends ImageView {
         matrix.getValues(p);
         float curScale = Math.abs(p[0]) + Math.abs(p[1]);
 
-        float minScale = Math.max((float) (viewW - leftMargins*2) / (float) rotatedImageW,
-                (float) (viewH - topBottomMargins) / (float) rotatedImageH);
+        float minScale = Math.max((viewW - leftMargins*2) / rotatedImageW,
+                (viewH - topBottomMargins) / rotatedImageH);
         if (curScale < minScale) {
             if (curScale > 0) {
                 double scale = minScale / curScale;
@@ -171,8 +171,8 @@ public class SuperImageView extends ImageView {
             return .0f;
         }*/
 
-        float minScale = Math.min((float) viewW / (float) rotatedImageW,
-                (float) viewH / (float) rotatedImageH);
+        float minScale = Math.min(viewW / rotatedImageW,
+                viewH / rotatedImageH);
         float maxScale = Math.max(minScale, MAX_SCALE);
         return maxScale / curScale;
     }
@@ -365,8 +365,8 @@ public class SuperImageView extends ImageView {
         matrix.getValues(p);
         float curScale = Math.abs(p[0]) + Math.abs(p[1]);
 
-        float minScale = Math.max((float) (viewW - leftMargins*2) / (float) rotatedImageW,
-                (float) (viewH - topBottomMargins) / (float) rotatedImageH);
+        float minScale = Math.max((viewW - leftMargins*2) / rotatedImageW,
+                (viewH - topBottomMargins) / rotatedImageH);
         if (curScale <= minScale + 0.01) { // zoom
             float toScale = Math.max(minScale, MAX_SCALE) / curScale;
             matrix.postScale(toScale, toScale, x, y);

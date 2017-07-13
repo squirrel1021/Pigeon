@@ -58,8 +58,8 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         btn.setOnClickListener(this);
         phoneNum = (EditText) findViewById(R.id.phoneNum);
         pswEt = (EditText) findViewById(R.id.pswEt);
-        ((TextView) findViewById(R.id.regiest)).setOnClickListener(this);
-        ((TextView) findViewById(R.id.forget_psw)).setOnClickListener(this);
+        findViewById(R.id.regiest).setOnClickListener(this);
+        findViewById(R.id.forget_psw).setOnClickListener(this);
     }
 
     // 接口回调

@@ -47,7 +47,7 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
     }
 
     private void initView() {
-        ((Button) findViewById(R.id.yzmBtn)).setOnClickListener(this);
+        findViewById(R.id.yzmBtn).setOnClickListener(this);
     }
 
     // 接口回调

@@ -31,7 +31,6 @@ public class CircleTask {
 
             @Override
             public void onSuccess(String result) {
-                Toast.makeText(context, result, Toast.LENGTH_LONG).show();
                 EventBus.getDefault().post(EventByTag.setDefault(result, EventTagConfig.uploadImg));
                 Log.i("resultdsf", result);
             }

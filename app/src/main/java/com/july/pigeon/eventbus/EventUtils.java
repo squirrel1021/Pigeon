@@ -25,12 +25,12 @@ public class EventUtils {
         return true;
     }
 
-    public static interface EmptyEventCallback {
+    public interface EmptyEventCallback {
 
         /**
          * 返回为Empty的时候自定义处理！
          */
-        public void onEmpty();
+        void onEmpty();
     }
 
 }

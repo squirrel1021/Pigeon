@@ -59,8 +59,8 @@ public class JiaohuanFragment extends Fragment implements RecyclerArrayAdapter.O
     }
 
     private void initView() {
-        ((LinearLayout) view.findViewById(R.id.setView)).setOnClickListener(this);
-        ((ImageView) view.findViewById(R.id.locationImage)).setOnClickListener(this);
+        view.findViewById(R.id.setView).setOnClickListener(this);
+        view.findViewById(R.id.locationImage).setOnClickListener(this);
         for (int i = 0; i < 5; i++) {
             Circle circle = new Circle();
             circle.setThemeInfo("100" + i);

@@ -18,14 +18,21 @@
 
 package com.pizidea.imagepicker.ui;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -44,6 +51,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.andsync.xpermission.XPermissionUtils;
 import com.pizidea.imagepicker.AndroidImagePicker;
 import com.pizidea.imagepicker.GlideImgLoader;
 import com.pizidea.imagepicker.ImgLoader;
@@ -267,11 +275,10 @@ public class ImagesGridFragment extends Fragment implements OnImagesLoadedListen
                 convertView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        try {
-                            androidImagePicker.takePicture(ImagesGridFragment.this,AndroidImagePicker.REQ_CAMERA);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+
+                            getPression();
+
+
                     }
                 });
             }else{
@@ -368,6 +375,42 @@ public class ImagesGridFragment extends Fragment implements OnImagesLoadedListen
             notifyDataSetChanged();
         }
 
+    }
+
+    private void getPression() {
+        XPermissionUtils.requestPermissions(getActivity(), 1, new String[]{Manifest.permission.CAMERA},
+                new XPermissionUtils.OnPermissionListener() {
+                    @Override
+                    public void onPermissionGranted() {
+                        try {
+                            androidImagePicker.takePicture(getActivity(),AndroidImagePicker.REQ_CAMERA);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onPermissionDenied(final String[] deniedPermissions, boolean alwaysDenied) {
+                        Toast.makeText(getActivity(), "获取权限失败", Toast.LENGTH_SHORT).show();
+                        if (alwaysDenied) { // 拒绝后不再询问 -> 提示跳转到设置
+                            new AlertDialog.Builder(getActivity()).setTitle("温馨提示")
+                                    .setMessage("我们需要读写权限才能正常使用该功能")
+                                    .setNegativeButton("取消", null)
+                                    .setPositiveButton("打开权限", new DialogInterface.OnClickListener() {
+                                        @RequiresApi(api = Build.VERSION_CODES.M)
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+//                                            XPermissionUtils.requestPermissionsAgain(ForgetPassWordActivity.this, deniedPermissions,
+//                                                    1);
+                                            Uri packageURI = Uri.parse("package:" + getActivity().getPackageName());
+                                            Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, packageURI);
+                                            startActivity(intent);
+                                        }
+                                    })
+                                    .show();
+                        }
+                    }
+                });
     }
 
     private boolean shouldSelectMulti(){

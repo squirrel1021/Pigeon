@@ -42,7 +42,7 @@ public class EventByTag {
     }
 
     public void setTAG(String TAG) {
-        this.TAG = TAG;
+        EventByTag.TAG = TAG;
     }
 
     public Object getObject() {
@@ -62,6 +62,6 @@ public class EventByTag {
     }
 
     public void setObj(Object obj) {
-        this.obj = obj;
+        EventByTag.obj = obj;
     }
 }

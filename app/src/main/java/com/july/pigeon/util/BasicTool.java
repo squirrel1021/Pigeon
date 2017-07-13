@@ -35,11 +35,7 @@ public class BasicTool {
                 .compile("^((13[0-9])|(15[^4,\\D])|(18[0-9])|(14[0-9])|(17[0-9]))\\d{8}$");
         Matcher matcher = pattern.matcher(str);
 
-        if (matcher.matches()) {
-            return true;
-        } else {
-            return false;
-        }
+        return matcher.matches();
     }
     public static void showToast(Context context,String info){
         Toast.makeText(context,info,Toast.LENGTH_LONG).show();
