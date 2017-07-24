@@ -41,4 +41,6 @@ public class ConstantValues {
     public static final String saveheadImg = BaseUrl + "/app/member/modifyIcon";
     //添加脚环
     public static final String addjiaohuan = BaseUrl + "/app/ring/create";
+    //评论列表
+    public static final String conments = BaseUrl + "/app/community/comment/comments";
 }

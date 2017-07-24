@@ -114,4 +114,11 @@ public class RequestParam {
         params.put("ringCode",ringCode);
         return params;
     }
+    public static RequestParams conments(String dynamicId,int pageIndex,int pageSize) {
+        RequestParams params = new RequestParams();
+        params.put("dynamicId",dynamicId);
+        params.put("pageIndex",pageIndex);
+        params.put("pageSize",pageSize);
+        return params;
+    }
 }

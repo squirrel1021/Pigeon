@@ -75,4 +75,25 @@ public class CircleTask {
             }
         });
     }
+
+    //评论列表
+    public void conments(final Context context, int pageIndex, int pageSize, final int type, String dynamicId) {
+        RequestUtil.getRequest(context, ConstantValues.conments, RequestParam.conments(dynamicId,pageIndex, pageSize), new BaseResponse(context, "加载中") {
+            @Override
+            public void onFailure(String message) {
+                Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+                Log.i("messagesdfds", message);
+            }
+
+            @Override
+            public void onSuccess(String result) {
+                if(type==0){
+                    EventBus.getDefault().post(EventByTag.setDefault(result, EventTagConfig.conments));
+                }else{
+
+                }
+                Log.i("resultdsf", result);
+            }
+        });
+    }
 }

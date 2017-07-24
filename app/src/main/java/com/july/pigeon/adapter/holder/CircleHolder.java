@@ -1,9 +1,13 @@
 package com.july.pigeon.adapter.holder;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
@@ -11,6 +15,7 @@ import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.july.pigeon.R;
 import com.july.pigeon.adapter.BaseListAdapter;
 import com.july.pigeon.bean.Circle;
+import com.july.pigeon.ui.activity.circle.CircleConment;
 import com.july.pigeon.ui.weight.MyGridView;
 import com.july.pigeon.util.GlideUtil;
 
@@ -24,7 +29,7 @@ public class CircleHolder extends BaseViewHolder<Circle> {
     private Context mContext;
     private MyGridView gv;
     private BaseListAdapter adapter;
-
+private LinearLayout touch_layout;
 
     public CircleHolder(ViewGroup parent, Context context) {
         super(parent, R.layout.circle_item);
@@ -32,6 +37,7 @@ public class CircleHolder extends BaseViewHolder<Circle> {
         releaseTime= $(R.id.releaseTime);
         mTv_sign = $(R.id.circleInfo);
         gv = $(R.id.circleGv);
+        touch_layout=$(R.id.touch_layout);
         mContext = context;
 
     }
@@ -48,6 +54,14 @@ public class CircleHolder extends BaseViewHolder<Circle> {
                 GlideUtil.getInstance().loadImageView(mContext,circle.getFdImgUrl().get(holder.getPosition()),image);
             }
         };
+        touch_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(mContext, CircleConment.class);
+                intent.putExtra("id",circle.getFdId());
+                mContext.startActivity(intent);
+            }
+        });
         gv.setAdapter(adapter);
     }
 }

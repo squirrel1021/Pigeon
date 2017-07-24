@@ -19,6 +19,7 @@ public interface EventTagConfig {
 	String honor = "honor";
 	String uploadImg = "uploadImg";
 	String mycircle = "mycircle";
+	String conments = "conments";
 	String mycirclemore = "mycirclemore";
 	String releaseCircle = "releaseCircle";
 	String headimg = "headimg";
