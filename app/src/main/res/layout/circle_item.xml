@@ -65,12 +65,11 @@
                 android:verticalSpacing="2dp" />
 
             <LinearLayout
-                android:layout_marginTop="@dimen/margin_5"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_5">
 
                 <ImageView
-                    android:layout_marginTop="@dimen/margin_3"
                     android:id="@+id/imageView3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -78,6 +77,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/margin_10"
+                    android:layout_marginTop="@dimen/margin_3"
                     android:src="@drawable/date" />
 
                 <TextView
@@ -97,4 +97,11 @@
 
     </LinearLayout>
 
+    <View
+        android:id="@+id/bottomLine"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/margin_5"
+        android:background="@color/color_b4"
+        android:visibility="gone" />
 </LinearLayout>

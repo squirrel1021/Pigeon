@@ -3,6 +3,7 @@ package com.july.pigeon.adapter.holder;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
@@ -59,6 +60,9 @@ private LinearLayout touch_layout;
             public void onClick(View v) {
                 Intent intent=new Intent(mContext, CircleConment.class);
                 intent.putExtra("id",circle.getFdId());
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("circle", circle);
+                intent.putExtras(bundle);
                 mContext.startActivity(intent);
             }
         });

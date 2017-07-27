@@ -71,7 +71,6 @@ public class CircleFragment extends Fragment implements RecyclerArrayAdapter.OnL
     }
 
     private void initView() {
-
         recyclerView = (EasyRecyclerView) view.findViewById(R.id.recyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);

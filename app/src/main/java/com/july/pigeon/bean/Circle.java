@@ -1,12 +1,13 @@
 package com.july.pigeon.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Administrator on 2017/6/7 0007.
  */
 
-public class Circle {
+public class Circle implements Serializable {
     private String username;
     private String themeInfo;
     private List<String> imageurl;
