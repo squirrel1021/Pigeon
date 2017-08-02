@@ -80,7 +80,7 @@ public class CircleConment extends BaseActivity implements RecyclerArrayAdapter.
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         setContentView(R.layout.conments_layout);
         inflater = getLayoutInflater();
         ButterKnife.bind(this);
