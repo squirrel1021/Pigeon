@@ -266,4 +266,11 @@
     <color name="return_bg_color">#eaebec</color>
 
     <color name="background_tab_pressed">#6633B5E5</color>
+
+    <color name="reply_button_text_disable">#b8b8b8</color>
+    <color name="dark_gray">#393a3e</color>
+    <color name="reply_button_disable">#f5f5f5</color>
+    <color name="light_gray">#50bfbfbf</color>
+    <color name="light_white">#f7fff6</color>
+    <color name="dark_green">#19ad17</color>
 </resources>

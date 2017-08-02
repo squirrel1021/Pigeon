@@ -1,1 +1,1 @@
-include ':app', ':imagepickerModule'
+include ':app', ':imagepickerModule',':emotionkeyboard'
