@@ -40,6 +40,7 @@ import com.july.pigeon.eventbus.EventTagConfig;
 import com.july.pigeon.eventbus.EventUtils;
 import com.july.pigeon.ui.activity.BaseActivity;
 import com.july.pigeon.util.BasicTool;
+import com.july.pigeon.util.StringUtils;
 import com.july.pigeon.util.UiUtil;
 import com.xk2318.emotionkeyboard.EmotionKeyboard;
 
@@ -52,6 +53,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * 评论列表
@@ -77,6 +79,8 @@ public class CircleConment extends BaseActivity implements RecyclerArrayAdapter.
     private static final int emsNumOfEveryFragment = 20;//每页的表情数量
     private RadioGroup rgTipPoints;
     private RadioButton rbPoint;
+    private String id;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,8 +93,8 @@ public class CircleConment extends BaseActivity implements RecyclerArrayAdapter.
     }
 
     private void initView() {
-        String id = getIntent().getStringExtra("id");
-        lastCircle=(Circle)getIntent().getSerializableExtra("circle");
+        id = getIntent().getStringExtra("id");
+        lastCircle = (Circle) getIntent().getSerializableExtra("circle");
         new CircleTask().conments(this, 0, 10, 0, id);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -110,10 +114,10 @@ public class CircleConment extends BaseActivity implements RecyclerArrayAdapter.
         adapter.addHeader(new RecyclerArrayAdapter.ItemView() {
             @Override
             public View onCreateView(ViewGroup parent) {
-                View view=inflater.inflate(R.layout.circle_item, parent, false);
-                ((TextView)view.findViewById(R.id.userName)).setText(lastCircle.getMemberName());
-                ((TextView)view.findViewById(R.id.circleInfo)).setText(lastCircle.getFdContent());
-                ((TextView)view.findViewById(R.id.releaseTime)).setText(lastCircle.getFdCreateTime());
+                View view = inflater.inflate(R.layout.circle_item, parent, false);
+                ((TextView) view.findViewById(R.id.userName)).setText(lastCircle.getMemberName());
+                ((TextView) view.findViewById(R.id.circleInfo)).setText(lastCircle.getFdContent());
+                ((TextView) view.findViewById(R.id.releaseTime)).setText(lastCircle.getFdCreateTime());
                 view.findViewById(R.id.bottomLine).setVisibility(View.VISIBLE);
                 return view;
             }
@@ -131,7 +135,19 @@ public class CircleConment extends BaseActivity implements RecyclerArrayAdapter.
         btnSend = (Button) findViewById(R.id.btn_send);
         extendView = (FrameLayout) findViewById(R.id.extend_layout);
         emotionView = (FrameLayout) findViewById(R.id.emotion_layout);
+        btnSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String content = edittext.getText() + "".trim();
+                if(StringUtils.isEmpty(content)){
+                    BasicTool.showToast(CircleConment.this,"请输入回复内容");
+                }else{
+                    new CircleTask().replyContent(CircleConment.this,content,id);
+                }
+            }
+        });
     }
+
 
     private void bindToEmotionKeyboard() {
         emotionKeyboard = EmotionKeyboard.with(this)
@@ -154,12 +170,17 @@ public class CircleConment extends BaseActivity implements RecyclerArrayAdapter.
                 String result = json.getJSONObject("comments").getString("resultList");
                 list = new GsonParser().parseList(result, new TypeToken<List<Circle>>() {
                 });
-                totalPage=json.getJSONObject("comments").getJSONObject("pageBean").getInt("totalPage");
+                totalPage = json.getJSONObject("comments").getJSONObject("pageBean").getInt("totalPage");
                 adapter.addAll(list);
             } catch (JSONException e) {
                 BasicTool.showToast(this, "这里解析挂了");
                 e.printStackTrace();
             }
+        }
+        // 回复评论
+        if (EventUtils.isValid(eventByTag, EventTagConfig.replyContent, null)) {
+            BasicTool.showToast(this,"回复成功");
+            new CircleTask().conments(this, 0, 10, 0, id);
         }
     }
 
@@ -180,12 +201,12 @@ public class CircleConment extends BaseActivity implements RecyclerArrayAdapter.
     /* 设置表情布局下的视图 */
     private void setUpEmotionViewPager() {
         int fragmentNum;
-		/*获取ems文件夹有多少个表情  减1 是因为有个删除键
+        /*获取ems文件夹有多少个表情  减1 是因为有个删除键
                          每页20个表情  总共有length个表情
                          先判断能不能整除  判断是否有不满一页的表情
 		 */
         int emsTotalNum = getSizeOfAssetsCertainFolder("ems") - 1;//表情的数量(除去删除按钮)
-        if(emsTotalNum % emsNumOfEveryFragment == 0){
+        if (emsTotalNum % emsNumOfEveryFragment == 0) {
             fragmentNum = emsTotalNum / emsNumOfEveryFragment;
         } else {
             fragmentNum = (emsTotalNum / emsNumOfEveryFragment) + 1;
@@ -196,7 +217,7 @@ public class CircleConment extends BaseActivity implements RecyclerArrayAdapter.
         mViewPager.setCurrentItem(0);
 
         GlobalOnItemClickManager globalOnItemClickListener = GlobalOnItemClickManager.getInstance();
-        globalOnItemClickListener.attachToEditText((EditText)findViewById(R.id.edit_text));
+        globalOnItemClickListener.attachToEditText((EditText) findViewById(R.id.edit_text));
 
 		/* 设置表情下的提示点 */
         setUpTipPoints(fragmentNum, mViewPager);
@@ -214,12 +235,11 @@ public class CircleConment extends BaseActivity implements RecyclerArrayAdapter.
     }
 
     /**
-     @param
-     num   提示点的数量
+     * @param num 提示点的数量
      */
     private void setUpTipPoints(int num, ViewPager mViewPager) {
         rgTipPoints = (RadioGroup) findViewById(R.id.rg_reply_layout);
-        for(int i=0;i<num;i++){
+        for (int i = 0; i < num; i++) {
             rbPoint = new RadioButton(this);
             RadioGroup.LayoutParams lp = new RadioGroup.LayoutParams(30, 30);
             lp.setMargins(10, 0, 10, 0);
@@ -228,7 +248,7 @@ public class CircleConment extends BaseActivity implements RecyclerArrayAdapter.
             rbPoint.setButtonDrawable(getResources().getDrawable(R.color.transparent));//设置button为@null
             rbPoint.setBackgroundResource(R.drawable.emotion_tip_points_selector);
             rbPoint.setClickable(false);
-            if(i == 0){ // 第一个点默认为选中，与其他点显示颜色不同
+            if (i == 0) { // 第一个点默认为选中，与其他点显示颜色不同
                 rbPoint.setChecked(true);
             } else {
                 rbPoint.setChecked(false);
@@ -253,13 +273,13 @@ public class CircleConment extends BaseActivity implements RecyclerArrayAdapter.
 
     @Override
     public void onBackPressed() {
-        if(!emotionKeyboard.interceptBackPress()){
+        if (!emotionKeyboard.interceptBackPress()) {
             super.onBackPressed();
         }
     }
 
     /* 获取assets下某个指定文件夹下的文件数量 */
-    private int getSizeOfAssetsCertainFolder(String folderName){
+    private int getSizeOfAssetsCertainFolder(String folderName) {
         int size = 0;
         try {
             size = getAssets().list(folderName).length;
@@ -268,6 +288,7 @@ public class CircleConment extends BaseActivity implements RecyclerArrayAdapter.
         }
         return size;
     }
+
     /* EditText输入框动态监听 */
     class ButtonBtnWatcher implements TextWatcher {
 
@@ -277,7 +298,7 @@ public class CircleConment extends BaseActivity implements RecyclerArrayAdapter.
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-            if(!TextUtils.isEmpty(edittext.getText().toString())){ //有文本内容，按钮为可点击状态
+            if (!TextUtils.isEmpty(edittext.getText().toString())) { //有文本内容，按钮为可点击状态
                 btnSend.setBackgroundResource(R.drawable.shape_button_reply_button_clickable);
                 btnSend.setTextColor(getResources().getColor(R.color.light_white));
             } else { // 无文本内容，按钮为不可点击状态

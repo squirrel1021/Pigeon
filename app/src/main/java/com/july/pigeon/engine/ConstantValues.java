@@ -43,4 +43,13 @@ public class ConstantValues {
     public static final String addjiaohuan = BaseUrl + "/app/ring/create";
     //评论列表
     public static final String conments = BaseUrl + "/app/community/comment/comments";
+    //发表评论
+    public static final String replyConments = BaseUrl + "/app/community/comment/submit";
+    //添加鸽子/app/pigeon/dove/myDoves
+    public static final String addPigeon = BaseUrl + "/app/pigeon/dove/create";
+    //我的鸽子
+    public static final String myPigeon = BaseUrl + "/app/pigeon/dove/myDoves";
+    //我的脚环
+    public static final String myJiaohuan = BaseUrl + "/app/ring/myRings";
+
 }

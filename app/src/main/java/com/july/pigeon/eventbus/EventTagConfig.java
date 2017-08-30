@@ -22,7 +22,12 @@ public interface EventTagConfig {
 	String conments = "conments";
 	String mycirclemore = "mycirclemore";
 	String releaseCircle = "releaseCircle";
+	String replyContent = "replyContent";
 	String headimg = "headimg";
 	String saveheadimg = "saveheadimg";
 	String addjiaohuan = "addjiaohuan";
+	String addpigeon = "addpigeon";
+	String mypigeon = "mypigeon";
+	String myjiaohuan = "myjiaohuan";
+
 }

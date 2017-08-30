@@ -96,4 +96,21 @@ public class CircleTask {
             }
         });
     }
+
+    //发表回复
+    public void replyContent(final Context context, String content, String dynamicId) {
+        RequestUtil.postRequest(context, ConstantValues.replyConments, RequestParam.replyContent( content, dynamicId), new BaseResponse(context, "加载中") {
+            @Override
+            public void onFailure(String message) {
+                Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+                Log.i("messagesdfds", message);
+            }
+
+            @Override
+            public void onSuccess(String result) {
+                EventBus.getDefault().post(EventByTag.setDefault(result, EventTagConfig.replyContent));
+                Log.i("resultdsf", result);
+            }
+        });
+    }
 }

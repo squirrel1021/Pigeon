@@ -66,8 +66,13 @@ public class CircleFragment extends Fragment implements RecyclerArrayAdapter.OnL
         ButterKnife.bind(this, view);
         EventBus.getDefault().register(this);
         initView();
+        onItemClickListener();
         new CircleTask().MyCircle(getActivity(), 0, 10, 0);
         return view;
+    }
+
+    private void onItemClickListener() {
+
     }
 
     private void initView() {

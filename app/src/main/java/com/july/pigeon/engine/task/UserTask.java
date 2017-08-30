@@ -38,6 +38,7 @@ public class UserTask {
             }
         });
     }
+
     //个人信息
     public void userinfo(final Context context) {
         RequestUtil.getRequest(context, ConstantValues.userInfo, null, new BaseResponse(context, "加载中") {
@@ -54,8 +55,9 @@ public class UserTask {
             }
         });
     }
+
     //个人信息
-    public void honor(final Context context,String honor) {
+    public void honor(final Context context, String honor) {
         RequestUtil.postRequest(context, ConstantValues.honor, RequestParam.honor(honor), new BaseResponse(context, "加载中") {
             @Override
             public void onFailure(String message) {
@@ -70,6 +72,7 @@ public class UserTask {
             }
         });
     }
+
     //修改鸽龄
     public void upadteage(final Context context, String age) {
         RequestUtil.postRequest(context, ConstantValues.updateAge, RequestParam.updateAge(age), new BaseResponse(context, "加载中") {
@@ -86,10 +89,11 @@ public class UserTask {
             }
         });
     }
+
     //上传头像
     public void uploadHeadImg(final Context context, File img) throws FileNotFoundException {
-        String token="apptoken "+ SharedPreferencesUtil.getData(context, "token", "");
-        RequestUtil.postRequest(context, ConstantValues.headImg, RequestParam.uploadheadImg(token,img), new BaseResponse(context, "加载中") {
+        String token = "apptoken " + SharedPreferencesUtil.getData(context, "token", "");
+        RequestUtil.postRequest(context, ConstantValues.headImg, RequestParam.uploadheadImg(token, img), new BaseResponse(context, "加载中") {
             @Override
             public void onFailure(String message) {
                 Toast.makeText(context, message, Toast.LENGTH_LONG).show();
@@ -103,7 +107,8 @@ public class UserTask {
             }
         });
     }
-    public void saveHeadImg(final Context context,String img) {
+
+    public void saveHeadImg(final Context context, String img) {
         RequestUtil.postRequest(context, ConstantValues.saveheadImg, RequestParam.saveheadImg(img), new BaseResponse(context, "加载中") {
             @Override
             public void onFailure(String message) {
@@ -114,6 +119,73 @@ public class UserTask {
             @Override
             public void onSuccess(String result) {
                 EventBus.getDefault().post(EventByTag.setDefault(result, EventTagConfig.saveheadimg));
+                Log.i("resultdsf", result);
+            }
+        });
+    }
+
+    //添加鸽子
+    public void addPigeon(final Context context, String ringId, String name, String sex, String color, String sandEye, String ancestry) {
+        RequestUtil.postRequest(context, ConstantValues.addPigeon, RequestParam.addPigeon(ringId, name, sex, color, sandEye, ancestry), new BaseResponse(context, "加载中") {
+            @Override
+            public void onFailure(String message) {
+                Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+                Log.i("messagesdfds", message);
+            }
+
+            @Override
+            public void onSuccess(String result) {
+                EventBus.getDefault().post(EventByTag.setDefault(result, EventTagConfig.addpigeon));
+                Log.i("resultdsf", result);
+            }
+        });
+    }
+
+    //我的鸽子
+    public void myPigeon(final Context context) {
+        RequestUtil.getRequest(context, ConstantValues.myPigeon, null, new BaseResponse(context, "加载中") {
+            @Override
+            public void onFailure(String message) {
+                Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+                Log.i("messagesdfds", message);
+            }
+
+            @Override
+            public void onSuccess(String result) {
+                EventBus.getDefault().post(EventByTag.setDefault(result, EventTagConfig.mypigeon));
+                Log.i("resultdsf", result);
+            }
+        });
+    }
+
+    //我的脚环
+    public void myJiaohuan(final Context context) {
+        RequestUtil.getRequest(context, ConstantValues.myJiaohuan, null, new BaseResponse(context, "加载中") {
+            @Override
+            public void onFailure(String message) {
+                Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+                Log.i("messagesdfds", message);
+            }
+
+            @Override
+            public void onSuccess(String result) {
+                EventBus.getDefault().post(EventByTag.setDefault(result, EventTagConfig.myjiaohuan));
+                Log.i("resultdsf", result);
+            }
+        });
+    }
+
+    public void addJiaohuan(final Context context, String ringCode) {
+        RequestUtil.postRequest(context, ConstantValues.addjiaohuan, RequestParam.addjiaohuan(ringCode), new BaseResponse(context, "加载中") {
+            @Override
+            public void onFailure(String message) {
+                Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+                Log.i("messagesdfds", message);
+            }
+
+            @Override
+            public void onSuccess(String result) {
+                EventBus.getDefault().post(EventByTag.setDefault(result, EventTagConfig.addjiaohuan));
                 Log.i("resultdsf", result);
             }
         });

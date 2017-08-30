@@ -138,7 +138,19 @@
             android:name=".LocationDemo"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.user.UpdateNickName"
+        android:name=".ui.activity.user.UpdateNickName"
+        android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.user.MyJiaohuan"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.user.AddJiaohuan"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.user.AddPigeon"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.user.MyPigeon"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.user.SetActivity"

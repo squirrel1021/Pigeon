@@ -103,6 +103,12 @@ public class RequestParam {
         params.put("imgUrls",imgUrls);
         return params;
     }
+    public static RequestParams replyContent( String content, String dynamicId) {
+        RequestParams params = new RequestParams();
+        params.put("content",content);
+        params.put("dynamicId",dynamicId);
+        return params;
+    }
     public static RequestParams myCircle(int pageIndex,int pageSize) {
         RequestParams params = new RequestParams();
         params.put("pageIndex",pageIndex);
@@ -121,4 +127,24 @@ public class RequestParam {
         params.put("pageSize",pageSize);
         return params;
     }
+
+    public static RequestParams addPigeon(String ringId,String name,String sex,String color,String sandEye,String ancestry) {
+        RequestParams params = new RequestParams();
+        params.put("ringId",ringId);
+        params.put("name",name);
+        params.put("sex",sex);
+        params.put("color",color);
+        params.put("sandEye",sandEye);
+        params.put("ancestry",ancestry);
+        int doveCode=(int)(Math.random()*(9999-1000+1))+1000;
+        params.put("doveCode",doveCode+"");
+        return params;
+    }
+
+    public static RequestParams addJiaohuan(String ringCode) {
+        RequestParams params = new RequestParams();
+        params.put("ringCode",ringCode);
+        return params;
+    }
+
 }
