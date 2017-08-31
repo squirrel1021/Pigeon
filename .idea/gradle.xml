@@ -9,6 +9,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/baseble" />
             <option value="$PROJECT_DIR$/emotionkeyboard" />
             <option value="$PROJECT_DIR$/imagepickerModule" />
           </set>

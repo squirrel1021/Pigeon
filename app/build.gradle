@@ -10,7 +10,7 @@ android {
     buildToolsVersion "25.0.2"
     defaultConfig {
         applicationId "com.july.pigeon"
-        minSdkVersion 15
+        minSdkVersion 18
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
@@ -45,6 +45,7 @@ dependencies {
     annotationProcessor "com.jakewharton:butterknife-compiler:8.5.1"
     compile project(':imagepickerModule')
     compile project(':emotionkeyboard')
+    compile project(':baseble')
     //权限适配
     compile 'com.andsync.xpermission:XPermissionUtils:1.2'
     //二维码依赖

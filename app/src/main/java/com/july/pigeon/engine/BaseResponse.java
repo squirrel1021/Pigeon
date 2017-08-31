@@ -2,9 +2,14 @@ package com.july.pigeon.engine;
 
 //import org.apache.http.Header;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
+
+import com.july.pigeon.ui.activity.login.LoginActivity;
+import com.july.pigeon.util.ActivityStartUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -12,6 +17,7 @@ import org.json.JSONObject;
 public abstract class BaseResponse extends HefansCallBack {
 
     private String msg;
+    private Context mContext;
 
     /**
      * 回调封装基类
@@ -22,6 +28,7 @@ public abstract class BaseResponse extends HefansCallBack {
     public BaseResponse(Context context, String msg) {
         super(context);
         this.msg = msg;
+        this.mContext = context;
     }
 
     @Override
@@ -32,7 +39,7 @@ public abstract class BaseResponse extends HefansCallBack {
 
         try {
             int code = result.getInt("code");
-            if (code==200) {
+            if (code == 200) {
                 onSuccess(result.getString("result"));
             } else {
                 onFailure(result.getString("msg"));
@@ -56,6 +63,9 @@ public abstract class BaseResponse extends HefansCallBack {
         // TODO Auto-generated method stub
         super.onFailure(statusCode, headers, responseString, throwable);
         onFailure(responseString);
+        if ("尚未登录!".equals(responseString)) {
+            ActivityStartUtil.start((Activity) mContext, LoginActivity.class);
+        }
     }
 
     @Override

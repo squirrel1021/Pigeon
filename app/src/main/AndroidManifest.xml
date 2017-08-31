@@ -105,6 +105,15 @@
             <!--</intent-filter>-->
         </activity>
         <activity
+            android:name=".bletest.DeviceScanActivity"
+            android:screenOrientation="portrait">
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        </activity>
+        <activity
             android:name=".ui.activity.main.SplashActivity"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -115,6 +124,12 @@
         </activity>
         <activity
             android:name=".ui.activity.login.LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".bletest.DeviceControlActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".bletest.DeviceDetailActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.login.RegisterActivity"

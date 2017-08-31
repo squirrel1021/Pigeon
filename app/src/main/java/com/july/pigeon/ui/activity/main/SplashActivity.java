@@ -85,7 +85,8 @@ public class SplashActivity extends BaseActivity implements Animator.AnimatorLis
             finish();
         } else {
             if (StringUtils.isEmpty((String) SharedPreferencesUtil.getData(this, "token", ""))) {
-
+                Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+                startActivity(intent);
             } else {
 
                 RequestUtil.getRequest(this, ConstantValues.userInfo, null, new BaseResponse(this, "加载中") {
@@ -103,8 +104,6 @@ public class SplashActivity extends BaseActivity implements Animator.AnimatorLis
                         finish();
                     }
                 });
-
-
             }
 
         }
