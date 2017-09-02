@@ -9,6 +9,7 @@ import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.july.pigeon.R;
 import com.july.pigeon.adapter.BaseListAdapter;
 import com.july.pigeon.bean.Circle;
+import com.july.pigeon.bean.Jiaohuan;
 import com.july.pigeon.ui.weight.MyGridView;
 import com.july.pigeon.util.GlideUtil;
 
@@ -16,7 +17,7 @@ import com.july.pigeon.util.GlideUtil;
  * Created by Administrator on 2017/6/20 0020.
  */
 
-public class JiaoHolder extends BaseViewHolder<Circle> {
+public class JiaoHolder extends BaseViewHolder<Jiaohuan> {
     private TextView tv_item;
 
 
@@ -26,7 +27,7 @@ public class JiaoHolder extends BaseViewHolder<Circle> {
     }
 
     @Override
-    public void setData(final Circle circle) {
-        tv_item.setText(circle.getThemeInfo());
+    public void setData(final Jiaohuan jiaohuan) {
+        tv_item.setText(jiaohuan.getRingCode());
     }
 }

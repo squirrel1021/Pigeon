@@ -23,6 +23,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.andsync.xpermission.XPermissionUtils;
+import com.google.gson.reflect.TypeToken;
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
@@ -30,14 +31,23 @@ import com.july.pigeon.LocationDemo;
 import com.july.pigeon.R;
 import com.july.pigeon.adapter.holder.JiaoHolder;
 import com.july.pigeon.bean.Circle;
+import com.july.pigeon.bean.Jiaohuan;
+import com.july.pigeon.engine.GsonParser;
+import com.july.pigeon.engine.task.UserTask;
+import com.july.pigeon.eventbus.EventByTag;
+import com.july.pigeon.eventbus.EventTagConfig;
+import com.july.pigeon.eventbus.EventUtils;
 import com.july.pigeon.ui.activity.login.ForgetPassWordActivity;
 import com.july.pigeon.ui.activity.main.HomeActivity;
 import com.july.pigeon.ui.activity.main.MapControlDemo;
+import com.july.pigeon.ui.activity.user.AddJiaohuan;
 import com.july.pigeon.ui.activity.user.SetActivity;
 import com.july.pigeon.util.ActivityStartUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.greenrobot.event.EventBus;
 
 
 /**
@@ -46,33 +56,37 @@ import java.util.List;
 
 public class JiaohuanFragment extends Fragment implements RecyclerArrayAdapter.OnLoadMoreListener, SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
     private View view;
+    private ImageView addjiaohuan;
     private EasyRecyclerView recyclerView;
-    private RecyclerArrayAdapter<Circle> adapter;
-    List<Circle> list = new ArrayList<Circle>();
+    private RecyclerArrayAdapter<Jiaohuan> adapter;
+    List<Jiaohuan> list = new ArrayList<Jiaohuan>();
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.home_frag, container, false);
+        EventBus.getDefault().register(this);
         initView();
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        new UserTask().myJiaohuan(getActivity());
+    }
+
     private void initView() {
+        addjiaohuan= (ImageView) view.findViewById(R.id.addjiaohuan);
         view.findViewById(R.id.setView).setOnClickListener(this);
         view.findViewById(R.id.locationImage).setOnClickListener(this);
-        for (int i = 0; i < 5; i++) {
-            Circle circle = new Circle();
-            circle.setThemeInfo("100" + i);
-            list.add(circle);
-        }
         recyclerView = (EasyRecyclerView) view.findViewById(R.id.recyclerView);
         GridLayoutManager gridlayoutManger = new GridLayoutManager(getActivity(), 3);
         recyclerView.setLayoutManager(gridlayoutManger);
 //        DividerDecoration itemDecoration = new DividerDecoration(Color.GRAY, UiUtil.dip2px(getActivity(), 0.5f), 0, 0);
 //        itemDecoration.setDrawLastItem(false);
 //        recyclerView.addItemDecoration(itemDecoration);
-        recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<Circle>(getActivity()) {
+        recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<Jiaohuan>(getActivity()) {
             @Override
             public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
                 return new JiaoHolder(parent);
@@ -82,18 +96,28 @@ public class JiaohuanFragment extends Fragment implements RecyclerArrayAdapter.O
 //        adapter.setNoMore(R.layout.view_nomore);
         recyclerView.setRefreshListener(this);
         adapter.addAll(list);
+        addjiaohuan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ActivityStartUtil.start(getActivity(), AddJiaohuan.class);
+            }
+        });
+    }
+
+    // 接口回调
+    public void onEventMainThread(EventByTag eventByTag) {
+//我的脚环
+        if (EventUtils.isValid(eventByTag, EventTagConfig.myjiaohuan, null)) {
+            list = new GsonParser().parseList(eventByTag.getObj() + "", new TypeToken<List<Jiaohuan>>() {
+            });
+            adapter.clear();
+            adapter.addAll(list);
+        }
     }
 
     @Override
     public void onRefresh() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                adapter.clear();
-                adapter.addAll(list);
-                Toast.makeText(getActivity(), "刷新成功", Toast.LENGTH_LONG).show();
-            }
-        }, 2000);
+        new UserTask().myJiaohuan(getActivity());
     }
 
     @Override
@@ -141,5 +165,11 @@ public class JiaohuanFragment extends Fragment implements RecyclerArrayAdapter.O
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

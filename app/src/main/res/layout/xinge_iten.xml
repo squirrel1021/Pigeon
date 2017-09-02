@@ -19,7 +19,7 @@
         android:layout_alignParentStart="true">
 
         <TextView
-            android:id="@+id/textView15"
+            android:id="@+id/pigeonName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="信鸽2号"
