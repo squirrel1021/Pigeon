@@ -54,7 +54,7 @@ public class RequestParam {
         return params;
     }
     /**
-     * 忘记密码-
+     * 修改密码-
      * @return
      */
     public static RequestParams updatePsw(String mobile,String password) {
@@ -147,4 +147,14 @@ public class RequestParam {
         return params;
     }
 
+    /**
+     * 修改密码-
+     * @return
+     */
+    public static RequestParams updatePassword(String oldPassword,String password) {
+        RequestParams params = new RequestParams();
+        params.put("oldPassword",oldPassword);
+        params.put("password",password);
+        return params;
+    }
 }

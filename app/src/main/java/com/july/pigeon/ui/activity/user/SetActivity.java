@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import com.july.pigeon.R;
 import com.july.pigeon.ui.activity.BaseActivity;
 import com.july.pigeon.ui.activity.login.LoginActivity;
+import com.july.pigeon.ui.activity.login.UpdatePassWord;
 import com.july.pigeon.util.ActionBarControl;
 import com.july.pigeon.util.ActivityStartUtil;
 import com.july.pigeon.util.SharedPreferencesUtil;
@@ -40,5 +41,10 @@ public class SetActivity extends BaseActivity {
         SharedPreferencesUtil.saveData(this, "token", "");
         ActivityStartUtil.start(this, LoginActivity.class);
         finish();
+    }
+
+    @OnClick(R.id.updateLayout)
+    public void updatePsw() {
+        ActivityStartUtil.start(this, UpdatePassWord.class);
     }
 }

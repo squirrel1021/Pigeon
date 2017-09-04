@@ -51,5 +51,7 @@ public class ConstantValues {
     public static final String myPigeon = BaseUrl + "/app/pigeon/dove/myDoves";
     //我的脚环
     public static final String myJiaohuan = BaseUrl + "/app/ring/myRings";
+    //修改密码
+    public static final String updatePassword = BaseUrl + "/app/member/modifyPassword";
 
 }

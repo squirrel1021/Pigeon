@@ -84,7 +84,7 @@ public class MainTask {
             }
         });
     }
-    //修改密码
+    //忘记密码
     public void updatePsw(final Context context, String phoneNum, String code) {
         RequestUtil.postRequest(context, ConstantValues.updatePsw, RequestParam.updatePsw(phoneNum, code), new BaseResponse(context, "加载中") {
             @Override
@@ -96,6 +96,23 @@ public class MainTask {
             @Override
             public void onSuccess(String result) {
                 EventBus.getDefault().post(EventByTag.setDefault(result, EventTagConfig.updatePsw));
+                Log.i("resultdsf", result);
+            }
+        });
+    }
+
+    //修改密码
+    public void updatePassword(final Context context, String newPsw, String oldPsw) {
+        RequestUtil.postRequest(context, ConstantValues.updatePassword, RequestParam.updatePassword(oldPsw, newPsw), new BaseResponse(context, "加载中") {
+            @Override
+            public void onFailure(String message) {
+                Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+                Log.i("messagesdfds", message);
+            }
+
+            @Override
+            public void onSuccess(String result) {
+                EventBus.getDefault().post(EventByTag.setDefault(result, EventTagConfig.updatePassword));
                 Log.i("resultdsf", result);
             }
         });

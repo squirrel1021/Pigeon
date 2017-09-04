@@ -13,6 +13,7 @@ public interface EventTagConfig {
 	String login = "login";
 	String verifyPhone = "verifyPhone";
 	String updatePsw = "updatePsw";
+	String updatePassword = "updatePassword";
 	String updateNickName = "updateNickName";
 	String updateage = "updateage";
 	String userinfo = "userinfo";

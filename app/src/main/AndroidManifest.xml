@@ -141,6 +141,9 @@
             android:name=".ui.activity.login.ForgetUpdatePsw"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.activity.login.UpdatePassWord"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.activity.login.ForgetPassWordActivity"
             android:screenOrientation="portrait" />
         <activity
