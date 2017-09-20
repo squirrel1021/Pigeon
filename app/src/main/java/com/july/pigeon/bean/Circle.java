@@ -28,6 +28,8 @@ public class Circle implements Serializable {
 
     private List<String> fdImgUrl;
 
+    private int dd;
+
     public List<String> getImgUrls() {
         return imgUrls;
     }
