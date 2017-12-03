@@ -115,6 +115,12 @@ public class RequestParam {
         params.put("pageSize",pageSize);
         return params;
     }
+
+    public static RequestParams getUpData(String  ringId) {
+        RequestParams params = new RequestParams();
+        params.put("ringId",ringId);
+        return params;
+    }
     public static RequestParams addjiaohuan(String ringCode) {
         RequestParams params = new RequestParams();
         params.put("ringCode",ringCode);

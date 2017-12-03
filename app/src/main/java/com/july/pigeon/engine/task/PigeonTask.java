@@ -34,4 +34,19 @@ public class PigeonTask {
             }
         });
     }
+
+    //我的社区
+    public void getUpData(final Context context, String ringCode) {
+        RequestUtil.getRequest(context, ConstantValues.getUpData, RequestParam.getUpData(ringCode), new BaseResponse(context, "加载中") {
+            @Override
+            public void onFailure(String message) {
+                Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onSuccess(String result) {
+                EventBus.getDefault().post(EventByTag.setDefault(result, EventTagConfig.getUpData));
+            }
+        });
+    }
 }

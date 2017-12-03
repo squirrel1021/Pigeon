@@ -53,5 +53,7 @@ public class ConstantValues {
     public static final String myJiaohuan = BaseUrl + "/app/ring/myRings";
     //修改密码
     public static final String updatePassword = BaseUrl + "/app/member/modifyPassword";
+    //获取脚环上报数据列表
+    public static final String getUpData = BaseUrl + "/app/pigeon/trajectory/getUpData";
 
 }
