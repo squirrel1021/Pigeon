@@ -1,5 +1,6 @@
 package com.july.pigeon.ui.activity.login;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
