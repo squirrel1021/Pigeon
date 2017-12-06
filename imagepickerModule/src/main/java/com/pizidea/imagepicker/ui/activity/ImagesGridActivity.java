@@ -163,7 +163,7 @@ public class ImagesGridActivity extends FragmentActivity implements View.OnClick
 
         if(resultCode == Activity.RESULT_OK){
 
-           if(requestCode == AndroidImagePicker.REQ_PREVIEW){
+           if(requestCode == AndroidImagePicker.REQ_PREVIEW||requestCode == AndroidImagePicker.REQ_CAMERA){
                 setResult(RESULT_OK);
                 finish();
                 androidImagePicker.notifyOnImagePickComplete();

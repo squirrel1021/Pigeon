@@ -13,15 +13,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
 import android.text.util.Linkify;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.july.pigeon.R;
 import com.july.pigeon.bletest.adapter.DeviceAdapter;
+import com.july.pigeon.ui.activity.BaseActivity;
 import com.vise.baseble.ViseBluetooth;
 import com.vise.baseble.callback.scan.PeriodLScanCallback;
 import com.vise.baseble.callback.scan.PeriodScanCallback;
@@ -34,7 +38,7 @@ import com.vise.log.inner.LogcatTree;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DeviceScanActivity extends AppCompatActivity {
+public class DeviceScanActivity extends BaseActivity {
 
     private static final int MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION = 100;
 
@@ -82,6 +86,7 @@ public class DeviceScanActivity extends AppCompatActivity {
     }
 
     private void init() {
+
         supportTv = (TextView) findViewById(R.id.scan_ble_support);
         statusTv = (TextView) findViewById(R.id.scan_ble_status);
         deviceLv = (ListView) findViewById(android.R.id.list);
@@ -95,10 +100,17 @@ public class DeviceScanActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 BluetoothLeDevice device = (BluetoothLeDevice) adapter.getItem(position);
-                if (device == null) return;
-                Intent intent = new Intent(DeviceScanActivity.this, DeviceDetailActivity.class);
-                intent.putExtra(DeviceDetailActivity.EXTRA_DEVICE, device);
-                startActivity(intent);
+                if (device != null) {
+                    Intent intent = new Intent(DeviceScanActivity.this, DeviceControlActivity.class);
+                    intent.putExtra("extra_device", device);
+                    startActivity(intent);
+                }
+
+//                break;
+//                if (device == null) return;
+//                Intent intent = new Intent(DeviceScanActivity.this, DeviceDetailActivity.class);
+//                intent.putExtra(DeviceDetailActivity.EXTRA_DEVICE, device);
+//                startActivity(intent);
             }
         });
 

@@ -7,6 +7,16 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+    <style name="DialogStyle" parent="@android:style/Theme.Dialog">
+        <!-- dialog背景样式 -->
+        <item name="android:windowBackground"> @android:color/transparent </item>
+        <!-- 背景透明 -->
+        <item name="android:backgroundDimEnabled">false</item>    </style>
+
+    作者：呵呵瓤儿
+    链接：http://www.jianshu.com/p/2ea705fc59b0
+    來源：简书
+    著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
     <!-- 底部导航按钮的style -->
     <style name="buttom_btn_style">
         <item name="android:button">@null</item>

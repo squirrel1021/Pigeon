@@ -19,20 +19,26 @@
 package com.pizidea.imagepicker;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.FileProvider;
 import android.util.Log;
 
 import com.pizidea.imagepicker.bean.ImageItem;
 import com.pizidea.imagepicker.bean.ImageSet;
 import com.pizidea.imagepicker.ui.activity.ImagesGridActivity;
+
 
 import java.io.File;
 import java.io.IOException;
@@ -51,7 +57,7 @@ import java.util.Set;
  */
 public class AndroidImagePicker {
     public static final String TAG = AndroidImagePicker.class.getSimpleName();
-
+    private File takeImageFile;
     public static final int REQ_CAMERA = 1431;
     public static final int REQ_PREVIEW = 2347;
 
@@ -367,23 +373,58 @@ public class AndroidImagePicker {
     /**
      * take picture
      */
-    public void takePicture(Activity act,int requestCode) throws IOException {
+    public void takePicture(Activity activity,int requestCode) throws IOException {
 
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Ensure that there's a camera activity to handle the intent
-        if (takePictureIntent.resolveActivity(act.getPackageManager()) != null) {
-            // Create the File where the photo should go
-            //File photoFile = createImageFile();
-            File photoFile = createImageSaveFile(act);
-            // Continue only if the File was successfully created
-            if (photoFile != null) {
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,Uri.fromFile(photoFile));
+        if (takePictureIntent.resolveActivity(activity.getPackageManager()) != null) {
+            if (Utils.existSDCard())
+                takeImageFile = new File(Environment.getExternalStorageDirectory(), "/DCIM/camera/");
+            else takeImageFile = Environment.getDataDirectory();
+            takeImageFile = createFile(takeImageFile, "IMG_", ".jpg");
+            if (takeImageFile != null) {
+                // 默认情况下，即不需要指定intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+                // 照相机有自己默认的存储路径，拍摄的照片将返回一个缩略图。如果想访问原始图片，
+                // 可以通过dat extra能够得到原始图片位置。即，如果指定了目标uri，data就没有数据，
+                // 如果没有指定uri，则data就返回有数据！
+
+                Uri uri;
+                if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.M) {
+                    uri = Uri.fromFile(takeImageFile);
+                } else {
+
+
+                    /**
+                     * 7.0 调用系统相机拍照不再允许使用Uri方式，应该替换为FileProvider
+                     * 并且这样可以解决MIUI系统上拍照返回size为0的情况
+                     */
+                    uri = FileProvider.getUriForFile(activity, ProviderUtil.getFileProviderName(activity), takeImageFile);
+                    //加入uri权限 要不三星手机不能拍照
+                    List<ResolveInfo> resInfoList = activity.getPackageManager().queryIntentActivities
+                            (takePictureIntent, PackageManager.MATCH_DEFAULT_ONLY);
+                    for (ResolveInfo resolveInfo : resInfoList) {
+                        String packageName = resolveInfo.activityInfo.packageName;
+                        activity.grantUriPermission(packageName, uri, Intent
+                                .FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    }
+                }
+
+                Log.e("nanchen", ProviderUtil.getFileProviderName(activity));
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
             }
         }
-        act.startActivityForResult(takePictureIntent, requestCode);
+        activity.startActivityForResult(takePictureIntent, requestCode);
 
     }
-
+    /**
+     * 根据系统时间、前缀、后缀产生一个文件
+     */
+    public static File createFile(File folder, String prefix, String suffix) {
+        if (!folder.exists() || !folder.isDirectory()) folder.mkdirs();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.CHINA);
+        String filename = prefix + dateFormat.format(new Date(System.currentTimeMillis())) + suffix;
+        return new File(folder, filename);
+    }
     /**
      * take picture
      */

@@ -55,14 +55,13 @@
         android:orientation="horizontal">
 
 
-        <com.jude.easyrecyclerview.EasyRecyclerView
-            android:id="@+id/recyclerView"
+        <com.july.pigeon.ui.weight.MyGridView
+            android:numColumns="3"
+            android:id="@+id/gridview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
-            app:recyclerClipToPadding="true"
-            app:scrollbarStyle="insideOverlay"
-            app:scrollbars="none" />
+            android:scrollbars="none"
+ />
 
         <RelativeLayout
             android:layout_width="100dp"
@@ -70,6 +69,7 @@
             android:layout_alignParentRight="true">
 
             <LinearLayout
+                android:id="@+id/transfer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
@@ -115,6 +115,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/contrastView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
