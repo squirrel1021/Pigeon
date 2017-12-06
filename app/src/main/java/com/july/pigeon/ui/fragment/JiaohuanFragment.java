@@ -90,7 +90,7 @@ public class JiaohuanFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (touthSum == 0) {
-                    Intent intent = new Intent(getActivity(), jiaohuanHistory.class);
+                    Intent intent = new Intent(getActivity(), contrastMapActivity.class);
                     intent.putExtra("code", list.get(position).getId());
                     startActivity(intent);
                 }else if(touthSum==1){

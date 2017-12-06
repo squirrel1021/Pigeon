@@ -8,6 +8,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -36,10 +37,22 @@ import com.baidu.mapapi.map.Polyline;
 import com.baidu.mapapi.map.PolylineOptions;
 import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.utils.DistanceUtil;
+import com.google.gson.reflect.TypeToken;
 import com.july.pigeon.R;
+import com.july.pigeon.bean.Jiaohuan;
+import com.july.pigeon.bean.LaLoBean;
 import com.july.pigeon.engine.ConstantValues;
+import com.july.pigeon.engine.GsonParser;
+import com.july.pigeon.engine.task.PigeonTask;
+import com.july.pigeon.eventbus.EventByTag;
+import com.july.pigeon.eventbus.EventTagConfig;
+import com.july.pigeon.eventbus.EventUtils;
+import com.july.pigeon.ui.activity.BaseActivity;
 import com.july.pigeon.ui.activity.main.MapControlDemo;
 import com.july.pigeon.util.ListUtils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +61,7 @@ import java.util.List;
  * Created by Administrator on 2017/12/3 0003.
  */
 
-public class contrastMapActivity extends Activity implements SensorEventListener {
+public class contrastMapActivity extends BaseActivity implements SensorEventListener {
 
 
     /**
@@ -86,7 +99,7 @@ public class contrastMapActivity extends Activity implements SensorEventListener
 
     // 定位相关
     LocationClient mLocClient;
-//    public contrastMapActivity.MyLocationListenner myListener = new contrastMapActivity.MyLocationListenner();
+    //    public contrastMapActivity.MyLocationListenner myListener = new contrastMapActivity.MyLocationListenner();
     private MyLocationConfiguration.LocationMode mCurrentMode;
     BitmapDescriptor mCurrentMarker;
     private static final int accuracyCircleFillColor = 0xAAFFFF88;
@@ -107,20 +120,20 @@ public class contrastMapActivity extends Activity implements SensorEventListener
     private float direction;
     private int showType = 0;
     private Handler mHandler;
-    private List<Lalo> laloList=new ArrayList<Lalo>();
-    private List<Lalo> lastLa=new ArrayList<Lalo>();
-    private static   double[] lo={113.889203,113.890784,113.897683,113.90336,113.903288};
-    private static double[] la={22.567348,22.564277,22.564878,22.564077,22.560072};int i=0;
+    private Runnable runnable;
+    private List<LaLoBean> laloList = new ArrayList<LaLoBean>();
+    private List<Lalo> lastLa = new ArrayList<Lalo>();
+    private static double[] lo = {113.889203, 113.890784, 113.897683, 113.90336, 113.903288};
+    private static double[] la = {22.567348, 22.564277, 22.564878, 22.564077, 22.560072};
+    int i = 0;
+    private String ringId = "";
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.contrast_map_view);
-        for(int i=0;i<la.length;i++){
-            Lalo lalo=new Lalo();
-            lalo.setLa(la[i]);
-            lalo.setLo(lo[i]);
-            laloList.add(lalo);
-        }
+        ringId = getIntent().getStringExtra("code");
+
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);//获取传感器管理服务
         mMapView = (MapView) findViewById(R.id.bmapView);
         mBaiduMap = mMapView.getMap();
@@ -149,54 +162,86 @@ public class contrastMapActivity extends Activity implements SensorEventListener
                 }
             }
         });
-        ((TextView)findViewById(R.id.ringCodeA)).setText("环号:"+ ConstantValues.ringCodeA);
-        ((TextView)findViewById(R.id.ringCodeB)).setText("环号:"+ ConstantValues.ringCodeB);
+        ((TextView) findViewById(R.id.ringCodeA)).setText("环号:" + ConstantValues.ringCodeA);
+        ((TextView) findViewById(R.id.ringCodeB)).setText("环号:" + ConstantValues.ringCodeB);
 
         mHandler = new Handler();
-        mHandler.post(new Runnable() {
+        runnable=new Runnable() {
             @Override
-            public void run()
-            {
-                // TODO Auto-generated method stub
-                addPoint();
-                mHandler.postDelayed(this, 1000);
+            public void run() {
+                new PigeonTask().getLastPoint(contrastMapActivity.this, ringId);
+                mHandler.postDelayed(this, 3000);
             }
-        });
+        };
+        mHandler.post(runnable);
     }
 
-    private void addPoint() {
-            if(i==0){
-                // 定义Maker坐标点
+    public boolean isdengyu(double a, double b) {
+        if (Double.doubleToLongBits(a) == Double.doubleToLongBits(b)) {
+            return true;
+        }
+        return false;
+    }
 
-                LatLng p1 = new LatLng(laloList.get(i).getLa(), laloList.get(i).getLo());
-                LatLng p2 = new LatLng(laloList.get(i).getLa(), laloList.get(i).getLo());
-                List<LatLng> points = new ArrayList<LatLng>();
-                points.add(p1);
-                points.add(p2);
+    // 接口回调
+    public void onEventMainThread(EventByTag eventByTag) {
+        //获取实时脚环上一个坐标
+        if (EventUtils.isValid(eventByTag, EventTagConfig.getLastUpData, null)) {
+            try {
+                String trajectory = new JSONObject(eventByTag.getObj() + "").getString("trajectory");
+                LaLoBean lalo = new GsonParser().parseObject(trajectory, LaLoBean.class);
+//                if (!ListUtils.isEmpty(laloList)) {
+//                    if (!isdengyu(lalo.getLatitude(), laloList.get(laloList.size() - 1).getLatitude()) || !isdengyu(lalo.getLongitude(), laloList.get(laloList.size() - 1).getLongitude())) {
+//                        laloList.add(lalo);
+//                    }
+//                } else {
+                    laloList.add(lalo);
+//                }
+                if (!ListUtils.isEmpty(laloList)) {
+                    addPoint();
+                }
 
-                OverlayOptions ooPolyline = new PolylineOptions().width(5)
-                        .color(Color.RED).points(points);
-                Polyline mPolyline = (Polyline) mBaiduMap.addOverlay(ooPolyline);
-                float f = mBaiduMap.getMaxZoomLevel();// 19.0 最小比例尺
-                MapStatusUpdate u = MapStatusUpdateFactory.newLatLngZoom(p1, f - 5);// 设置缩放比例
-                mBaiduMap.animateMapStatus(u);
-            }else if(i<5){
-                // 定义Maker坐标点
-
-                LatLng p1 = new LatLng(laloList.get(i-1).getLa(), laloList.get(i-1).getLo());
-                LatLng p2 = new LatLng(laloList.get(i).getLa(), laloList.get(i).getLo());
-                List<LatLng> points = new ArrayList<LatLng>();
-                points.add(p1);
-                points.add(p2);
-
-                OverlayOptions ooPolyline = new PolylineOptions().width(5)
-                        .color(Color.RED).points(points);
-                Polyline mPolyline = (Polyline) mBaiduMap.addOverlay(ooPolyline);
-                MapStatus.Builder builder = new MapStatus.Builder();
-                builder.target(p2).zoom(18.0f);
-                mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-        i++;
+        }
+
+    }
+
+
+    private void addPoint() {
+
+        if (laloList.size() == 1) {
+            //定义Maker坐标点
+            LatLng p1 = new LatLng(laloList.get(0).getLatitude(), laloList.get(0).getLongitude());
+            LatLng p2 = new LatLng(laloList.get(0).getLatitude(), laloList.get(0).getLongitude());
+            List<LatLng> points = new ArrayList<LatLng>();
+            points.add(p1);
+            points.add(p2);
+
+            OverlayOptions ooPolyline = new PolylineOptions().width(5)
+                    .color(Color.RED).points(points);
+            Polyline mPolyline = (Polyline) mBaiduMap.addOverlay(ooPolyline);
+            float f = mBaiduMap.getMaxZoomLevel();// 19.0 最小比例尺
+            MapStatusUpdate u = MapStatusUpdateFactory.newLatLngZoom(p1, f - 5);// 设置缩放比例
+            mBaiduMap.animateMapStatus(u);
+        } else {
+            // 定义Maker坐标点
+
+            LatLng p1 = new LatLng(laloList.get(laloList.size() - 2).getLatitude(), laloList.get(laloList.size() - 2).getLongitude());
+            LatLng p2 = new LatLng(laloList.get(laloList.size() - 1).getLatitude(), laloList.get(laloList.size() - 1).getLongitude());
+            List<LatLng> points = new ArrayList<LatLng>();
+            points.add(p1);
+            points.add(p2);
+
+            OverlayOptions ooPolyline = new PolylineOptions().width(5)
+                    .color(Color.RED).points(points);
+            Polyline mPolyline = (Polyline) mBaiduMap.addOverlay(ooPolyline);
+            MapStatus.Builder builder = new MapStatus.Builder();
+            builder.target(p2).zoom(18.0f);
+            mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
+        }
+//        i++;
     }
 
     /**
@@ -442,6 +487,7 @@ public class contrastMapActivity extends Activity implements SensorEventListener
         mMapView.onDestroy();
         mMapView = null;
         super.onDestroy();
+        mHandler.removeCallbacks(runnable);
     }
 
     @Override
@@ -464,7 +510,7 @@ public class contrastMapActivity extends Activity implements SensorEventListener
 
     }
 
-    class Lalo{
+    class Lalo {
         double la;//经度
         double lo;//纬度
 
