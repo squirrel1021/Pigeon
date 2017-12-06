@@ -127,12 +127,19 @@ public class contrastMapActivity extends BaseActivity implements SensorEventList
     private static double[] la = {22.567348, 22.564277, 22.564878, 22.564077, 22.560072};
     int i = 0;
     private String ringId = "";
+    private TextView ringCodeA,fensuA,hightA,laloA;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.contrast_map_view);
         ringId = getIntent().getStringExtra("code");
+        ringCodeA= (TextView) findViewById(R.id.ringCodeA);
+        ringCodeA.setText("环号:"+getIntent().getStringExtra("ringCode"));
+        fensuA= (TextView) findViewById(R.id.fensuA);
+        hightA= (TextView) findViewById(R.id.hightA);
+        laloA= (TextView) findViewById(R.id.laloA);
+
 
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);//获取传感器管理服务
         mMapView = (MapView) findViewById(R.id.bmapView);
@@ -162,8 +169,8 @@ public class contrastMapActivity extends BaseActivity implements SensorEventList
                 }
             }
         });
-        ((TextView) findViewById(R.id.ringCodeA)).setText("环号:" + ConstantValues.ringCodeA);
-        ((TextView) findViewById(R.id.ringCodeB)).setText("环号:" + ConstantValues.ringCodeB);
+//        ((TextView) findViewById(R.id.ringCodeA)).setText("环号:" + ConstantValues.ringCodeA);
+//        ((TextView) findViewById(R.id.ringCodeB)).setText("环号:" + ConstantValues.ringCodeB);
 
         mHandler = new Handler();
         runnable=new Runnable() {
@@ -190,12 +197,15 @@ public class contrastMapActivity extends BaseActivity implements SensorEventList
             try {
                 String trajectory = new JSONObject(eventByTag.getObj() + "").getString("trajectory");
                 LaLoBean lalo = new GsonParser().parseObject(trajectory, LaLoBean.class);
+                hightA.setText("高度:"+lalo.getHeight());
+                fensuA.setText("分速:"+lalo.getSpeed());
+                laloA.setText("经纬度:"+lalo.getLongitude()+","+lalo.getLatitude());
 //                if (!ListUtils.isEmpty(laloList)) {
 //                    if (!isdengyu(lalo.getLatitude(), laloList.get(laloList.size() - 1).getLatitude()) || !isdengyu(lalo.getLongitude(), laloList.get(laloList.size() - 1).getLongitude())) {
 //                        laloList.add(lalo);
 //                    }
 //                } else {
-                    laloList.add(lalo);
+                laloList.add(lalo);
 //                }
                 if (!ListUtils.isEmpty(laloList)) {
                     addPoint();
@@ -213,8 +223,11 @@ public class contrastMapActivity extends BaseActivity implements SensorEventList
 
         if (laloList.size() == 1) {
             //定义Maker坐标点
-            LatLng p1 = new LatLng(laloList.get(0).getLatitude(), laloList.get(0).getLongitude());
-            LatLng p2 = new LatLng(laloList.get(0).getLatitude(), laloList.get(0).getLongitude());
+
+            LatLng p1 = new LatLng(laloList.get(0).getLongitude(), laloList.get(0).getLatitude());
+            LatLng p2 = new LatLng(laloList.get(0).getLongitude(), laloList.get(0).getLatitude());
+            MarkerOptions ooA = new MarkerOptions().position(p2).icon(
+                    bdA);
             List<LatLng> points = new ArrayList<LatLng>();
             points.add(p1);
             points.add(p2);
@@ -225,14 +238,17 @@ public class contrastMapActivity extends BaseActivity implements SensorEventList
             float f = mBaiduMap.getMaxZoomLevel();// 19.0 最小比例尺
             MapStatusUpdate u = MapStatusUpdateFactory.newLatLngZoom(p1, f - 5);// 设置缩放比例
             mBaiduMap.animateMapStatus(u);
+            mBaiduMap.addOverlay(ooA);
         } else {
             // 定义Maker坐标点
 
-            LatLng p1 = new LatLng(laloList.get(laloList.size() - 2).getLatitude(), laloList.get(laloList.size() - 2).getLongitude());
-            LatLng p2 = new LatLng(laloList.get(laloList.size() - 1).getLatitude(), laloList.get(laloList.size() - 1).getLongitude());
+            LatLng p1 = new LatLng(laloList.get(laloList.size() - 2).getLongitude(), laloList.get(laloList.size() - 2).getLatitude());
+            LatLng p2 = new LatLng(laloList.get(laloList.size() - 1).getLongitude(), laloList.get(laloList.size() - 1).getLatitude());
             List<LatLng> points = new ArrayList<LatLng>();
             points.add(p1);
             points.add(p2);
+            MarkerOptions ooA = new MarkerOptions().position(p2).icon(
+                    bdA);
 
             OverlayOptions ooPolyline = new PolylineOptions().width(5)
                     .color(Color.RED).points(points);
@@ -240,6 +256,7 @@ public class contrastMapActivity extends BaseActivity implements SensorEventList
             MapStatus.Builder builder = new MapStatus.Builder();
             builder.target(p2).zoom(18.0f);
             mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
+            mBaiduMap.addOverlay(ooA);
         }
 //        i++;
     }

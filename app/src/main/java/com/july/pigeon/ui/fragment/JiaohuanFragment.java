@@ -92,6 +92,7 @@ public class JiaohuanFragment extends Fragment implements View.OnClickListener {
                 if (touthSum == 0) {
                     Intent intent = new Intent(getActivity(), contrastMapActivity.class);
                     intent.putExtra("code", list.get(position).getId());
+                    intent.putExtra("ringCode", list.get(position).getRingCode());
                     startActivity(intent);
                 }else if(touthSum==1){
                     touthSum++;
