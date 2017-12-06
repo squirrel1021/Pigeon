@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.andsync.xpermission.XPermissionUtils;
 import com.july.pigeon.R;
+import com.july.pigeon.engine.task.MainTask;
 import com.july.pigeon.engine.task.UserTask;
 import com.july.pigeon.eventbus.EventByTag;
 import com.july.pigeon.eventbus.EventTagConfig;
@@ -25,6 +26,9 @@ import com.july.pigeon.util.ActivityStartUtil;
 import com.july.pigeon.util.BasicTool;
 import com.uuzuche.lib_zxing.activity.CaptureActivity;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -54,6 +58,17 @@ public class AddJiaohuan extends BaseActivity{
         if (EventUtils.isValid(eventByTag, EventTagConfig.addjiaohuan, null)) {
             BasicTool.showToast(this,"添加成功");
             finish();
+        }
+
+        if (EventUtils.isValid(eventByTag, EventTagConfig.getImei, null)) {
+            BasicTool.showToast(this,eventByTag.getObj()+"");
+            try {
+                String eid=new JSONObject(eventByTag.getObj()+"").getString("eid");
+                new UserTask().addJiaohuan(this,eid);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+//            new UserTask().addJiaohuan(this,result);
         }
     }
     private void scanQRcode() {
@@ -109,7 +124,8 @@ public class AddJiaohuan extends BaseActivity{
                 if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_SUCCESS) {
                     String result = bundle.getString(CodeUtils.RESULT_STRING);
 //                    Toast.makeText(this, "解析结果:" + result, Toast.LENGTH_LONG).show();
-                    new UserTask().addJiaohuan(this,result);
+                    new MainTask().getImei(this,result);
+//                    new UserTask().addJiaohuan(this,result);
                 } else if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_FAILED) {
                     BasicTool.showToast(this,"解析二维码失败");
                 }

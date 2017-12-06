@@ -55,5 +55,26 @@ public class ConstantValues {
     public static final String updatePassword = BaseUrl + "/app/member/modifyPassword";
     //获取脚环上报数据列表
     public static final String getUpData = BaseUrl + "/app/pigeon/trajectory/getUpData";
+    //转换脚环
+    public static final String getEidByAid = BaseUrl + "/app/ring/atoe/getEidByAid";
+    //获取实时脚环当前坐标
+    public static final String getLastUpData = BaseUrl + "/app/pigeon/trajectory/getLastUpData";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public static String ringCodeA="";
+    public static String ringCodeB="";
 
 }

@@ -21,6 +21,8 @@ public interface EventTagConfig {
 	String uploadImg = "uploadImg";
 	String mycircle = "mycircle";
 	String getUpData = "getUpData";
+	String getLastUpData = "getLastUpData";
+	String getImei = "getImei";
 	String conments = "conments";
 	String mycirclemore = "mycirclemore";
 	String releaseCircle = "releaseCircle";

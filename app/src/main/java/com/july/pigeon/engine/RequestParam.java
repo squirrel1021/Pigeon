@@ -121,6 +121,11 @@ public class RequestParam {
         params.put("ringId",ringId);
         return params;
     }
+    public static RequestParams getImei(String  aid) {
+        RequestParams params = new RequestParams();
+        params.put("aid",aid);
+        return params;
+    }
     public static RequestParams addjiaohuan(String ringCode) {
         RequestParams params = new RequestParams();
         params.put("ringCode",ringCode);

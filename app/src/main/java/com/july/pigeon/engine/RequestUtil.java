@@ -80,7 +80,8 @@ public class RequestUtil {
 			Toast.makeText(context, "抱歉，您的网络不通呢", Toast.LENGTH_SHORT).show();
 			asyncCallBack.onFail("");
 		} else {
-			Log.i("TAG", relativeUrl + mParams);
+			Log.i("relativeUrl", relativeUrl);
+			Log.i("mParams", mParams+"");
 			client.addHeader("charset", "UTF-8");
 			client.addHeader("Authorization", "apptoken "+SharedPreferencesUtil.getData(context, "token", ""));
 			client.get(relativeUrl,mParams,asyncCallBack);

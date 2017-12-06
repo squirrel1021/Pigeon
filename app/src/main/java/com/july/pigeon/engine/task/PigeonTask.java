@@ -49,4 +49,18 @@ public class PigeonTask {
             }
         });
     }
+    //获取实时脚环上一个坐标
+    public void getLastPoint(final Context context, String ringCode) {
+        RequestUtil.getRequest(context, ConstantValues.getLastUpData, RequestParam.getUpData(ringCode), new BaseResponse(context, "加载中") {
+            @Override
+            public void onFailure(String message) {
+                Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onSuccess(String result) {
+                EventBus.getDefault().post(EventByTag.setDefault(result, EventTagConfig.getLastUpData));
+            }
+        });
+    }
 }
