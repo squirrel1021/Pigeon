@@ -49,6 +49,7 @@ public class PigeonTask {
             }
         });
     }
+
     //获取实时脚环上一个坐标
     public void getLastPoint(final Context context, String ringCode) {
         RequestUtil.getRequest(context, ConstantValues.getLastUpData, RequestParam.getUpData(ringCode), new BaseResponse(context, "加载中") {
@@ -60,6 +61,23 @@ public class PigeonTask {
             @Override
             public void onSuccess(String result) {
                 EventBus.getDefault().post(EventByTag.setDefault(result, EventTagConfig.getLastUpData));
+            }
+        });
+    }
+
+    //设置脚环
+    public void setJiaohuan(final Context context, String name, String intervalTime, String gpsTime, String isStart, String startTime, String endTime) {
+        RequestUtil.postRequest(context, ConstantValues.setACQ, RequestParam.setACQ(name, intervalTime, gpsTime, isStart, startTime, endTime), new BaseResponse(context, "加载中") {
+            @Override
+            public void onFailure(String message) {
+                Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+                Log.i("messagesdfds", message);
+            }
+
+            @Override
+            public void onSuccess(String result) {
+                EventBus.getDefault().post(EventByTag.setDefault(result, EventTagConfig.setACQ));
+                Log.i("resultdsf", result);
             }
         });
     }

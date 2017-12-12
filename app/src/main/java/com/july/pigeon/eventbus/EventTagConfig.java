@@ -30,6 +30,7 @@ public interface EventTagConfig {
 	String headimg = "headimg";
 	String saveheadimg = "saveheadimg";
 	String addjiaohuan = "addjiaohuan";
+	String setACQ = "setACQ";
 	String addpigeon = "addpigeon";
 	String mypigeon = "mypigeon";
 	String myjiaohuan = "myjiaohuan";

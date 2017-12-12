@@ -59,6 +59,8 @@ public class ConstantValues {
     public static final String getEidByAid = BaseUrl + "/app/ring/atoe/getEidByAid";
     //获取实时脚环当前坐标
     public static final String getLastUpData = BaseUrl + "/app/pigeon/trajectory/getLastUpData";
+    //设置脚环
+    public static final String setACQ = BaseUrl + "/app/member/acquisition/setACQ";
 
 
 
