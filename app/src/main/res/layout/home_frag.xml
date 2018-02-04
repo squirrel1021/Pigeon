@@ -25,6 +25,18 @@
             android:text="脚环"
             android:textSize="20sp" />
 
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/queding"
+            android:text="确定"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="25dp"
+            android:layout_marginRight="25dp"
+             />
         <ImageView
             android:id="@+id/addjiaohuan"
             android:layout_width="20dp"

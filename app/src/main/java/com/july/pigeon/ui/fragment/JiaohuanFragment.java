@@ -54,7 +54,9 @@ import com.july.pigeon.ui.activity.main.MapControlDemo;
 import com.july.pigeon.ui.activity.user.AddJiaohuan;
 import com.july.pigeon.ui.activity.user.SetActivity;
 import com.july.pigeon.util.ActivityStartUtil;
+import com.july.pigeon.util.BasicTool;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,13 +69,15 @@ import de.greenrobot.event.EventBus;
 
 public class JiaohuanFragment extends Fragment implements View.OnClickListener {
     private View view;
-    private ImageView addjiaohuan;
+    private ImageView addjiaohuan, locationImage;
+    private TextView queding;
     private BaseListAdapter adapter;
     List<Jiaohuan> list = new ArrayList<Jiaohuan>();
     private GridView gridView;
     private LinearLayout contrastView, transfer, setView;
     private int touthSum = 0;
     private int touthIndex = 0;
+    private ArrayList<String> indexList = new ArrayList<String>();
 
     @Nullable
     @Override
@@ -94,16 +98,41 @@ public class JiaohuanFragment extends Fragment implements View.OnClickListener {
                     intent.putExtra("code", list.get(position).getId());
                     intent.putExtra("ringCode", list.get(position).getRingCode());
                     startActivity(intent);
-                }else if(touthSum==1){
-                    touthSum++;
-                    touthIndex=position;
-                    ConstantValues.ringCodeA=list.get(position).getRingCode();
+                } else if (touthSum == 1) {
+//                    touthSum++;
+                    touthIndex = position;
+                    boolean cancel = false;
+                    if (list.get(position).getIsSelect()==0) {
+                        list.get(position).setIsSelect(1);
+                    }else{
+                        list.get(position).setIsSelect(0);
+                    }
+                    for(int i=0;i<indexList.size();i++){
+                        if(list.get(position).getId().equals(indexList.get(i))){
+                            indexList.remove(i);
+                            cancel=true;
+                        }
+                    }
+                    if(!cancel){
+                        indexList.add(list.get(position).getId());
+                    }
                     adapter.notifyDataSetChanged();
-                }else{
-                    ConstantValues.ringCodeB=list.get(position).getRingCode();
-                    touthIndex=position;
+//                    ConstantValues.ringCodeA=list.get(position).getId();
+//                    adapter.notifyDataSetChanged();
+
+
+                } else {
+                    ConstantValues.ringCodeB = list.get(position).getId();
+                    touthIndex = position;
                     adapter.notifyDataSetChanged();
-                    jumpMap(contrastMapActivity.class);
+                    StringBuffer sb = new StringBuffer();
+                    sb.append(ConstantValues.ringCodeA + ",");
+                    sb.append(ConstantValues.ringCodeB);
+                    Intent intent = new Intent(getActivity(), contrastMapActivity.class);
+                    intent.putExtra("code", sb.toString());
+                    intent.putExtra("ringCode", sb.toString());
+                    startActivity(intent);
+//                    jumpMap(contrastMapActivity.class);
 
                 }
 
@@ -114,25 +143,32 @@ public class JiaohuanFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
-        touthSum=0;
+        touthSum = 0;
         new UserTask().myJiaohuan(getActivity());
+        addjiaohuan.setVisibility(View.VISIBLE);
+        queding.setVisibility(View.GONE);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        touthSum=0;
+        touthSum = 0;
         setAdapter();
     }
 
     private void initView() {
-        ((ImageView)view.findViewById(R.id.locationImage)).setOnClickListener(this);
+        locationImage = (ImageView) view.findViewById(R.id.locationImage);
+        locationImage.setOnClickListener(this);
         contrastView = (LinearLayout) view.findViewById(R.id.contrastView);
         setView = (LinearLayout) view.findViewById(R.id.setView);
         transfer = (LinearLayout) view.findViewById(R.id.transfer);
         contrastView.setOnClickListener(this);
         setView.setOnClickListener(this);
         transfer.setOnClickListener(this);
+        setView.setVisibility(View.GONE);
+        transfer.setVisibility(View.GONE);
+        queding = (TextView) view.findViewById(R.id.queding);
+        queding.setOnClickListener(this);
         addjiaohuan = (ImageView) view.findViewById(R.id.addjiaohuan);
         gridView = (GridView) view.findViewById(R.id.gridview);
         addjiaohuan.setOnClickListener(new View.OnClickListener() {
@@ -152,19 +188,25 @@ public class JiaohuanFragment extends Fragment implements View.OnClickListener {
                     TextView tv = holder.getView(R.id.tv_item);
                     ImageView image = holder.getView(R.id.iv_item);
                     tv.setText(list.get(holder.getPosition()).getRingCode());
-                    if (touthSum == 1) {
-                        image.setImageDrawable(getResources().getDrawable(R.drawable.footring_back));
-                    } else if (touthSum == 2) {
-                        if (holder.getPosition() == touthIndex) {
-                            image.setImageDrawable(getResources().getDrawable(R.drawable.footring_front));
-                        }
-                    }else if(touthSum == 3){
-                        if (holder.getPosition() == touthIndex) {
-                            image.setImageDrawable(getResources().getDrawable(R.drawable.footring_front));
-                        }
-                    }else{
+
+                    if (list.get(holder.getPosition()).getIsSelect()==0) {
                         image.setImageDrawable(getResources().getDrawable(R.drawable.footring_front));
+                    }else{
+                        image.setImageDrawable(getResources().getDrawable(R.drawable.footring_back));
                     }
+//                    if (touthSum == 1) {
+//                        image.setImageDrawable(getResources().getDrawable(R.drawable.footring_back));
+//                    } else if (touthSum == 2) {
+//                        if (holder.getPosition() == touthIndex) {
+//                            image.setImageDrawable(getResources().getDrawable(R.drawable.footring_front));
+//                        }
+//                    }else if(touthSum == 3){
+//                        if (holder.getPosition() == touthIndex) {
+//                            image.setImageDrawable(getResources().getDrawable(R.drawable.footring_front));
+//                        }
+//                    }else{
+//                        image.setImageDrawable(getResources().getDrawable(R.drawable.footring_front));
+//                    }
                 }
             };
             gridView.setAdapter(adapter);
@@ -196,14 +238,45 @@ public class JiaohuanFragment extends Fragment implements View.OnClickListener {
                 jumpMap(MapControlDemo.class);
                 break;
             case R.id.setView:
-                ActivityStartUtil.start(getActivity(), SetJiaohuan.class);
+                Intent intent = new Intent(getActivity(), SetJiaohuan.class);
+                intent.putExtra("list", (Serializable) list);
+                startActivity(intent);
+                break;
+            case R.id.queding:
+               if(indexList.size()<2){
+                   BasicTool.showToast(getActivity(),"请至少选择2只进行对比");
+               }else if(indexList.size()>20){
+                   BasicTool.showToast(getActivity(),"最多只支持20个同时对比");
+               }else{
+                   StringBuffer sb=new StringBuffer();
+                   for(int i=0;i<indexList.size();i++){
+
+                       if(i==indexList.size()-1){
+                           sb.append(indexList.get(i));
+                       }else {
+                           sb.append(indexList.get(i));
+                           sb.append(",");
+                       }
+                   }
+                   Intent intent1 = new Intent(getActivity(), contrastMapActivity.class);
+                   intent1.putExtra("code", sb.toString());
+                   intent1.putExtra("ringCode", sb.toString());
+                   startActivity(intent1);
+               }
                 break;
             case R.id.contrastView:
-                if(touthSum==0){
+                if (touthSum == 0) {
+                    queding.setVisibility(View.VISIBLE);
+                    addjiaohuan.setVisibility(View.GONE);
                     touthSum++;
                     setAdapter();
-                }else {
-                    touthSum=0;
+                } else {
+                    addjiaohuan.setVisibility(View.VISIBLE);
+                    queding.setVisibility(View.GONE);
+                    touthSum = 0;
+                    for(int i=0;i<list.size();i++){
+                        list.get(i).setIsSelect(0);
+                    }
                     setAdapter();
                 }
 
@@ -248,6 +321,8 @@ public class JiaohuanFragment extends Fragment implements View.OnClickListener {
                     }
                 });
     }
+
+
 
     @Override
     public void onDestroy() {

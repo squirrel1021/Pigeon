@@ -1,10 +1,12 @@
 package com.july.pigeon.bean;
 
+import java.io.Serializable;
+
 /**
  * Created by Administrator on 2017/8/30 0030.
  */
 
-public class Jiaohuan {
+public class Jiaohuan implements Serializable{
     private String id;
 
     private String name;
@@ -18,6 +20,16 @@ public class Jiaohuan {
     private String groupName;
 
     private String memberId;
+
+    private  int isSelect;
+
+    public int getIsSelect() {
+        return isSelect;
+    }
+
+    public void setIsSelect(int isSelect) {
+        this.isSelect = isSelect;
+    }
 
     public String getId() {
         return id;

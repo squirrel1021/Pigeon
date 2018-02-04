@@ -14,9 +14,17 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.gson.reflect.TypeToken;
 import com.july.pigeon.R;
 import com.july.pigeon.adapter.BaseListAdapter;
 import com.july.pigeon.adapter.holder.CommViewHolder;
+import com.july.pigeon.bean.Jiaohuan;
+import com.july.pigeon.bean.Pigeon;
+import com.july.pigeon.engine.GsonParser;
+import com.july.pigeon.engine.task.PigeonTask;
+import com.july.pigeon.eventbus.EventByTag;
+import com.july.pigeon.eventbus.EventTagConfig;
+import com.july.pigeon.eventbus.EventUtils;
 import com.july.pigeon.ui.activity.BaseActivity;
 import com.july.pigeon.ui.activity.login.ForgetPassWordActivity;
 import com.july.pigeon.util.ActivityStartUtil;
@@ -61,6 +69,8 @@ public class SetJiaohuan extends BaseActivity {
     private String startTimeString = "";//开始时间
     private String endTimeString = "";//结束时间
 
+    private List<Jiaohuan> jiaohuanList = new ArrayList<Jiaohuan>();
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,7 +84,7 @@ public class SetJiaohuan extends BaseActivity {
         list.add("1");
         list.add("1.5");
         list.add("2");
-
+        jiaohuanList = (List<Jiaohuan>) getIntent().getSerializableExtra("list");
         title.setText("忘记密码");
         leftTv.setText("取消");
         leftTv.setVisibility(View.VISIBLE);
@@ -141,14 +151,22 @@ public class SetJiaohuan extends BaseActivity {
         if (StringUtils.isEmpty(startTimeString)) {
             BasicTool.showToast(this, "请选择开始时间");
             return;
-        } if (StringUtils.isEmpty(endTimeString)) {
+        }
+        if (StringUtils.isEmpty(endTimeString)) {
             BasicTool.showToast(this, "请选择结束时间");
             return;
         }
+        new PigeonTask().setJiaohuan(this, jiaohuanList.get(0).getId(), intervalTime, postTime, "true", startTimeString, endTimeString);
 
 
+    }
 
-
+    // 接口回调
+    public void onEventMainThread(EventByTag eventByTag) {
+//设置脚环
+        if (EventUtils.isValid(eventByTag, EventTagConfig.setACQ, null)) {
+          BasicTool.showToast(this,eventByTag.getObj()+"");
+        }
     }
 
     @OnClick(R.id.startTimeLayout)

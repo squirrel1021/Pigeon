@@ -134,7 +134,7 @@ public class RequestParam {
 
     public static RequestParams getUpData(String ringId) {
         RequestParams params = new RequestParams();
-        params.put("ringId", ringId);
+        params.put("ringIds", ringId);
         return params;
     }
 
@@ -152,7 +152,7 @@ public class RequestParam {
 
     public static RequestParams setACQ(String name, String intervalTime, String gpsTime, String isStart, String startTime, String endTime) {
         RequestParams params = new RequestParams();
-        params.put("ringCode", name);
+        params.put("name", name);
         params.put("intervalTime", intervalTime);
         params.put("gpsTime", gpsTime);
         params.put("isStart", isStart);

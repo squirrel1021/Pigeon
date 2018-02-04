@@ -76,6 +76,18 @@
             android:padding="@dimen/margin_10"
             android:text="切换地图" />
 
+        <TextView
+            android:id="@+id/startStop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="停止对比"
+            android:padding="@dimen/margin_10"
+            android:textColor="@color/black"
+            android:layout_marginBottom="@dimen/margin_100"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:background="@color/tab_main_text_2"
+            />
         <RelativeLayout
             android:id="@+id/infoView"
             android:layout_width="@dimen/margin_150"

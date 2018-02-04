@@ -3,6 +3,7 @@ package com.july.pigeon;
 import android.app.Application;
 import android.content.Context;
 
+import com.baidu.mapapi.CoordType;
 import com.baidu.mapapi.SDKInitializer;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -19,6 +20,7 @@ public class MyApplication extends Application{
     public void onCreate() {
         super.onCreate();
         SDKInitializer.initialize(getApplicationContext());
+        SDKInitializer.setCoordType(CoordType.GCJ02);//默认为BD09LL坐标
         initImageLoader(this);
         ZXingLibrary.initDisplayOpinion(this);
     }

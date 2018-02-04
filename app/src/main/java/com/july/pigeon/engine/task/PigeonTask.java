@@ -70,7 +70,7 @@ public class PigeonTask {
         RequestUtil.postRequest(context, ConstantValues.setACQ, RequestParam.setACQ(name, intervalTime, gpsTime, isStart, startTime, endTime), new BaseResponse(context, "加载中") {
             @Override
             public void onFailure(String message) {
-                Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "脚环设置失败", Toast.LENGTH_LONG).show();
                 Log.i("messagesdfds", message);
             }
 

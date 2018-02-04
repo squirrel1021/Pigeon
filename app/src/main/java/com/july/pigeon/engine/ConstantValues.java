@@ -1,5 +1,7 @@
 package com.july.pigeon.engine;
 
+import android.graphics.Color;
+
 /**
  * Created by ANDROID on 2017/6/7.
  */
@@ -58,7 +60,7 @@ public class ConstantValues {
     //转换脚环
     public static final String getEidByAid = BaseUrl + "/app/ring/atoe/getEidByAid";
     //获取实时脚环当前坐标
-    public static final String getLastUpData = BaseUrl + "/app/pigeon/trajectory/getLastUpData";
+    public static final String getLastUpData = BaseUrl + "/app/pigeon/trajectory/getLastUpDatas";
     //设置脚环
     public static final String setACQ = BaseUrl + "/app/member/acquisition/setACQ";
 
@@ -79,4 +81,5 @@ public class ConstantValues {
     public static String ringCodeA="";
     public static String ringCodeB="";
 
+    public static int[] randomColor={Color.BLUE};
 }
