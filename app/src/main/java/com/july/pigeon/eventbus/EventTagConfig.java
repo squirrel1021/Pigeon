@@ -22,6 +22,7 @@ public interface EventTagConfig {
 	String mycircle = "mycircle";
 	String getUpData = "getUpData";
 	String getLastUpData = "getLastUpData";
+	String getUpDatas = "getUpDatas";
 	String getImei = "getImei";
 	String conments = "conments";
 	String mycirclemore = "mycirclemore";
@@ -31,6 +32,9 @@ public interface EventTagConfig {
 	String saveheadimg = "saveheadimg";
 	String addjiaohuan = "addjiaohuan";
 	String setACQ = "setACQ";
+	String start = "start";
+	String end = "end";
+	String getStatus = "getStatus";
 	String addpigeon = "addpigeon";
 	String mypigeon = "mypigeon";
 	String myjiaohuan = "myjiaohuan";

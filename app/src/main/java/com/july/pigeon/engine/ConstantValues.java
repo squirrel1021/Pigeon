@@ -64,9 +64,15 @@ public class ConstantValues {
     //设置脚环
     public static final String setACQ = BaseUrl + "/app/member/acquisition/setACQ";
 
+    //获取多脚环上报数据列表
+    public static final String getUpDatas = BaseUrl + "/app/pigeon/trajectory/getUpDatas";
 
-
-
+    //获取某个脚环的飞行状态
+    public static final String getStatus = BaseUrl + "/app/ring/getStatus";
+    //开始某个脚环的飞行或重新开始飞行
+    public static final String start = BaseUrl + "/app/ring/start";
+    //结束某个脚环的飞行
+    public static final String end = BaseUrl + "/app/ring/end";
 
 
 

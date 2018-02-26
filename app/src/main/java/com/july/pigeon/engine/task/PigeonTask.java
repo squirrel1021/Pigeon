@@ -65,6 +65,72 @@ public class PigeonTask {
         });
     }
 
+    //获取多脚环上报数据列表
+    public void getLastPointList(final Context context, String ringCode) {
+        RequestUtil.getRequest(context, ConstantValues.getUpDatas, RequestParam.getUpData(ringCode), new BaseResponse(context, "加载中") {
+            @Override
+            public void onFailure(String message) {
+                Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onSuccess(String result) {
+                EventBus.getDefault().post(EventByTag.setDefault(result, EventTagConfig.getUpDatas));
+            }
+        });
+    }
+
+    //获取某个脚环的飞行状态
+    public void getStatus(final Context context, String ringId) {
+        RequestUtil.postRequest(context, ConstantValues.getStatus, RequestParam.getStatus(ringId), new BaseResponse(context, "加载中") {
+            @Override
+            public void onFailure(String message) {
+                Toast.makeText(context, "脚环设置失败", Toast.LENGTH_LONG).show();
+                Log.i("messagesdfds", message);
+            }
+
+            @Override
+            public void onSuccess(String result) {
+                EventBus.getDefault().post(EventByTag.setDefault(result, EventTagConfig.getStatus));
+                Log.i("resultdsf", result);
+            }
+        });
+    }
+
+    //开始某个脚环的飞行或重新开始飞行
+    public void start(final Context context, String ringId) {
+        RequestUtil.postRequest(context, ConstantValues.start, RequestParam.getStatus(ringId), new BaseResponse(context, "加载中") {
+            @Override
+            public void onFailure(String message) {
+                Toast.makeText(context, "脚环开始飞行失败", Toast.LENGTH_LONG).show();
+                Log.i("messagesdfds", message);
+            }
+
+            @Override
+            public void onSuccess(String result) {
+                EventBus.getDefault().post(EventByTag.setDefault(result, EventTagConfig.start));
+                Log.i("resultdsf", result);
+            }
+        });
+    }
+
+    //开始某个脚环的飞行或重新开始飞行
+    public void end(final Context context, String ringId) {
+        RequestUtil.postRequest(context, ConstantValues.end, RequestParam.getStatus(ringId), new BaseResponse(context, "加载中") {
+            @Override
+            public void onFailure(String message) {
+                Toast.makeText(context, "脚环停止失败", Toast.LENGTH_LONG).show();
+                Log.i("messagesdfds", message);
+            }
+
+            @Override
+            public void onSuccess(String result) {
+                EventBus.getDefault().post(EventByTag.setDefault(result, EventTagConfig.end));
+                Log.i("resultdsf", result);
+            }
+        });
+    }
+
     //设置脚环
     public void setJiaohuan(final Context context, String name, String intervalTime, String gpsTime, String isStart, String startTime, String endTime) {
         RequestUtil.postRequest(context, ConstantValues.setACQ, RequestParam.setACQ(name, intervalTime, gpsTime, isStart, startTime, endTime), new BaseResponse(context, "加载中") {

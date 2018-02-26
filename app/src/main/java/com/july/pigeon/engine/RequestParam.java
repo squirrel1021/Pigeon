@@ -138,6 +138,12 @@ public class RequestParam {
         return params;
     }
 
+    public static RequestParams getStatus(String ringId) {
+        RequestParams params = new RequestParams();
+        params.put("ringId", ringId);
+        return params;
+    }
+
     public static RequestParams getImei(String aid) {
         RequestParams params = new RequestParams();
         params.put("aid", aid);

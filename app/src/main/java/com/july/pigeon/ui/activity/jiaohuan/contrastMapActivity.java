@@ -40,10 +40,15 @@ import com.baidu.mapapi.utils.CoordinateConverter;
 import com.baidu.mapapi.utils.DistanceUtil;
 import com.google.gson.reflect.TypeToken;
 import com.july.pigeon.R;
+import com.july.pigeon.bean.JHSturts;
 import com.july.pigeon.bean.Jiaohuan;
 import com.july.pigeon.bean.LaLoBean;
+import com.july.pigeon.bean.Pigeon;
+import com.july.pigeon.engine.BaseResponse;
 import com.july.pigeon.engine.ConstantValues;
 import com.july.pigeon.engine.GsonParser;
+import com.july.pigeon.engine.RequestParam;
+import com.july.pigeon.engine.RequestUtil;
 import com.july.pigeon.engine.task.PigeonTask;
 import com.july.pigeon.eventbus.EventByTag;
 import com.july.pigeon.eventbus.EventTagConfig;
@@ -51,6 +56,7 @@ import com.july.pigeon.eventbus.EventUtils;
 import com.july.pigeon.ui.activity.BaseActivity;
 import com.july.pigeon.ui.activity.main.MapControlDemo;
 import com.july.pigeon.util.ListUtils;
+import com.july.pigeon.util.StringUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -58,6 +64,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by Administrator on 2017/12/3 0003.
@@ -97,7 +105,6 @@ public class contrastMapActivity extends BaseActivity implements SensorEventList
     //	private Button animateStatus;
 
 
-
     // 定位相关
     LocationClient mLocClient;
     //    public contrastMapActivity.MyLocationListenner myListener = new contrastMapActivity.MyLocationListenner();
@@ -123,20 +130,21 @@ public class contrastMapActivity extends BaseActivity implements SensorEventList
     private Handler mHandler;
     private Runnable runnable;
     private List<List<LaLoBean>> totalList = new ArrayList<List<LaLoBean>>();
-    private boolean isStart=true;
+    private boolean isStart = true;
     private List<Lalo> lastLa = new ArrayList<Lalo>();
     private static double[] lo = {113.889203, 113.890784, 113.897683, 113.90336, 113.903288};
     private static double[] la = {22.567348, 22.564277, 22.564878, 22.564077, 22.560072};
     int i = 0;
     private String ringId = "";
-    private TextView ringCodeA, fensuA, hightA, laloA, fensuB, hightB, laloB,startStop;
-    private int[] niao={R.drawable.niao1,R.drawable.niao2,R.drawable.niao3,R.drawable.niao4,R.drawable.niao5,R.drawable.niao6,R.drawable.niao7
-            ,R.drawable.niao8,R.drawable.niao9,R.drawable.niao10,R.drawable.niao11,R.drawable.niao12,R.drawable.niao13,R.drawable.niao14,R.drawable.niao15
-            ,R.drawable.niao16,R.drawable.niao17,R.drawable.niao18,R.drawable.niao19,R.drawable.niao20};
+    private TextView ringCodeA, fensuA, hightA, laloA, fensuB, hightB, laloB, startStop;
+    private int[] niao = {R.drawable.niao1, R.drawable.niao2, R.drawable.niao3, R.drawable.niao4, R.drawable.niao5, R.drawable.niao6, R.drawable.niao7
+            , R.drawable.niao8, R.drawable.niao9, R.drawable.niao10, R.drawable.niao11, R.drawable.niao12, R.drawable.niao13, R.drawable.niao14, R.drawable.niao15
+            , R.drawable.niao16, R.drawable.niao17, R.drawable.niao18, R.drawable.niao19, R.drawable.niao20};
 
-    private List<Integer> r=new ArrayList<Integer>();
-    private List<Integer> g=new ArrayList<Integer>();
-    private List<Integer> b=new ArrayList<Integer>();
+    private List<Integer> r = new ArrayList<Integer>();
+    private List<Integer> g = new ArrayList<Integer>();
+    private List<Integer> b = new ArrayList<Integer>();
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -150,20 +158,52 @@ public class contrastMapActivity extends BaseActivity implements SensorEventList
         fensuB = (TextView) findViewById(R.id.fensuB);
         hightB = (TextView) findViewById(R.id.hightB);
         laloB = (TextView) findViewById(R.id.laloB);
-        startStop= (TextView) findViewById(R.id.startStop);
+        startStop = (TextView) findViewById(R.id.startStop);
+        String ringArray[] = ringId.split(",");
+        RequestUtil.postRequest(this, ConstantValues.getStatus, RequestParam.getStatus(ringArray[0]), new BaseResponse(this, "加载中") {
+            @Override
+            public void onFailure(String message) {
+                Log.i("messagesdfds", message);
+            }
 
+            @Override
+            public void onSuccess(String result) {
+                Log.i("resultdsf", result);
+                if (!StringUtils.isEmpty(result)) {
+
+                    List<JHSturts> list = new GsonParser().parseList(result, new TypeToken<List<JHSturts>>() {
+                    });
+                    if (list.get(0).isStatus()) {
+                        startStop.setText("停止对比");
+                        isStart = true;
+                        getLastPointList();
+                    } else {
+                        startStop.setText("开始对比");
+                        isStart = false;
+                    }
+                }
+            }
+        });
         startStop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if(isStart){
+                if (isStart) {
+                    String ringArray[] = ringId.split(",");
+                    for (int i = 0; i < ringArray.length; i++) {
+                        new PigeonTask().end(contrastMapActivity.this, ringArray[i]);
+                    }
                     mHandler.removeCallbacks(runnable);
                     startStop.setText("开始对比");
-                    isStart=false;
-                }else{
+                    isStart = false;
+                } else {
+                    String ringArray[] = ringId.split(",");
+                    for (int i = 0; i < ringArray.length; i++) {
+                        new PigeonTask().start(contrastMapActivity.this, ringArray[i]);
+                    }
                     startDrawPoint();
                     startStop.setText("停止对比");
-                    isStart=true;
+                    isStart = true;
                 }
             }
         });
@@ -205,10 +245,14 @@ public class contrastMapActivity extends BaseActivity implements SensorEventList
                 }
             }
         });
-//        ((TextView) findViewById(R.id.ringCodeA)).setText("环号:" + ConstantValues.ringCodeA);
-//        ((TextView) findViewById(R.id.ringCodeB)).setText("环号:" + ConstantValues.ringCodeB);
 
         startDrawPoint();
+    }
+
+    //获取之前的历史轨迹
+    private void getLastPointList() {
+        new PigeonTask().getLastPointList(this, ringId);
+
     }
 
     private void startDrawPoint() {
@@ -217,7 +261,7 @@ public class contrastMapActivity extends BaseActivity implements SensorEventList
             @Override
             public void run() {
                 new PigeonTask().getLastPoint(contrastMapActivity.this, ringId);
-                mHandler.postDelayed(this, 3000);
+                mHandler.postDelayed(this, 3000 * 10);
             }
         };
         mHandler.post(runnable);
@@ -248,7 +292,7 @@ public class contrastMapActivity extends BaseActivity implements SensorEventList
                             fensuA.setText("分速:" + resultList.get(i).getSpeed());
                             laloA.setText("经纬度:" + resultList.get(i).getLatitude() + "," + resultList.get(i).getLongitude());
                         }
-                        if(i==1){
+                        if (i == 1) {
                             hightB.setText("高度:" + resultList.get(i).getHeight());
                             fensuB.setText("分速:" + resultList.get(i).getSpeed());
                             laloB.setText("经纬度:" + resultList.get(i).getLatitude() + "," + resultList.get(i).getLongitude());
@@ -269,6 +313,10 @@ public class contrastMapActivity extends BaseActivity implements SensorEventList
                 e.printStackTrace();
             }
         }
+//获取多脚环上报数据列表
+        if (EventUtils.isValid(eventByTag, EventTagConfig.getUpDatas, null)) {
+            Log.i("ds", eventByTag.getObj() + "");
+        }
 
     }
 
@@ -285,7 +333,7 @@ public class contrastMapActivity extends BaseActivity implements SensorEventList
     }
 
     private void addPoint(int index) {
-         List<LaLoBean> laloList = totalList.get(index);
+        List<LaLoBean> laloList = totalList.get(index);
         BitmapDescriptor bdA = BitmapDescriptorFactory
                 .fromResource(niao[index]);
         if (laloList.size() == 1) {
@@ -300,7 +348,7 @@ public class contrastMapActivity extends BaseActivity implements SensorEventList
             points.add(p2);
 
             OverlayOptions ooPolyline = new PolylineOptions().width(5)
-                    .color(Color.rgb(r.get(index),g.get(index),b.get(index))).points(points);
+                    .color(Color.rgb(r.get(index), g.get(index), b.get(index))).points(points);
             Polyline mPolyline = (Polyline) mBaiduMap.addOverlay(ooPolyline);
             float f = mBaiduMap.getMaxZoomLevel();// 19.0 最小比例尺
             MapStatusUpdate u = MapStatusUpdateFactory.newLatLngZoom(p1, f - 5);// 设置缩放比例
@@ -318,7 +366,7 @@ public class contrastMapActivity extends BaseActivity implements SensorEventList
                     bdA);
 
             OverlayOptions ooPolyline = new PolylineOptions().width(5)
-                    .color(Color.rgb(r.get(index),g.get(index),b.get(index))).points(points);
+                    .color(Color.rgb(r.get(index), g.get(index), b.get(index))).points(points);
             Polyline mPolyline = (Polyline) mBaiduMap.addOverlay(ooPolyline);
             MapStatus.Builder builder = new MapStatus.Builder();
             builder.target(p2).zoom(18.0f);
