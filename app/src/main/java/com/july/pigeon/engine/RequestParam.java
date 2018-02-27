@@ -132,9 +132,11 @@ public class RequestParam {
         return params;
     }
 
-    public static RequestParams getUpData(String ringId) {
+    public static RequestParams getUpData(String ringId,String startTime) {
         RequestParams params = new RequestParams();
         params.put("ringIds", ringId);
+        params.put("startTime", startTime);
+        params.put("endTime", "-1");
         return params;
     }
 

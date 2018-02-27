@@ -37,7 +37,7 @@ public class PigeonTask {
 
     //我的社区
     public void getUpData(final Context context, String ringCode) {
-        RequestUtil.getRequest(context, ConstantValues.getUpData, RequestParam.getUpData(ringCode), new BaseResponse(context, "加载中") {
+        RequestUtil.getRequest(context, ConstantValues.getUpData, RequestParam.getUpData(ringCode,""), new BaseResponse(context, "加载中") {
             @Override
             public void onFailure(String message) {
                 Toast.makeText(context, message, Toast.LENGTH_LONG).show();
@@ -52,7 +52,7 @@ public class PigeonTask {
 
     //获取实时脚环上一个坐标
     public void getLastPoint(final Context context, String ringCode) {
-        RequestUtil.getRequest(context, ConstantValues.getLastUpData, RequestParam.getUpData(ringCode), new BaseResponse(context, "加载中") {
+        RequestUtil.getRequest(context, ConstantValues.getLastUpData, RequestParam.getUpData(ringCode,""), new BaseResponse(context, "加载中") {
             @Override
             public void onFailure(String message) {
                 Toast.makeText(context, message, Toast.LENGTH_LONG).show();
@@ -66,8 +66,8 @@ public class PigeonTask {
     }
 
     //获取多脚环上报数据列表
-    public void getLastPointList(final Context context, String ringCode) {
-        RequestUtil.getRequest(context, ConstantValues.getUpDatas, RequestParam.getUpData(ringCode), new BaseResponse(context, "加载中") {
+    public void getLastPointList(final Context context, String ringCode,String startTime) {
+        RequestUtil.getRequest(context, ConstantValues.getUpDatas, RequestParam.getUpData(ringCode,startTime), new BaseResponse(context, "加载中") {
             @Override
             public void onFailure(String message) {
                 Toast.makeText(context, message, Toast.LENGTH_LONG).show();
