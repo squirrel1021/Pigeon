@@ -186,7 +186,7 @@ public class contrastMapActivity extends BaseActivity implements SensorEventList
                             startTime = list.get(0).getStartTime();
                         } else {
                             int res = startTime.compareTo(list.get(0).getStartTime());
-                            if (res < 0) {
+                            if (res > 0) {
                                 startTime = list.get(0).getStartTime();
                                 Log.i("ds", startTime);
                             }
@@ -353,7 +353,7 @@ public class contrastMapActivity extends BaseActivity implements SensorEventList
                     }
 
                     for (int i = 0; i < totalList.size(); i++) {
-                        if (ListUtils.isEmpty(lastIndex) && first) {
+                        if (first) {
                             indexBean bean = new indexBean();
                             bean.setIndex(0);
                             lastIndex.add(bean);
