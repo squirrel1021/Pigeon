@@ -163,30 +163,30 @@ public class contrastMapActivity extends BaseActivity implements SensorEventList
         startStop = (TextView) findViewById(R.id.startStop);
 //        getLastPointList();
         String ringArray[] = ringId.split(",");
-//        RequestUtil.postRequest(this, ConstantValues.getStatus, RequestParam.getStatus(ringArray[0]), new BaseResponse(this, "加载中") {
-//            @Override
-//            public void onFailure(String message) {
-//                Log.i("messagesdfds", message);
-//            }
-//
-//            @Override
-//            public void onSuccess(String result) {
-//                Log.i("resultdsf", result);
-//                if (!StringUtils.isEmpty(result)&&!result.equals("{}")) {
-//
-//                    List<JHSturts> list = new GsonParser().parseList(result, new TypeToken<List<JHSturts>>() {
-//                    });
-//                    if (list.get(0).isStatus()) {
-//                        startStop.setText("停止对比");
-//                        isStart = true;
-//                        getLastPointList();
-//                    } else {
-//                        startStop.setText("开始对比");
-//                        isStart = false;
-//                    }
-//                }
-//            }
-//        });
+        RequestUtil.postRequest(this, ConstantValues.getStatus, RequestParam.getStatus(ringArray[0]), new BaseResponse(this, "加载中") {
+            @Override
+            public void onFailure(String message) {
+                Log.i("messagesdfds", message);
+            }
+
+            @Override
+            public void onSuccess(String result) {
+                Log.i("resultdsf", result);
+                if (!StringUtils.isEmpty(result)&&!result.equals("{}")) {
+
+                    List<JHSturts> list = new GsonParser().parseList(result, new TypeToken<List<JHSturts>>() {
+                    });
+                    if (list.get(0).isStatus()) {
+                        startStop.setText("停止对比");
+                        isStart = true;
+                        getLastPointList();
+                    } else {
+                        startStop.setText("开始对比");
+                        isStart = false;
+                    }
+                }
+            }
+        });
         startStop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

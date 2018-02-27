@@ -135,6 +135,8 @@ public class RequestParam {
     public static RequestParams getUpData(String ringId) {
         RequestParams params = new RequestParams();
         params.put("ringIds", ringId);
+        params.put("startTime", "2018-02-27 11:08:10");
+        params.put("endTime", "-1");
         return params;
     }
 
