@@ -352,6 +352,7 @@ public class contrastMapActivity extends BaseActivity implements SensorEventList
                         }
                     }
 
+
                     for (int i = 0; i < totalList.size(); i++) {
                         if (first) {
                             indexBean bean = new indexBean();
