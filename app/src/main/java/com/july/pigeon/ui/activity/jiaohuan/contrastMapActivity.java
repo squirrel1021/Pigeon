@@ -133,6 +133,7 @@ public class contrastMapActivity extends BaseActivity implements SensorEventList
     private Handler mHandler;
     private Runnable runnable;
     private List<List<LaLoBean>> totalList = new ArrayList<List<LaLoBean>>();
+    private List<String> nowRindId = new ArrayList<String>();
     private boolean isStart = true;
     private List<Lalo> lastLa = new ArrayList<Lalo>();
     private static double[] lo = {113.889203, 113.890784, 113.897683, 113.90336, 113.903288};
@@ -164,41 +165,7 @@ public class contrastMapActivity extends BaseActivity implements SensorEventList
         laloB = (TextView) findViewById(R.id.laloB);
         startStop = (TextView) findViewById(R.id.startStop);
 //        getLastPointList();
-        final String ringArray[] = ringId.split(",");
-
-        for (int i = 0; i < ringArray.length; i++) {
-            final int finalI = i;
-            RequestUtil.postRequest(this, ConstantValues.getStatus, RequestParam.getStatus(ringArray[i]), new BaseResponse(this, "加载中") {
-                @Override
-                public void onFailure(String message) {
-                    Log.i("messagesdfds", message);
-                }
-
-                @Override
-                public void onSuccess(String result) {
-                    Log.i("resultdsf", result);
-                    if (!StringUtils.isEmpty(result) && !result.equals("{}")) {
-
-                        List<JHSturts> list = new GsonParser().parseList(result, new TypeToken<List<JHSturts>>() {
-                        });
-
-                        if (StringUtils.isEmpty(startTime)) {
-                            startTime = list.get(0).getStartTime();
-                        } else {
-                            int res = startTime.compareTo(list.get(0).getStartTime());
-                            if (res > 0) {
-                                startTime = list.get(0).getStartTime();
-                                Log.i("ds", startTime);
-                            }
-                        }
-                        if (finalI == ringArray.length - 1) {
-                            startDrawPoint();
-                        }
-
-                    }
-                }
-            });
-        }
+        getRindStatus();
         Log.i("ds", startTime);
         startStop.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -209,13 +176,32 @@ public class contrastMapActivity extends BaseActivity implements SensorEventList
                     for (int i = 0; i < ringArray.length; i++) {
                         new PigeonTask().end(contrastMapActivity.this, ringArray[i]);
                     }
-                    mHandler.removeCallbacks(runnable);
+                    if (runnable != null) {
+                        mHandler.removeCallbacks(runnable);
+                    }
+
                     startStop.setText("开始对比");
                     isStart = false;
+                    mBaiduMap.clear();
                 } else {
-                    String ringArray[] = ringId.split(",");
+                    final String ringArray[] = ringId.split(",");
                     for (int i = 0; i < ringArray.length; i++) {
-                        new PigeonTask().start(contrastMapActivity.this, ringArray[i]);
+//                        new PigeonTask().start(contrastMapActivity.this, ringArray[i]);
+                        final int finalI = i;
+                        RequestUtil.postRequest(contrastMapActivity.this, ConstantValues.start, RequestParam.getStatus(ringArray[i]), new BaseResponse(contrastMapActivity.this, "加载中") {
+                            @Override
+                            public void onFailure(String message) {
+                                Log.i("messagesdfds", message);
+                            }
+
+                            @Override
+                            public void onSuccess(String result) {
+                                if (finalI == ringArray.length - 1) {
+                                    getRindStatus();
+                                }
+                                Log.i("resultdsf", result);
+                            }
+                        });
                     }
                     startStop.setText("停止对比");
                     isStart = true;
@@ -264,12 +250,72 @@ public class contrastMapActivity extends BaseActivity implements SensorEventList
 
     }
 
+    private void getRindStatus() {
+        final String ringArray[] = ringId.split(",");
+
+        for (int i = 0; i < ringArray.length; i++) {
+            final int finalI = i;
+            RequestUtil.postRequest(this, ConstantValues.getStatus, RequestParam.getStatus(ringArray[i]), new BaseResponse(this, "加载中") {
+                @Override
+                public void onFailure(String message) {
+                    Log.i("messagesdfds", message);
+                }
+
+                @Override
+                public void onSuccess(String result) {
+                    Log.i("resultdsf", result);
+                    if (!StringUtils.isEmpty(result) && !result.equals("{}")) {
+
+                        List<JHSturts> list = new GsonParser().parseList(result, new TypeToken<List<JHSturts>>() {
+                        });
+
+                        if (list.get(0).isStatus()) {
+                            nowRindId.add(list.get(0).getRingId());
+                            if (StringUtils.isEmpty(startTime)) {
+                                startTime = list.get(0).getStartTime();
+                            } else {
+                                int res = startTime.compareTo(list.get(0).getStartTime());
+                                if (res > 0) {
+                                    startTime = list.get(0).getStartTime();
+                                    Log.i("ds", startTime);
+                                }
+                            }
+                        }
+
+                        if (finalI == ringArray.length - 1) {
+                            if (!ListUtils.isEmpty(nowRindId)) {
+                                startDrawPoint();
+                                startStop.setText("停止对比");
+                                isStart = true;
+                            } else {
+                                startStop.setText("开始对比");
+                                isStart = false;
+                            }
+
+                        }
+
+                    }
+                }
+            });
+        }
+    }
+
     private void startDrawPoint() {
+        final StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < nowRindId.size(); i++) {
+            if (i == nowRindId.size() - 1) {
+                sb.append(nowRindId.get(i));
+            } else {
+                sb.append(nowRindId.get(i) + ",");
+            }
+
+        }
+
         mHandler = new Handler();
         runnable = new Runnable() {
             @Override
             public void run() {
-                new PigeonTask().getLastPointList(contrastMapActivity.this, ringId, startTime);
+                new PigeonTask().getLastPointList(contrastMapActivity.this, sb.toString(), startTime);
 //                new PigeonTask().getLastPoint(contrastMapActivity.this, ringId);
                 mHandler.postDelayed(this, 3000 * 10);
             }
@@ -335,7 +381,7 @@ public class contrastMapActivity extends BaseActivity implements SensorEventList
 
                 if (!ListUtils.isEmpty(resultList)) {
                     for (int i = 0; i < resultList.size(); i++) {
-                        if (!"0.0".equals(resultList.get(i).getLongitude()+"")) {
+                        if (!"0.0".equals(resultList.get(i).getLongitude() + "")) {
                             boolean hasData = false;
                             for (int j = 0; j < totalList.size(); j++) {
                                 if (resultList.get(i).getRingName().equals(totalList.get(j).get(0).getRingName())) {
@@ -442,6 +488,7 @@ public class contrastMapActivity extends BaseActivity implements SensorEventList
                     builder.target(p2).zoom(18.0f);
                     mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
                     mBaiduMap.addOverlay(ooA);
+
                 }
             }
 
@@ -693,7 +740,9 @@ public class contrastMapActivity extends BaseActivity implements SensorEventList
         mMapView.onDestroy();
         mMapView = null;
         super.onDestroy();
-        mHandler.removeCallbacks(runnable);
+        if (runnable != null) {
+            mHandler.removeCallbacks(runnable);
+        }
     }
 
     @Override
